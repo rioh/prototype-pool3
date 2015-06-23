@@ -23,7 +23,7 @@ class ApiClient(object):
     """
     logger = logging.getLogger(__name__)
 
-    def __init__(self,  **kwargs):
+    def __init__(self, **kwargs):
         self.kwargs = kwargs
         self.api_limit = 100
 
@@ -57,7 +57,7 @@ class ApiClient(object):
         resp = requests.get(url)
         resp_json = resp.json()
         total_male = resp_json['meta']['results']['total']
-        
+
         # grouping by female
         female_filter = '+AND+patient.drug.openfda.substance_name:%s+AND+patient.patientsex:2' % filter_string
         url = '%s?search=%s%s' % (API_TYPES[api_type], urllib.quote(param), female_filter)
@@ -71,7 +71,7 @@ class ApiClient(object):
         }, {
             "name": "Female",
             "data": [total_female]
-        }]);
+        }])
 
     def get_data(self, api_type, query_string, filter_string):
 
@@ -105,10 +105,9 @@ class ApiClient(object):
         else:
             self.logger.debug("got %s status code", resp.status_code)
         return results
-        
 
     def browse(self, browse_type):
         data = requests.get("%s?count=%s.exact" % (API_TYPES.get(browse_type), BROWSE_TYPES.get(browse_type)))
         if data:
             results = data.json()
-        return [{BROWSE_TYPES.get(browse_type): result.get('term')} for result in results.get('results')]
+        return results.get('results')

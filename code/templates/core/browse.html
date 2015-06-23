@@ -12,9 +12,7 @@
     </div>
 
     {% for term in terms %}
-    {% for key, value in term.items %}
-    <a href="{% url 'search' %}?browse_type={{ browse_type }}&q={{key}}:{{ value|replace_spaces|urlencode }}">{{ value }}</a></br>
-    {% endfor %}
+    <a href="{% url 'search' %}?browse_type={{ browse_type }}&q={{term.term}}:{{ term.term|replace_spaces|urlencode }}">{{ term.term }} ({{ term.count }})</a></br>
     {% endfor %}
 
 {% endblock %}
