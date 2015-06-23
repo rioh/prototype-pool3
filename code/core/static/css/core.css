@@ -1,0 +1,29 @@
+body {
+    background-color: #E6E6E6;
+}
+
+.navbar {
+    border-radius: 0;
+    background-color: #1565c0;
+}
+
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-brand {
+    color: #FFF;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #FFF
+}
+
+#search .panel-body {
+    padding: 5px;
+}
+
+#search input {
+    box-shadow: none;
+}
+
+#labels .panel {
+    margin-top: 15px;
+}

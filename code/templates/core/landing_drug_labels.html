@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+
+{% load staticfiles %}
+{% load url_tags %}
+
+{% block body %}
+
+    <img src="{% static "images/drugs.png" %}" class="img-responsive center-block" alt="drug labels banner image">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Select a drug below for additional information</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+           <div class="panel">
+                <div class="panel-body">
+                    {% for term in terms %}
+                        <a href="{% url 'search' %}?browse_type={{ browse_type }}&q={{term.term}}:{{ term.term|replace_spaces|urlencode }}">{{ term.term }} <strong>({{ term.count }})</strong></a>
+                        <br/>
+                    {% endfor %}
+                </div>
+           </div>
+        </div>
+    </div>
+
+{% endblock %}

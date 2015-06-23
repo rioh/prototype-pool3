@@ -18,7 +18,13 @@ def browse(request, browse_type):
     client = ApiClient()
     data = {'browse_type': browse_type,
             'terms': client.browse(browse_type)}
-    return render(request, 'core/browse.html', data)
+
+    if browse_type == 'enforcements':
+        return render(request, 'core/landing_enforcement_reports.html', data)
+    elif browse_type == 'events':
+        return render(request, 'core/landing_adverse_events.html', data)
+    else:
+        return render(request, 'core/landing_drug_labels.html', data)
 
 
 def search(request):
@@ -27,7 +33,14 @@ def search(request):
         browse_type = request.GET.get('browse_type')
         client = ApiClient()
         data = client.search(query_string, api=browse_type)
-        return render(request, 'core/search_results.html', data)
+
+        if browse_type == 'enforcements':
+            return render(request, 'core/details_enforcement_reports.html', data)
+        elif browse_type == 'events':
+            return render(request, 'core/details_adverse_events.html', data)
+        else:
+            return render(request, 'core/details_drug_labels.html', data)
+
     return HttpResponseBadRequest()
 
 

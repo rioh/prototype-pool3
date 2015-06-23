@@ -3,24 +3,42 @@
 {% load staticfiles %}
 {% block body %}
 
-  <div class="row"> <img src="{% static "images/home.png" %}" class="img-responsive" alt="home banner image">
-    <h3>Search for Information on Drugs</h3>
-    <p>Begin your request for FDA drug information by searching for adverse drug reactions, drugs by manufacturers, or enforceable actions against manufacturers.</p>
-  </div>
+    <img src="{% static "images/home.png" %}" class="img-responsive center-block" alt="home banner image">
 
-  <div class="row" style="padding:24px;">
-    <div class="col-md-6">
-    <form class="form-inline" action="{% url 'search' %}" method="get" name="main_search" id="mainsearch">
-        <div class="form-group">
-            <div class="input-group">
-                <input type="text" class="form-control" name="q" id='search' placeholder="Search for...">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
-                  </span>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Search for Information</h3>
+            <p>Begin your request for FDA drug information by searching for adverse drug reactions, drugs by manufacturers,
+            or enforcement reports against manufacturers.</p>
+        </div>
+    </div>
+
+    <form action="{% url 'search' %}" method="get" name="main_search" id="mainsearch">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel" id="search">
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            <input type="text" class="form-control" name="q" id='search' placeholder="Search for...">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4">
+                <button type="button" class="btn btn-default btn-block btn-lg">Drug Names</button>
+            </div>
+            <div class="col-xs-4">
+                <button type="button" class="btn btn-default btn-block btn-lg">Adverse Events</button>
+            </div>
+            <div class="col-xs-4">
+                <button type="button" class="btn btn-default btn-block btn-lg">Enforcement Reports</button>
             </div>
         </div>
     </form>
-    </div>
-  </div>
 
 {% endblock %}

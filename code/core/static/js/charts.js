@@ -1,59 +1,8 @@
-{% extends "core/base.html" %}
+// we need to fix this file. remove template variables/decide where it is going to live
 
-{% load staticfiles %}
-
-{% block body %}
-
-  <div class="row"> <img src="{% static "images/drugs.png" %}" class="img-responsive" alt="drugs banner image">
-    <h3>Drug Details</h3>
-    <p>You searched for {{ q }}</p>
-  </div>
-
-<div>
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#labels" aria-controls="labels" role="tab" data-toggle="tab">Labels</a></li>
-    <li role="presentation"><a href="#events" aria-controls="events" role="tab" data-toggle="tab">Adverse Events</a></li>
-    <li role="presentation"><a href="#enforcements" aria-controls="enforcements" role="tab" data-toggle="tab">Enforcement Reports</a></li>
-  </ul>
-</div>
-
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="labels">
-  {% for results in labels %}<br />
-  {% for key, value in results.items %}
-  {{ key }}: {{ value }}<br />
-  {% endfor %}
-  {% endfor %}
-  </div>
-
-  <div role="tabpanel" class="tab-pane" id="events">
-  <p>This chart will allow clicking through to another chart to get additional detail</p>
-  <div id="adverseChart"></div><br/>
-  <div id="productChart"></div><br/>
-  {% for results in events %}<br />
-  {% for key, value in results.items %}
-  {{ key }}: {{ value }}<br />
-  {% endfor %}
-  {% endfor %}
-  </div>
-
-  <div role="tabpanel" class="tab-pane" id="enforcements">
-  {% for results in enforcements %}<br />
-  {% for key, value in results.items %}
-  {{ key }}: {{ value }}<br />
-  {% endfor %}
-  {% endfor %}
-  </div>
-</div>
-
-{% endblock %}
-
-{% block extra_js %}
-<script type="text/javascript">
 (function($) {
 
-    var drugNames = 
+    var drugNames =
         [
         {% for results in events %}
         "{{ results.term }}",
@@ -203,12 +152,3 @@
 
     createAdverseEffectsChart(drugNames, adverseEffectsData);
 })(jQuery);
-</script>
-
-<script>
-$('#myTabs a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-</script>
-{% endblock %}
