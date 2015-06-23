@@ -1,0 +1,6 @@
+---
+applications:
+- name: opendata
+  instances: 1
+  host: opendatafda-artemis
+  memory: 512MB

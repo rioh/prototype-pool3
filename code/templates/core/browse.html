@@ -1,0 +1,20 @@
+{% extends "core/base.html" %}
+
+{% load staticfiles %}
+{% load url_tags %}
+
+{% block body %}
+
+    <!-- check which of the urls we are loading, and put in the specific images/text -->
+    <!-- or do we want to have a separate page for each of these? -->
+    <div class="row"> <img src="{% static "images/drugs.png" %}" class="img-responsive" alt="drugs banner image">
+        <h3>Drug Information</h3>
+    </div>
+
+    {% for term in terms %}
+    {% for key, value in term.items %}
+    <a href="{% url 'search' %}?browse_type={{ browse_type }}&q={{key}}:{{ value|replace_spaces|urlencode }}">{{ value }}</a></br>
+    {% endfor %}
+    {% endfor %}
+
+{% endblock %}

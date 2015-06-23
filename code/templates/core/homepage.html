@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}
+
+{% load staticfiles %}
+{% block body %}
+
+  <div class="row"> <img src="{% static "images/home.png" %}" class="img-responsive" alt="home banner image">
+    <h3>Search for Information on Drugs</h3>
+    <p>Begin your request for FDA drug information by searching for adverse drug reactions, drugs by manufacturers, or enforceable actions against manufacturers.</p>
+  </div>
+
+  <div class="row" style="padding:24px;">
+    <div class="col-md-6">
+    <form class="form-inline" action="{% url 'search' %}" method="get" name="main_search" id="mainsearch">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control" name="q" id='search' placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                  </span>
+            </div>
+        </div>
+    </form>
+    </div>
+  </div>
+
+{% endblock %}
