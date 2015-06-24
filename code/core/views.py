@@ -44,8 +44,37 @@ def search(request):
     return HttpResponseBadRequest()
 
 
-def result(request):
-    return render(request, 'core/result.html')
+def search_labels(request):
+    client = ApiClient()
+    query_term = request.GET.get('q')
+    data = client.search_labels(query_term)
+    data['q'] = query_term
+    return render(request, 'core/search_results.html', data)
+
+
+def search_label_events(request):
+    client = ApiClient()
+    query_string = request.GET.get('q')
+    limit = request.GET.get('limit')
+    skip = request.GET.get('skip')
+    data = client.search_label_events(query_string, limit, skip)
+    return HttpResponse(data, content_type='application/json')
+
+
+def search_events(request):
+    client = ApiClient()
+    query_term = request.GET.get('q')
+    data = client.search_events(query_term)
+    data['q'] = query_term
+    return render(request, 'core/search_results.html', data)
+
+
+def search_enforcements(request):
+    client = ApiClient()
+    query_term = request.GET.get('q')
+    data = client.search_enforcements(query_term)
+    data['q'] = query_term
+    return render(request, 'core/search_results.html', data)
 
 
 def search_detail(request):
@@ -56,4 +85,5 @@ def search_detail(request):
         browse_type = request.GET.get('browse_type').strip()
         client = ApiClient()
         results = client.get_age_sex(browse_type, q, filter_string)
-    return HttpResponse(results, content_type='application/json')
+        return HttpResponse(results, content_type='application/json')
+    return HttpResponseBadRequest()

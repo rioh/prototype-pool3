@@ -55,7 +55,7 @@
 
     var drugNames = 
         [
-        {% for results in events %}
+        {% for results in events_count %}
         "{{ results.term }}",
         {% endfor %}
     ];
@@ -64,7 +64,7 @@
         name: 'Counts',
         // data points with extra properties:
         data: [
-        {% for results in events %}
+        {% for results in events_count %}
         {x: {{ forloop.counter0 }}, y: {{ results.count }}, investigation: true},
         {% endfor %}
         ]

@@ -27,44 +27,57 @@ class ApiClient(object):
         self.kwargs = kwargs
         self.api_limit = 100
 
-    def search(self, query_string, api=None, filters=None):
-        self.logger.debug("Searching for '%s'", query_string)
-        filter_string = ""
-        if filters:
-            for key, value in filters.items():
-                if filter_string != "":
-                    filter_string += "&%s:%s" % (key, value)
-                else:
-                    filter_string += "+%s:%s" % (key, value)
-        # TESTING
-        if api == "events":
-            filter_string = "&count=patient.drug.openfda.substance_name"
-        data = {'q': query_string}
-        if api is None:
-            for t in API_TYPES.keys():
-                data[t] = self.get_data(t, query_string, filter_string)
-        else:
-            data[api] = self.get_data(api, query_string, filter_string)
+    def browse(self, browse_type):
+        data = requests.get("%s?count=%s.exact" % (API_TYPES.get(browse_type), BROWSE_TYPES.get(browse_type)))
+        if data:
+            results = data.json()
+        return results.get('results')
 
+    def search_labels(self, query_term):
+        self.logger.debug("Searching for '%s'", query_term)
+        data = {}
+
+        # get general drug info
+        data['labels'] = self.get_sub_data(
+            "%s?search=openfda.brand_name:%s" % (
+                API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0)
+
+        # get additional enforcement info
+        data['enforcements'] = self.get_sub_data(
+            "%s?search=patient.drug.medicinalproduct:%s" % (
+                API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0)
+        return data
+
+    def search_events(self, query_term):
+        self.logger.debug("Searching for event '%s'", query_term)
+        data = {}
+
+        # get events counts
+        count_string = "&count=patient.drug.openfda.substance_name"
+        data['events_count'] = self.get_count_data(
+            "%s?search=patient.reaction.reactionmeddrapt:%s%s" % (
+                API_TYPES['events'], query_term, count_string))
+
+        data['events'] = self.get_sub_data(
+            "%s?search=patient.reaction.reactionmeddrapt:%s" % (
+                API_TYPES['events'], query_term), self.api_limit, 0)
+        return data
+
+    def search_enforcements(self, query_term):
+        self.logger.debug("Searching for enforcement '%s'", query_term)
+        data = {}
+
+        # get general enforcement info
+        data['enforcements'] = self.get_sub_data(
+            "%s?search=state:%s" % (
+                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0)
         return data
 
     def get_age_sex(self, api_type, param, filter_string):
-        # grouping by male
-        self.logger.debug("api_type: %s", api_type)
-        male_filter = '+AND+patient.drug.openfda.substance_name:%s+AND+patient.patientsex:1' % filter_string
-        url = '%s?search=%s%s' % (API_TYPES[api_type], urllib.quote(param), male_filter)
-        self.logger.debug("url: %s", url)
-        resp = requests.get(url)
-        resp_json = resp.json()
-        total_male = resp_json['meta']['results']['total']
 
-        # grouping by female
-        female_filter = '+AND+patient.drug.openfda.substance_name:%s+AND+patient.patientsex:2' % filter_string
-        url = '%s?search=%s%s' % (API_TYPES[api_type], urllib.quote(param), female_filter)
-        self.logger.debug("url: %s", url)
-        resp = requests.get(url)
-        resp_json = resp.json()
-        total_female = resp_json['meta']['results']['total']
+        total_male = self.filter_patient(api_type, filter_string, param, 1)
+        total_female = self.filter_patient(api_type, filter_string, param, 2)
+
         return json.dumps([{
             "name": "Male",
             "data": [total_male]
@@ -72,6 +85,29 @@ class ApiClient(object):
             "name": "Female",
             "data": [total_female]
         }])
+
+    def filter_patient(self, api_type, filter_string, param, identifier):
+        filter = '+AND+patient.drug.openfda.substance_name:%s+AND+patient.patientsex:%s' % (filter_string, identifier)
+        url = '%s?search=%s%s' % (API_TYPES[api_type], urllib.quote(param), filter)
+        self.logger.debug("url: %s", url)
+        resp = requests.get(url)
+        resp_json = resp.json()
+        return resp_json['meta']['results']['total']
+
+    def get_sub_data(self, query_string, limit, skip):
+        url = '%s&limit=%s&skip=%s' % (query_string, limit, skip)
+        self.logger.debug("url: %s", url)
+        resp = requests.get(url)
+        if resp.status_code == 200:
+            resp = requests.get(url).json().get('results')
+            return resp
+        self.logger.info('no results found for %s', query_string)
+        return None
+
+    def get_count_data(self, query_url):
+        self.logger.debug("url: %s", query_url)
+        resp = requests.get(query_url).json().get('results')
+        return resp
 
     def get_data(self, api_type, query_string, filter_string):
 
@@ -105,9 +141,3 @@ class ApiClient(object):
         else:
             self.logger.debug("got %s status code", resp.status_code)
         return results
-
-    def browse(self, browse_type):
-        data = requests.get("%s?count=%s.exact" % (API_TYPES.get(browse_type), BROWSE_TYPES.get(browse_type)))
-        if data:
-            results = data.json()
-        return results.get('results')

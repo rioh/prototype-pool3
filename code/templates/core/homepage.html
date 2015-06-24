@@ -5,6 +5,7 @@
 
     <img src="{% static "images/home.png" %}" class="img-responsive center-block" alt="home banner image">
 
+<<<<<<< HEAD
     <div class="row">
         <div class="col-xs-12">
             <h3>Search for Information</h3>
@@ -37,6 +38,17 @@
             </div>
             <div class="col-xs-4">
                 <button type="button" class="btn btn-default btn-block btn-lg">Enforcement Reports</button>
+=======
+  <div class="row" style="padding:24px;">
+    <div class="col-md-6">
+    <form class="form-inline" action="{% url 'search_labels' %}" method="get" name="main_search" id="mainsearch">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control" name="q" id='search' placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                  </span>
+>>>>>>> separated out and modified code to return additional information for each browse type
             </div>
         </div>
     </form>

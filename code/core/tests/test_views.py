@@ -26,16 +26,21 @@ class BasicViews(TestCase):
         self.assertEquals(resp.status_code, 200)
 
     @patch("core.api_client.ApiClient")
-    def test_search(self, mock_client):
-        resp = self.client.get('/search/?q=test', follow=True)
+    def test_search_labels(self, mock_client):
+        resp = self.client.get('/search/labels?q=test', follow=True)
         self.assertEquals(resp.status_code, 200)
 
     @patch("core.api_client.ApiClient")
-    def test_search_bad_request(self, mock_client):
-        resp = self.client.get('/search/', follow=True)
-        self.assertEquals(resp.status_code, 400)
+    def test_search_events(self, mock_client):
+        resp = self.client.get('/search/events?q=test', follow=True)
+        self.assertEquals(resp.status_code, 200)
+
+    @patch("core.api_client.ApiClient")
+    def test_search_enforcements(self, mock_client):
+        resp = self.client.get('/search/enforcements?q=test', follow=True)
+        self.assertEquals(resp.status_code, 200)
 
     @patch("core.api_client.ApiClient")
     def test_search_detail(self, mock_client):
-        resp = self.client.get('/search_detail', follow=True)
+        resp = self.client.get('/search_detail?q=test&browse_type=events&filter_string=aspirin', follow=True)
         self.assertEquals(resp.status_code, 200)
