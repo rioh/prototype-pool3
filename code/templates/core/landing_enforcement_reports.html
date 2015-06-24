@@ -321,7 +321,7 @@
                                 // eg, go to enforcements/?state=NM
                                // var url = 'https://api.fda.gov/drug/enforcement.json?search=state:' + e.point.code + '&limit=' + e.point.value;
 
-                                window.location = '{% url 'search_enforcements' %}?q= + e.point.code;
+                                window.location = '{% url 'search_enforcements' %}?q=' + e.point.code;
 
                             }
                         }
