@@ -1,0 +1,61 @@
+{% extends "core/base.html" %}
+
+{% load staticfiles %}
+{% block body %}
+
+    <img src="{% static "images/home.png" %}" class="img-responsive center-block" alt="home banner image">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Search for Information</h3>
+            <p>Begin your request for FDA drug information by searching for adverse drug reactions, drugs by manufacturers,
+            or enforcement reports against manufacturers.</p>
+        </div>
+    </div>
+
+    <form action="" method="get" name="main_search" id="mainsearch">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel" id="search">
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            <input type="text" class="form-control" name="q" id='search' placeholder="Search for...">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4">
+                <button id="drug_button" type="button" class="btn btn-default btn-block btn-lg">Drug Names</button>
+            </div>
+            <div class="col-xs-4">
+                <button id="adverse_button" type="button" class="btn btn-default btn-block btn-lg">Adverse Events</button>
+            </div>
+            <div class="col-xs-4">
+                <button id"enforcement_button" type="button" class="btn btn-default btn-block btn-lg">Enforcement Reports</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$("#drug_button").click(function() {
+    $('form').attr("action", "{% url 'search_labels' %}");
+    $('form').submit();
+});
+$("#adverse_button").click(function() {
+    $('form').attr("action", "{% url 'search_events' %}");
+    $('form').submit();
+});
+$("#enforcement_button").click(function() {
+    $('form').attr("action", "{% url 'search_enforcements' %}");
+    $('form').submit();
+});
+</script>
+{% endblock %}

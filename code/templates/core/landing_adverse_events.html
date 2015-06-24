@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+
+{% load staticfiles %}
+{% load url_tags %}
+
+{% block body %}
+
+    <img src="{% static "images/reactions.png" %}" class="img-responsive center-block" alt="adverse events banner image">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Adverse Events</h3>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-12">
+           <div class="panel">
+                <div class="panel-body">
+                    {% for term in terms %}
+                        <a href="{% url 'search_events' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }} <strong>({{ term.count }})</strong></a>
+                        <br/>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
