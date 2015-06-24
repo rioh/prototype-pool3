@@ -25,12 +25,37 @@
         <div class="tab-content">
             <!-- tab 1 -->
             <div role="tabpanel" class="tab-pane active" id="details">
-                {% for results in enforcements %}<br />
-                    {% for key, value in results.items %}
-                        {{ key }}: {{ value }}<br />
+                <!-- accordion panel groups -->
+               <div class="panel-group" aria-multiselectable="true">
+                    {% for result in enforcements %}
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" href="#panel{{ forloop.counter }}" aria-expanded="false">
+                                        Recall Number: {{ result.recall_number }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="panel-collapse collapse" id="panel{{ forloop.counter }}">
+                                <div class="panel-body">
+                                    <table class="table table-condensed table-striped">
+                                        <tbody>
+                                            {% for key, value in result.items %}
+                                                <tr>
+                                                    <td>{{ key }}</td>
+                                                    <td>{{ value }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
                     {% endfor %}
-                {% endfor %}
-          </div>
+                </div>
+            </div>
 
             <!-- tab 2 -->
             <div role="tabpanel" class="tab-pane" id="drugs">
