@@ -36,7 +36,7 @@
             <!-- tab 2 -->
             <div role="tabpanel" class="tab-pane" id="drugs">
                 <p>This chart will allow clicking through to another chart to get additional detail</p>
-                <div id="adverseChart" style="width:100%; margin: 0 auto"></div>
+                <div id="adverseChart"></div>
                 <br/>
                 <div id="productChart"></div><br/>
             </div>
@@ -76,7 +76,10 @@
                 enabled: false
             },
             chart: {
-                type: 'column'
+                type: 'column',
+                style: {
+                    fontFamily: '"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif'
+                }
             },
             title: {
                 text: 'Counts for drugs with adverse effects'
@@ -124,7 +127,8 @@
                                 getDataAndCreateProductChart(xLabel); // <-- long name here :)
                             }
                         }
-                    }
+                    },
+                    color: '#1976D2'
                 }
             },
             series: [seriesData]
@@ -150,8 +154,12 @@
                 enabled: false
             },
             chart: {
-                type: 'column'
+                type: 'column',
+                style: {
+                    fontFamily: '"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif'
+                }
             },
+            colors: ['#1976D2', '#212121'],
             title: {
                 text: productName+" effects grouped by sex"
             },
@@ -182,7 +190,7 @@
                 column: {
                     pointPadding: 0.2,
                     borderWidth: 0
-                }
+                },
             },
             series: productDataArray
         });
@@ -202,14 +210,14 @@
         });
     */
 
-    createAdverseEffectsChart(drugNames, adverseEffectsData);
+    // fix for highcharts width. it needs to wait for the div or else it won't fill the space
+    $('a[href=#drugs]').click(function() {
+       setTimeout(function(){
+         createAdverseEffectsChart(drugNames, adverseEffectsData);
+      }, 0);
+    });
+
 })(jQuery);
 </script>
 
-<script>
-$('#myTabs a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-</script>
 {% endblock %}

@@ -1,10 +1,10 @@
 body {
-    background-color: #E6E6E6;
+    background-color: #CCC;
 }
 
 .navbar {
     border-radius: 0;
-    background-color: #1565c0;
+    background-color: #9E9E9E;
 }
 
 .navbar-default .navbar-nav > li > a,
@@ -16,8 +16,12 @@ body {
     background-color: #FFF
 }
 
+.btn-default {
+    background-color: #F5F5F5;
+}
+
 #search .panel-body {
-    padding: 5px;
+    padding: 6px;
 }
 
 #search input {
@@ -27,3 +31,4 @@ body {
 #labels .panel {
     margin-top: 15px;
 }
+

@@ -33,9 +33,9 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="http://code.highcharts.com/maps/modules/map.js"></script>
-    <script src="http://code.highcharts.com/maps/modules/data.js"></script>
-    <script src="http://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+    <script src="{% static "highmaps-1.1.6/modules/map.js" %}"></script>
+    <script src="{% static "highmaps-1.1.6/modules/data.js" %}"></script>
+    <script src="{% static "highmaps-1.1.6/mapdata/countries/us/us-all.js" %}"></script>
 
     <script>
 		var mapdata = [
@@ -251,9 +251,15 @@
 			}
 
     	$(function() {
+            var map_color = '18, 83, 147'
             $('#map').highcharts('Map', {
                 credits: {
                     enabled: false
+                },
+                chart: {
+                    style: {
+                        fontFamily: '"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif'
+                    }
                 },
                 title: {
                     text: 'Enforcement Reports By State'
@@ -280,35 +286,35 @@
                 colorAxis: {
                     dataClasses: [{
                         to: 0,
-                        color: '#999'
+                        color: '#9E9E9E'
                     },
                     {
                         from: 1,
                         to: 3,
-                        color: 'rgba(19,64,117,0.05)'
+                        color: 'rgba('+map_color+',0.05)'
                     }, {
                         from: 3,
                         to: 10,
-                        color: 'rgba(19,64,117,0.2)'
+                        color: 'rgba('+map_color+',0.2)'
                     }, {
                         from: 10,
                         to: 30,
-                        color: 'rgba(19,64,117,0.4)'
+                        color: 'rgba('+map_color+',0.4)'
                     }, {
                         from: 30,
                         to: 100,
-                        color: 'rgba(19,64,117,0.5)'
+                        color: 'rgba('+map_color+',0.5)'
                     }, {
                         from: 100,
                         to: 300,
-                        color: 'rgba(19,64,117,0.6)'
+                        color: 'rgba('+map_color+',0.6)'
                     }, {
                         from: 300,
                         to: 1000,
-                        color: 'rgba(19,64,117,0.8)'
+                        color: 'rgba('+map_color+',0.8)'
                     }, {
                         from: 1000,
-                        color: 'rgba(19,64,117,1)'
+                        color: 'rgba('+map_color+',1)'
                     }]
                 },
                 // plotOptions is where we set click listeners
@@ -343,6 +349,11 @@
                         format: '{point.code}'
                     },
                     name: 'Enforcement Reports',
+                    states: {
+                        hover: {
+                            color: '#E39999'
+                        }
+                    },
                     tooltip: {
                         pointFormat: '{point.code}: {point.value}'
                     }
