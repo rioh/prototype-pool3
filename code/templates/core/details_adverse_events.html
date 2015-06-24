@@ -4,47 +4,50 @@
 
 {% block body %}
 
-  <div class="row"> <img src="{% static "images/drugs.png" %}" class="img-responsive" alt="drugs banner image">
-    <h3>Drug Details</h3>
-    <p>You searched for {{ q }}</p>
-  </div>
+    <img src="{% static "images/reactions.png" %}" class="img-responsive center-block" alt="adverse events banner image">
 
-<div>
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#labels" aria-controls="labels" role="tab" data-toggle="tab">Labels</a></li>
-    <li role="presentation"><a href="#events" aria-controls="events" role="tab" data-toggle="tab">Adverse Events</a></li>
-    <li role="presentation"><a href="#enforcements" aria-controls="enforcements" role="tab" data-toggle="tab">Enforcement Reports</a></li>
-  </ul>
-</div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Adverse Event Details</h3>
+            <p>Information for {{ q }}</p>
+        </div>
+    </div>
 
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="labels">
-  {% for results in labels %}<br />
-  {% for key, value in results.items %}
-  {{ key }}: {{ value }}<br />
-  {% endfor %}
-  {% endfor %}
-  </div>
 
-  <div role="tabpanel" class="tab-pane" id="events">
-  <p>This chart will allow clicking through to another chart to get additional detail</p>
-  <div id="adverseChart"></div><br/>
-  <div id="productChart"></div><br/>
-  {% for results in events %}<br />
-  {% for key, value in results.items %}
-  {{ key }}: {{ value }}<br />
-  {% endfor %}
-  {% endfor %}
-  </div>
 
-  <div role="tabpanel" class="tab-pane" id="enforcements">
-  {% for results in enforcements %}<br />
-  {% for key, value in results.items %}
-  {{ key }}: {{ value }}<br />
-  {% endfor %}
-  {% endfor %}
-  </div>
+<!-- Nav tabs -->
+<div class="panel">
+    <div class="panel-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
+            <li role="presentation"><a href="#drugs" aria-controls="drugs" role="tab" data-toggle="tab">Drugs</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- tab 1 -->
+            <div role="tabpanel" class="tab-pane active" id="details">
+                {% for results in events %}<br />
+                    {% for key, value in results.items %}
+                        {{ key }}: {{ value }}<br />
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            <!-- tab 2 -->
+            <div role="tabpanel" class="tab-pane" id="drugs">
+                <p>This chart will allow clicking through to another chart to get additional detail</p>
+                <div id="adverseChart" style="width:100%; margin: 0 auto"></div>
+                <br/>
+                <div id="productChart"></div><br/>
+                    {% for results in events %}<br />
+                        {% for key, value in results.items %}
+                            {{ key }}: {{ value }}<br />
+                        {% endfor %}
+                    {% endfor %}
+            </div>
+
+        </div>
+    </div>
 </div>
 
 {% endblock %}
@@ -61,7 +64,7 @@
     ];
 
     var adverseEffectsData = {
-        name: 'Counts',
+        name: 'Count',
         // data points with extra properties:
         data: [
         {% for results in events %}
@@ -85,6 +88,9 @@
             },
             subtitle: {
                 text: '{{ q }}'
+            },
+            legend: {
+                enabled: false
             },
             xAxis: {
                 categories: categoryArray,
@@ -166,7 +172,7 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Number off effects'
+                    text: 'Number of effects'
                 }
             },
             tooltip: {
