@@ -15,12 +15,21 @@
 
     <form action="" method="get" name="main_search" id="mainsearch">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-8">
                 <div class="panel" id="search">
                     <div class="panel-body">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                            <input type="text" class="form-control" name="q" id='search' placeholder="Search for...">
+                            <input type="text" class="form-control" name="q" id='search-term' placeholder="Search for...">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default dropdown-toggle" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" id="select-category">Select Category</button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="#" data-value="search_labels">DRUG NAMES</li>
+                                        <li><a href="#" data-value="search_events">ADVERSE EVENTS</a></li>
+                                        <li><a href="#" data-value="search_enforcements">ENFORCEMENT REPORTS</a></li>
+                                    </ul>
+                                <button class="btn btn-primary" type="button" id="search-category">Search</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -28,34 +37,39 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-4">
-                <button id="drug_button" type="button" class="btn btn-default btn-block btn-lg">Drug Names</button>
-            </div>
-            <div class="col-xs-4">
-                <button id="adverse_button" type="button" class="btn btn-default btn-block btn-lg">Adverse Events</button>
-            </div>
-            <div class="col-xs-4">
-                <button id"enforcement_button" type="button" class="btn btn-default btn-block btn-lg">Enforcement Reports</button>
-            </div>
-        </div>
     </form>
 
 {% endblock %}
 
 {% block extra_js %}
 <script>
-$("#drug_button").click(function() {
-    $('form').attr("action", "{% url 'search_labels' %}");
-    $('form').submit();
+// update button with chosen selection
+var searchOptions = ['search_labels', 'search_events', 'search_enforcements'];
+
+// search category onclick handler
+$(".dropdown-menu li a").click(function(){
+    $(this).parents(".input-group-btn").find('#select-category').text($(this).text());
+    $(this).parents(".input-group-btn").find('#select-category').val($(this).data('value'));
 });
-$("#adverse_button").click(function() {
-    $('form').attr("action", "{% url 'search_events' %}");
-    $('form').submit();
+
+// search go button onclick handler
+$("#search-category").click(function() {
+    var url_category = $('#select-category').val();
+    var search_term = $('#search-term').val();
+
+    if (url_category === 'search_labels' && search_term) {
+        $('form').attr("action", "{% url 'search_labels' %}").submit();
+    }
+    else if (url_category === 'search_events' && search_term) {
+        $('form').attr("action", "{% url 'search_events' %}").submit();
+    }
+    else if (url_category === 'search_enforcements' && search_term) {
+        $('form').attr("action", "{% url 'search_enforcements' %}").submit();
+    } else {
+        // TODO -- add error handling/validation message
+        console.log('unknown category or empty term' + url_category + search_term);
+    }
 });
-$("#enforcement_button").click(function() {
-    $('form').attr("action", "{% url 'search_enforcements' %}");
-    $('form').submit();
-});
+
 </script>
 {% endblock %}
