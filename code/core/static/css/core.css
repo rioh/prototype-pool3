@@ -1,5 +1,33 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
-    background-color: #CCC;
+    background-color: #FFF;
+    color: #212121;
+    font-size: 14px;
+    /* Margin bottom by footer height */
+    margin-bottom: 120px;
+}
+
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: #212121;
+}
+
+h3, .h3 {
+    font-size: 24px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 120px;
+    background-color: #FFF;
+    border-top: 1px solid #dddddd;
 }
 
 .navbar {
@@ -20,6 +48,21 @@ body {
     background-color: #F5F5F5;
 }
 
+.cell .text {
+    max-height: 50px;
+    overflow: hidden;
+}
+
+.expanded .text {
+    max-height: none;
+    overflow: visible;
+}
+
+.more, .less {
+    cursor: pointer;
+    color: #0D87E9;
+}
+
 #search .panel-body {
     padding: 6px;
 }
@@ -28,7 +71,7 @@ body {
     box-shadow: none;
 }
 
-#labels .panel {
+#labels .panel, #details .panel {
     margin-top: 15px;
 }
 

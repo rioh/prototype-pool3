@@ -44,7 +44,13 @@
                                             {% for key, value in result.items %}
                                                 <tr>
                                                     <td>{{ key }}</td>
-                                                    <td>{{ value }}</td>
+                                                    <td class="cell">
+                                                        <div class="text">
+                                                            {{ value }}
+                                                        </div>
+                                                        <span class="more">More...</span>
+                                                        <span class="less" style="display:none;">Less...</span>
+                                                    </td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
@@ -120,3 +126,7 @@
 </div>
 
 {% endblock %}
+
+{% block extra_js %}
+{% endblock %}
+

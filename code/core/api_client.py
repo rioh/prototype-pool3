@@ -40,12 +40,12 @@ class ApiClient(object):
         # get general drug info
         data['labels'] = self.get_sub_data(
             "%s?search=openfda.brand_name:%s" % (
-                API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0)
+                API_TYPES['labels'], urllib.parse.quote(query_term)), self.api_limit, 0)
 
         # get additional enforcement info
         data['enforcements'] = self.get_sub_data(
             "%s?search=patient.drug.medicinalproduct:%s" % (
-                API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0)
+                API_TYPES['events'], urllib.parse.quote(query_term)), self.api_limit, 0)
         return data
 
     def search_events(self, query_term):
@@ -70,7 +70,7 @@ class ApiClient(object):
         # get general enforcement info
         data['enforcements'] = self.get_sub_data(
             "%s?search=state:%s" % (
-                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0)
+                API_TYPES['enforcements'], urllib.parse.quote(query_term)), self.api_limit, 0)
         return data
 
     def get_age_sex(self, api_type, param, filter_string):
@@ -88,7 +88,7 @@ class ApiClient(object):
 
     def filter_patient(self, api_type, filter_string, param, identifier):
         filter = '+AND+patient.drug.openfda.substance_name:%s+AND+patient.patientsex:%s' % (filter_string, identifier)
-        url = '%s?search=%s%s' % (API_TYPES[api_type], urllib.quote(param), filter)
+        url = '%s?search=%s%s' % (API_TYPES[api_type], urllib.parse.quote(param), filter)
         self.logger.debug("url: %s", url)
         resp = requests.get(url)
         resp_json = resp.json()
@@ -113,7 +113,7 @@ class ApiClient(object):
 
         results = None
         url = '%s?search=%s%s&limit=100' % (
-            API_TYPES[api_type], urllib.quote(query_string), filter_string)
+            API_TYPES[api_type], urllib.parse.quote(query_string), filter_string)
         self.logger.debug("url: %s", url)
         resp = requests.get(url)
         if resp.status_code == 200:

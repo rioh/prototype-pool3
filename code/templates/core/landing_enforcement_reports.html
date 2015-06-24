@@ -9,7 +9,8 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <h3>Enforcement Reports by State</h3>
+            <h3>Enforcement Reports</h3>
+            <p>Select a state on the map to view current enforcement reports</p>
         </div>
     </div>
 
@@ -21,10 +22,14 @@
 	                <!-- highcharts map -->
                     <div id="map" style="height:800px; min-width:310px; max-width:100%; margin:0 auto"></div>
 
-                    {% for term in terms %}
-                        <a href="{% url 'search_enforcements' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }} ({{ term.count }})</a>
-                        <br/>
-                    {% endfor %}
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">Enforcement Reports</a>
+                        {% for term in terms %}
+                            <a href="{% url 'search_enforcements' %}?q={{ term.term|replace_spaces|urlencode }}" class="list-group-item">{{ term.term }}
+                                <span class="badge">{{ term.count }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -251,7 +256,7 @@
 			}
 
     	$(function() {
-            var map_color = '18, 83, 147';
+            var map_color = '23, 105, 170';
             $('#map').highcharts('Map', {
                 credits: {
                     enabled: false

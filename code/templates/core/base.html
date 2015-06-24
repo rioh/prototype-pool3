@@ -52,10 +52,58 @@
         {% endblock %}
     </div>
 
+    <!-- end body/begin footer -->
+    <footer class="footer">
+        <div class="container" style="max-width:1024px;">
+            <div class="row" style="margin-top:15px;">
+                <div class="col-xs-12 text-center">
+                    <ul class="list-inline">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <p>Copyright Information/Licensing Information</p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
     <script src="{% static "js/jquery-2.1.3.min.js" %}"></script>
     <script src="{% static "highcharts-4.1.6/highcharts.js" %}"></script>
     <script src="{% static "bootstrap-3.3.5-dist/js/bootstrap.min.js" %}"></script>
+
+    <script>
+    // functionality to support expand/collapse of divs for large bodies of text
+        $(".cell").each(function() {
+            var cell = this;
+            var text = $(cell).find(".text");
+            var more = $(cell).find(".more");
+            var less = $(cell).find(".less");
+
+            if($(text).height() < 50) {
+                $(more).hide();
+            }
+
+            $(more).click(function() {
+                $(cell).addClass("expanded");
+                $(more).toggle();
+                $(less).toggle();
+            });
+
+            $(less).click(function() {
+                $(cell).removeClass("expanded");
+                $(more).toggle();
+                $(less).toggle();
+            });
+        });
+    </script>
+
     {% block extra_js %}
     {% endblock %}
+
 </body>
 </html>
