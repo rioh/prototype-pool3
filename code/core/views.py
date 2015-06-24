@@ -27,29 +27,12 @@ def browse(request, browse_type):
         return render(request, 'core/landing_drug_labels.html', data)
 
 
-def search(request):
-    if request.method == 'GET' and 'q' in request.GET:
-        query_string = request.GET.get('q')
-        browse_type = request.GET.get('browse_type')
-        client = ApiClient()
-        data = client.search(query_string, api=browse_type)
-
-        if browse_type == 'enforcements':
-            return render(request, 'core/details_enforcement_reports.html', data)
-        elif browse_type == 'events':
-            return render(request, 'core/details_adverse_events.html', data)
-        else:
-            return render(request, 'core/details_drug_labels.html', data)
-
-    return HttpResponseBadRequest()
-
-
 def search_labels(request):
     client = ApiClient()
     query_term = request.GET.get('q')
     data = client.search_labels(query_term)
     data['q'] = query_term
-    return render(request, 'core/search_results.html', data)
+    return render(request, 'core/details_drug_labels.html', data)
 
 
 def search_label_events(request):
@@ -66,7 +49,7 @@ def search_events(request):
     query_term = request.GET.get('q')
     data = client.search_events(query_term)
     data['q'] = query_term
-    return render(request, 'core/search_results.html', data)
+    return render(request, 'core/details_adverse_events.html', data)
 
 
 def search_enforcements(request):
@@ -74,7 +57,7 @@ def search_enforcements(request):
     query_term = request.GET.get('q')
     data = client.search_enforcements(query_term)
     data['q'] = query_term
-    return render(request, 'core/search_results.html', data)
+    return render(request, 'core/details_enforcement_reports.html', data)
 
 
 def search_detail(request):

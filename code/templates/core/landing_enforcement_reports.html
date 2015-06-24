@@ -22,7 +22,7 @@
                     <div id="map" style="height:800px; min-width:310px; max-width:100%; margin:0 auto"></div>
 
                     {% for term in terms %}
-                        <a href="{% url 'search' %}?browse_type={{ browse_type }}&q={{term.term}}:{{ term.term|replace_spaces|urlencode }}">{{ term.term }} ({{ term.count }})</a>
+                        <a href="{% url 'search_enforcements' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }} ({{ term.count }})</a>
                         <br/>
                     {% endfor %}
                 </div>
@@ -321,7 +321,7 @@
                                 // eg, go to enforcements/?state=NM
                                // var url = 'https://api.fda.gov/drug/enforcement.json?search=state:' + e.point.code + '&limit=' + e.point.value;
 
-                                window.location = '{% url 'search' %}?browse_type={{ browse_type }}&q=state:' + e.point.code;
+                                window.location = '{% url 'search_enforcements' %}?q= + e.point.code;
 
                             }
                         }

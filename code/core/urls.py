@@ -8,7 +8,6 @@ urlpatterns = patterns(
     url(r'^browse/events/$', views.browse, {'browse_type': "events"}, name='browse_events'),
     url(r'^browse/labels/$', views.browse, {'browse_type': "labels"}, name='browse_labels'),
     url(r'^browse/enforcements/$', views.browse, {'browse_type': "enforcements"}, name='browse_enforcements'),
-    url(r'^search/$', views.search, name='search'),
     url(r'^search/labels/$', views.search_labels, name='search_labels'),
     url(r'^search/events/$', views.search_events, name='search_events'),
     url(r'^search/enforcements/$', views.search_enforcements, name='search_enforcements'),

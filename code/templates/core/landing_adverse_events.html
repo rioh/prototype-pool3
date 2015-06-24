@@ -19,7 +19,7 @@
            <div class="panel">
                 <div class="panel-body">
                     {% for term in terms %}
-                        <a href="{% url 'search' %}?browse_type={{ browse_type }}&q={{term.term}}:{{ term.term|replace_spaces|urlencode }}">{{ term.term }} <strong>({{ term.count }})</strong></a>
+                        <a href="{% url 'search_events' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }} <strong>({{ term.count }})</strong></a>
                         <br/>
                     {% endfor %}
                 </div>
