@@ -84,10 +84,6 @@
             var more = $(cell).find(".more");
             var less = $(cell).find(".less");
 
-            if($(text).height() < 50) {
-                $(more).hide();
-            }
-
             $(more).click(function() {
                 $(cell).addClass("expanded");
                 $(more).toggle();
