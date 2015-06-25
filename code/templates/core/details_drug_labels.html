@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-xs-12">
             <h3>Drug Details</h3>
-            <p>Information for {{ q }}</p>
+            <p>Information for <strong>{{ q }}</strong></p>
         </div>
     </div>
 
@@ -34,7 +34,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a role="button" data-toggle="collapse" href="#panel{{ forloop.counter }}" aria-expanded="false">
-                                        Set ID: {{ result.id }}
+                                        {{ result.openfda.brand_name.0 }}: {{ result.id }}
                                     </a>
                                 </h4>
                             </div>
@@ -47,7 +47,13 @@
                                             </div>
                                             <div class="col-sm-9 col-xs-12 cell">
                                                 <div class="text">
-                                                    {{ value }}
+                                                            {% if value|is_list %}
+                                                            {% for val in value %}
+                                                            {{ val }}
+                                                            {% endfor %}
+                                                            {% else %}
+                                                            {{ value }}
+                                                            {% endif %}
                                                 </div>
                                                 <span class="more">More...</span>
                                                 <span class="less" style="display:none;">Less...</span>
@@ -64,60 +70,114 @@
 
             <!-- tab 2 -->
             <div role="tabpanel" class="tab-pane" id="events">
+                <!-- accordion panel groups -->
+                <div class="panel-group" aria-multiselectable="true">
 
-                {% for result in enforcements %}
-                <p>{{ result.receivedate }}</p>
-                <table class="table table-striped table-bordered">
-                    <caption>
-                        Reporting Sources
-                    </caption>
-                    <tbody>
-                        <tr>
+                {% for result in events %}
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                         <a role="button" data-toggle="collapse" href="#tab2_panel{{ forloop.counter }}" aria-expanded="false">
+                           Safety Report Id: {{ result.safetyreportid  }} (received: {{ result.receivedate }})
+                         </a>
+                      </h4>
+                    </div>
+                  </div>
+                  <div class="panel-collapse collapse" id="tab2_panel{{ forloop.counter }}">
+                    <div class="panel-body">
+                      <table class="table table-striped table-bordered">
+                        <caption>Reporting Sources</caption>
+                        <tbody>
+                          <tr>
                             <td>Safety Report</td>
                             <td>{{ result.safetyreportid }}</td>
-                        </tr>
-                        <tr>
+                          </tr>
+                          <tr>
                             <td>Safety Report Version</td>
                             <td>{{ result.safetyreportversion }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-striped table-bordered">
-                    <caption>
+                          </tr>
+                      </tbody>
+                    </table>
+                    <table class="table table-striped table-bordered">
+                      <caption>
                         Patient Data
-                    </caption>
-                    <tbody>
+                      </caption>
+                      <tbody>
                         <tr>
-                            <td>Patient Report</td>
-                            <td>['patient']</td>
+                          <td>Patient Report</td>
+                          <td>['patient']</td>
                         </tr>
                         <tr>
-                            <td>Second Field</td>
-                            <td>['second value']</td>
+                          <td>Second Field</td>
+                          <td>['second value']</td>
                         </tr>
-                    </tbody>
-                </table>
-                <table class="table table-striped table-bordered">
-                    <caption>
+                      </tbody>
+                    </table>
+                    <table class="table table-striped table-bordered">
+                      <caption>
                         Drug Data
-                    </caption>
-                    <tbody>
+                      </caption>
+                      <tbody>
                         <tr>
-                            <td>Drug Report</td>
-                            <td>['patient.drug']</td>
+                          <td>Drug Report</td>
+                          <td>['patient.drug']</td>
                         </tr>
-                         <tr>
-                            <td>Second Field</td>
-                            <td>['second value']</td>
+                        <tr>
+                          <td>Second Field</td>
+                          <td>['second value']</td>
                         </tr>
-                    </tbody>
-                </table>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
                 {% endfor %}
+              </div>
             </div>
 
             <!-- tab 3 -->
             <div role="tabpanel" class="tab-pane" id="enforcements">
-                <p>PLACEHOLDER TODO</p>
+                <!-- accordion panel groups -->
+                <div class="panel-group" aria-multiselectable="true">
+
+                {% for result in enforcements %}
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                         <a role="button" data-toggle="collapse" href="#tab3_panel{{ forloop.counter }}" aria-expanded="false">
+                           Reason for recall: {{ result.reason_for_recall }}
+                         </a>
+                      </h4>
+                    </div>
+                  </div>
+                  <div class="panel-collapse collapse" id="tab3_panel{{ forloop.counter }}">
+                    <div class="panel-body">
+                      <table class="table table-striped table-bordered">
+                        <tbody>
+                        {% for key, value in result.items %}
+                          <tr>
+                             <td>{{ key }}</td>
+                             <td class="cell">
+                               <div class="text">
+                               {% if value|is_list %}
+                               {% for val in value %}
+                               {{ val }}
+                               {% endfor %}
+                               {% else %}
+                               {{ value }}
+                               {% endif %}
+                               </div>
+                               <span class="more">More...</span>
+                               <span class="less" style="display:none;">Less...</span>
+                             </td>
+                           </tr>
+                         {% endfor %}
+                         </tbody>
+                      </table>
+                    </div>
+                  </div>
+                {% endfor %}
+                </div>
+              </div>
             </div>
         </div>
 

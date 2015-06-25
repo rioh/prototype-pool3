@@ -8,3 +8,7 @@ def replace_spaces(value):
 @register.filter
 def replace_underscores(value):
     return value.replace('_', ' ')
+
+@register.filter
+def is_list(value):
+    return hasattr(value, "__iter__")

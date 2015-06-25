@@ -19,7 +19,7 @@
     <div class="panel-body">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
-            <li role="presentation"><a href="#drugs" aria-controls="drugs" role="tab" data-toggle="tab">Drugs</a></li>
+            <li role="presentation"><a href="#drugs" aria-controls="drugs" role="tab" data-toggle="tab">Drugs with this adverse effect</a></li>
         </ul>
 
         <div class="tab-content">
@@ -46,7 +46,13 @@
                                             </div>
                                             <div class="col-sm-9 col-xs-12 cell">
                                                 <div class="text">
-                                                    {{ value }}
+                                                        {% if value|is_list %}
+                                                        {% for val in value %}
+                                                        {{ val }}
+                                                        {% endfor %}
+                                                        {% else %}
+                                                        {{ value }}
+                                                        {% endif %}
                                                 </div>
                                                 <span class="more">More...</span>
                                                 <span class="less" style="display:none;">Less...</span>
@@ -120,7 +126,10 @@
             },
             xAxis: {
                 categories: categoryArray,
-                crosshair: false
+                crosshair: false,
+                title: {
+                    text: 'Drug name'
+                }
             },
             yAxis: {
                 min: 0,

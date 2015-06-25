@@ -42,10 +42,15 @@ class ApiClient(object):
             "%s?search=openfda.brand_name:%s" % (
                 API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0)
 
-        # get additional enforcement info
-        data['enforcements'] = self.get_sub_data(
+        # get additional event info
+        data['events'] = self.get_sub_data(
             "%s?search=patient.drug.medicinalproduct:%s" % (
                 API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0)
+
+        # get additional enforcement info
+        data['enforcements'] = self.get_sub_data(
+            "%s?search=product_description:%s" % (
+                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0)
         return data
 
     def search_events(self, query_term):
@@ -71,10 +76,15 @@ class ApiClient(object):
         data['enforcements'] = self.get_sub_data(
             "%s?search=state:%s" % (
                 API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0)
+
+        # get drug counts
+        count_string = "&count=openfda.brand_name"
+        data['drugs_count'] = self.get_count_data(
+            "%s?search=state:%s%s" % (
+                API_TYPES['enforcements'], query_term, count_string))
         return data
 
     def get_age_sex(self, api_type, param, filter_string):
-
         total_male = self.filter_patient(api_type, filter_string, param, 1)
         total_female = self.filter_patient(api_type, filter_string, param, 2)
 

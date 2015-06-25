@@ -21,15 +21,6 @@
                 <div class="panel-body">
 	                <!-- highcharts map -->
                     <div id="map" style="height:800px; min-width:310px; max-width:100%; margin:0 auto"></div>
-
-                    <div class="list-group">
-                        <a href="#" class="list-group-item active">Enforcement Reports</a>
-                        {% for term in terms %}
-                            <a href="{% url 'search_enforcements' %}?q={{ term.term|replace_spaces|urlencode }}" class="list-group-item">{{ term.term }}
-                                <span class="badge">{{ term.count }}</span>
-                            </a>
-                        {% endfor %}
-                    </div>
                 </div>
             </div>
         </div>

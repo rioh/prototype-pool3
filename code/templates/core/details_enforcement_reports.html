@@ -9,8 +9,8 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <h3>Enforcement Reports</h3>
-            <p>Information for {{ q }}</p>
+            <h3>Enforcement Report Details</h3>
+            <p>Information for <strong>{{ q }}</strong></p>
         </div>
     </div>
 
@@ -19,7 +19,7 @@
     <div class="panel-body">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
-            <li role="presentation"><a href="#drugs" aria-controls="drugs" role="tab" data-toggle="tab">Drugs</a></li>
+            <li role="presentation"><a href="#drugs" aria-controls="drugs" role="tab" data-toggle="tab">Drugs with enforcement reports in state</a></li>
         </ul>
 
         <div class="tab-content">
@@ -33,7 +33,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a role="button" data-toggle="collapse" href="#panel{{ forloop.counter }}" aria-expanded="false">
-                                        Recall Number: {{ result.recall_number }}
+                                        Recall Number: {{ result.recall_number }} [{{ result.report_date }}: {{ result.city }}, {{ result.state }}]
                                     </a>
                                 </h4>
                             </div>
@@ -46,7 +46,13 @@
                                             </div>
                                             <div class="col-sm-9 col-xs-12 cell">
                                                 <div class="text">
-                                                    {{ value }}
+                                                        {% if value|is_list %}
+                                                        {% for val in value %}
+                                                        {{ val }}
+                                                        {% endfor %}
+                                                        {% else %}
+                                                        {{ value }}
+                                                        {% endif %}
                                                 </div>
                                                 <span class="more">More...</span>
                                                 <span class="less" style="display:none;">Less...</span>
@@ -85,7 +91,7 @@
 
     var drugNames = 
         [
-        {% for results in events %}
+        {% for results in drugs_count %}
         "{{ results.term }}",
         {% endfor %}
     ];
@@ -94,7 +100,7 @@
         name: 'Counts',
         // data points with extra properties:
         data: [
-        {% for results in events %}
+        {% for results in drugs_count %}
         {x: {{ forloop.counter0 }}, y: {{ results.count }}, investigation: true},
         {% endfor %}
         ]
@@ -111,19 +117,22 @@
                 type: 'column'
             },
             title: {
-                text: 'Counts for drugs with adverse effects'
+                text: 'Counts for drugs with enforcement reports in state'
             },
             subtitle: {
                 text: '{{ q }}'
             },
             xAxis: {
                 categories: categoryArray,
-                crosshair: false
+                crosshair: false,
+                title: {
+                    text: 'Drug name'
+                }
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Number of adverse effects'
+                    text: 'Number of drugs'
                 }
             },
             tooltip: {
@@ -162,7 +171,7 @@
 
     function getDataAndCreateProductChart(productName) {
 
-        $.getJSON("{% url 'search_detail' %}", {"browse_type": "events", "q": "{{ q }}", "filter_string": productName})
+        $.getJSON("{% url 'search_detail' %}", {"browse_type": "enforcements", "q": "{{ q }}", "filter_string": productName})
             .fail(function() {
                 console.log("error getting data");
             })
