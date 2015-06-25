@@ -18,7 +18,7 @@
 
     <form action="" method="get" name="main_search" id="mainsearch">
         <div class="row">
-            <div class="col-xs-7">
+            <div class="col-xs-12 col-sm-7">
                 <div class="panel" id="search">
                     <div class="panel-body">
                         <div class="input-group">
@@ -31,7 +31,7 @@
                                         <li><a href="#" data-value="search_events">ADVERSE EVENTS</a></li>
                                         <li><a href="#" data-value="search_enforcements">ENFORCEMENT REPORTS</a></li>
                                     </ul>
-                                <button class="btn btn-primary" type="button" id="search-category">GO</button>
+                                <button class="btn btn-primary" type="submit" id="search-category">GO</button>
                             </div>
                         </div>
                     </div>
@@ -60,17 +60,22 @@ $("#search-category").click(function() {
     var url_category = $('#select-category').val();
     var search_term = $('#search-term').val();
 
-    if (url_category === 'search_labels' && search_term) {
+    // stop the click event if the search term or category is falsey.
+    if(!search_term || !url_category) {
+        return false;
+    }
+
+    if (url_category === 'search_labels') {
         $('form').attr("action", "{% url 'search_labels' %}").submit();
     }
-    else if (url_category === 'search_events' && search_term) {
+    else if (url_category === 'search_events') {
         $('form').attr("action", "{% url 'search_events' %}").submit();
     }
-    else if (url_category === 'search_enforcements' && search_term) {
+    else if (url_category === 'search_enforcements') {
         $('form').attr("action", "{% url 'search_enforcements' %}").submit();
     } else {
-        // TODO -- add error handling/validation message
-        console.log('unknown category or empty term' + url_category + search_term);
+        console.log('unknown category' + url_category);
+        return false;
     }
 });
 

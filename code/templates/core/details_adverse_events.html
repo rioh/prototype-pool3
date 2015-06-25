@@ -1,6 +1,7 @@
 {% extends "core/base.html" %}
 
 {% load staticfiles %}
+{% load url_tags %}
 
 {% block body %}
 
@@ -12,8 +13,6 @@
             <p>Information for {{ q }}</p>
         </div>
     </div>
-
-
 
 <!-- Nav tabs -->
 <div class="panel">
@@ -40,22 +39,20 @@
                             </div>
                             <div class="panel-collapse collapse" id="panel{{ forloop.counter }}">
                                 <div class="panel-body">
-                                    <table class="table table-condensed table-striped">
-                                        <tbody>
-                                            {% for key, value in result.items %}
-                                                <tr>
-                                                    <td>{{ key }}</td>
-                                                    <td class="cell">
-                                                        <div class="text">
-                                                          {{ value }}
-                                                        </div>
-                                                        <span class="more">More...</span>
-                                                        <span class="less" style="display:none;">Less...</span>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
+                                    {% for key, value in result.items %}
+                                        <div class="row">
+                                            <div class="col-sm-3 col-xs-12">
+                                                <strong>{{ key|replace_underscores }}</strong>
+                                            </div>
+                                            <div class="col-sm-9 col-xs-12 cell">
+                                                <div class="text">
+                                                    {{ value }}
+                                                </div>
+                                                <span class="more">More...</span>
+                                                <span class="less" style="display:none;">Less...</span>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>

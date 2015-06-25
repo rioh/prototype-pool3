@@ -37,7 +37,8 @@
             </div>
             <div id="bs-example-navbar-collapse-9" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li> <a href="{%  url 'browse_labels' %}">Drug Names</a> </li>
+                    <li> <a href="{% url 'homepage' %}">Search</a> </li>
+                    <li> <a href="{% url 'browse_labels' %}">Drug Names</a> </li>
                     <li> <a href="{% url 'browse_events' %}">Adverse Events</a> </li>
                     <li> <a href="{% url 'browse_enforcements' %}">Enforcement Reports</a> </li>
                     <!--<li> <a href="manufacturers.html">Drug Manufacturers</a> </li>-->
@@ -78,24 +79,36 @@
 
     <script>
     // functionality to support expand/collapse of divs for large bodies of text
-        $(".cell").each(function() {
-            var cell = this;
-            var text = $(cell).find(".text");
-            var more = $(cell).find(".more");
-            var less = $(cell).find(".less");
+        $(".panel-title a").click(function() {
+            var panelTitle = this;
+            setTimeout(function() {
+                $(panelTitle).parents('.panel').first().find('.cell').each(function () {
+                    var cell = this;
+                    var text = $(cell).find(".text");
+                    var more = $(cell).find(".more");
+                    var less = $(cell).find(".less");
 
-            $(more).click(function() {
-                $(cell).addClass("expanded");
-                $(more).toggle();
-                $(less).toggle();
-            });
+                    // correct for resizing
+                    if ($(text).height() < 55) {
+                        $(more).hide();
+                        $(text).removeClass("text");
+                    }
 
-            $(less).click(function() {
-                $(cell).removeClass("expanded");
-                $(more).toggle();
-                $(less).toggle();
-            });
+                    $(more).click(function () {
+                        $(cell).addClass("expanded");
+                        $(more).toggle();
+                        $(less).toggle();
+                    });
+
+                    $(less).click(function () {
+                        $(cell).removeClass("expanded");
+                        $(more).toggle();
+                        $(less).toggle();
+                    });
+                });
+            }, 0);
         });
+
     </script>
 
     {% block extra_js %}
