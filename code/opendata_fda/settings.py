@@ -1,5 +1,7 @@
 # Django settings for opendata_fda project.
 import os
+import urlparse
+import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -96,11 +98,13 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -160,6 +164,30 @@ LOGGING = {
         },
     },
 }
+
+"""
+Use this for local caching
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+"""
+
+memcachedcloud_service = json.loads(os.environ['VCAP_SERVICES'])['memcachedcloud'][0]
+credentials = memcachedcloud_service['credentials']
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': credentials['servers'].split(','),
+        'OPTIONS': {'username': credentials['username'],
+                    'password': credentials['password']
+    }
+  }
+}
+
+CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24  # cache for a day
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
