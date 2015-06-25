@@ -18,6 +18,7 @@
 
     <form action="" method="get" name="main_search" id="mainsearch">
         <div class="row">
+{# currently this will shrink for xs devices, up to 320x480. we will need to adjust the bs to make it wrap to new line #}
             <div class="col-xs-12 col-sm-7">
                 <div class="panel" id="search">
                     <div class="panel-body">
@@ -30,6 +31,7 @@
                                         <li><a href="#" data-value="search_labels">DRUG NAMES</a></li>
                                         <li><a href="#" data-value="search_events">ADVERSE EVENTS</a></li>
                                         <li><a href="#" data-value="search_enforcements">ENFORCEMENT REPORTS</a></li>
+                                        <li><a href="#" data-value="search_manufacturers">MANUFACTURERS</a></li>
                                     </ul>
                                 <button class="btn btn-primary" type="submit" id="search-category">GO</button>
                             </div>
@@ -73,7 +75,11 @@ $("#search-category").click(function() {
     }
     else if (url_category === 'search_enforcements') {
         $('form').attr("action", "{% url 'search_enforcements' %}").submit();
-    } else {
+    }
+    else if (url_category === 'search_manufacturers') {
+        $('form').attr("action", "{% url 'search_manufacturers' %}").submit();
+    }
+    else {
         console.log('unknown category' + url_category);
         return false;
     }

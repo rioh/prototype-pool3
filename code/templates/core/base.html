@@ -37,11 +37,10 @@
             </div>
             <div id="bs-example-navbar-collapse-9" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li> <a href="{% url 'homepage' %}">Search</a> </li>
                     <li> <a href="{% url 'browse_labels' %}">Drug Names</a> </li>
                     <li> <a href="{% url 'browse_events' %}">Adverse Events</a> </li>
                     <li> <a href="{% url 'browse_enforcements' %}">Enforcement Reports</a> </li>
-                    <!--<li> <a href="manufacturers.html">Drug Manufacturers</a> </li>-->
+                    <li> <a href="{% url 'browse_manufacturers' %}">Drug Manufacturers</a> </li>
                 </ul>
             </div>
         </div>
@@ -81,6 +80,7 @@
     // functionality to support expand/collapse of divs for large bodies of text
         $(".panel-title a").click(function() {
             var panelTitle = this;
+
             setTimeout(function() {
                 $(panelTitle).parents('.panel').first().find('.cell').each(function () {
                     var cell = this;
