@@ -5,7 +5,6 @@ import json
 
 from django.conf import settings
 
-
 API_TYPES = {
     "events": settings.FDA_DRUG_API_EVENT_URL,
     "labels": settings.FDA_DRUG_API_LABEL_URL,
@@ -37,20 +36,22 @@ class ApiClient(object):
         self.logger.debug("Searching for '%s'", query_term)
         data = {}
 
+        # TODO: need to add pagination
+
         # get general drug info
-        data['labels'] = self.get_sub_data(
+        data['labels'] = self.clean_labels(self.get_sub_data(
             "%s?search=openfda.brand_name:%s" % (
-                API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0)
+                API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0))
 
         # get additional event info
-        data['events'] = self.get_sub_data(
+        data['events'] = self.clean_events(self.get_sub_data(
             "%s?search=patient.drug.medicinalproduct:%s" % (
-                API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0)
+                API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0))
 
         # get additional enforcement info
-        data['enforcements'] = self.get_sub_data(
+        data['enforcements'] = self.clean_enforcements(self.get_sub_data(
             "%s?search=product_description:%s" % (
-                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0)
+                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0))
         return data
 
     def search_events(self, query_term):
@@ -63,9 +64,9 @@ class ApiClient(object):
             "%s?search=patient.reaction.reactionmeddrapt:%s%s" % (
                 API_TYPES['events'], query_term, count_string))
 
-        data['events'] = self.get_sub_data(
+        data['events'] = self.clean_events(self.get_sub_data(
             "%s?search=patient.reaction.reactionmeddrapt:%s" % (
-                API_TYPES['events'], query_term), self.api_limit, 0)
+                API_TYPES['events'], query_term), self.api_limit, 0))
         return data
 
     def search_enforcements(self, query_term):
@@ -73,9 +74,9 @@ class ApiClient(object):
         data = {}
 
         # get general enforcement info
-        data['enforcements'] = self.get_sub_data(
+        data['enforcements'] = self.clean_enforcements(self.get_sub_data(
             "%s?search=state:%s" % (
-                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0)
+                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0))
 
         # get drug counts
         count_string = "&count=openfda.brand_name"
@@ -119,35 +120,99 @@ class ApiClient(object):
         resp = requests.get(query_url).json().get('results')
         return resp
 
-    def get_data(self, api_type, query_string, filter_string):
-
-        results = None
-        url = '%s?search=%s%s&limit=100' % (
-            API_TYPES[api_type], urllib.quote(query_string), filter_string)
-        self.logger.debug("url: %s", url)
-        resp = requests.get(url)
-        if resp.status_code == 200:
-            resp_json = resp.json()
-            results = resp_json.get('results')
-            if resp_json['meta'].get('results'):
-                total = resp_json['meta']['results']['total']
-                self.logger.debug("%s results%", total)
-
-                if total > self.api_limit:
-                    # TODO: Cap this for now
-                    if total > 500:
-                        total = 500
-                    for count in xrange(self.api_limit, total, self.api_limit):
-                        self.logger.debug("getting the next %s results: %s / %s", self.api_limit, count, total)
-                        url = "%s?search=%s%s&limit=100&skip=%d" % (
-                            API_TYPES[api_type], query_string, filter_string, count)
-                        self.logger.debug("url: %s", url)
-                        results.append(requests.get(url).json().get('results'))
-                else:
-                    url = "%s?search=%s%s" % (
-                        API_TYPES[api_type], query_string, filter_string)
-                    self.logger.debug("url: %s", url)
-                    results.append(requests.get(url).json().get('results'))
-        else:
-            self.logger.debug("got %s status code", resp.status_code)
+    def clean_labels(self, data):
+        results = []
+        for d in data:
+            clean_data = {
+                "id": d.get('id', {}),
+                "brand_name": d.get('openfda', {}).get('brand_name'),
+                "generic_name": d.get('openfda', {}).get('generic_name'),
+                "description": d.get('openfda', {}).get('description'),
+                "pharm_class_epc": d.get('openfda', {}).get('pharm_class_epc'),
+                "pharm_class cs": d.get('openfda', {}).get('pharm_class_cs'),
+                "route": d.get('openfda', {}).get('route'),
+                "manufacturer": d.get('openfda', {}).get('manufacturer_name'),
+                "do_not_use": d.get('openfda', {}).get('do_not_use'),
+                "active_ingredient": d.get('active_ingredient'),
+                "inactive_ingredient": d.get('inactive_ingredient'),
+                "dosage_and_administration": d.get('dosage_and_administration'),
+                "warnings": d.get('warnings'),
+                "adverse_reactions": d.get('adverse_reactions'),
+                "drug_interactions": d.get('drug_interactions'),
+                "pharmacokinetics": d.get('pharmacokinetics'),
+            }
+            results.append(clean_data)
         return results
+
+    def clean_events(self, data):
+        results = []
+        for d in data:
+            safety_data = {
+                "safety_report": d.get('safetyreportid'),
+                "safety_report_version": d.get('safetyreportversion'),
+                "receive_date": d.get('receivedate'),
+                "receipt_date_format": d.get('receiptdateformat'),
+                "seriousness": self.yes_or_no(d.get('seriousness')),
+                "seriousness_details": ["congenital_anomali: %s" % d.get("seriouscongenitalanomali"),
+                                        "death: %s" % d.get("seriousnessdeath"),
+                                        "disabling: %s" % d.get("seriousnessdisabling"),
+                                        "hospitalizationg: %s" % d.get("seriousnesshospitalization"),
+                                        "lifethreatening: %s" % d.get("seriousnesslifethreatening")],
+                "duplicate_report_source": d.get('reportduplicate.duplicatesource'),
+                "duplicate_report_number": d.get('reportduplicate.duplicatenumb'),
+            }
+            patient_data = {
+                "patient_onset_age": "%s %s" % (d.get('patient.patientonsetstage'),
+                                                d.get('patinetonsetageunit')),
+                "patient_sex": self.male_or_female(d.get('patient.patientsex')),
+                "patient_death_details": d.get('patient.patientdeath')
+            }
+            label_data = {
+                "drug_administration_route": d.get('patient.drug.drugadministrationroute'),
+                "actions_taken_with_drug": d.get('patient.drug.actiondrug'),
+                "dosage": "%s %s" % (d.get('patient.drug.drugcumulativedosagenumb'),
+                                     d.get('patient.drug.drugcumulativedosageunit')),
+                "number_of_doses": d.get('patient.drug.drugstructuredosagenumb'),
+                "reported_role_of_the_drug_in_the_adverse_event": d.get('patient.drug.drugcharacterization')
+            }
+            results.append({'safety_data': safety_data,
+                            'patient_data': patient_data,
+                            'label_data': label_data})
+        return results
+
+    def clean_enforcements(self, data):
+        results = []
+        for d in data:
+            clean_data = {
+                'event_id': d.get('event_id'),
+                'status': d.get('status'),
+                'city': d.get('city'),
+                'state': d.get('state'),
+                'recalling_firm': d.get('recalling_firm'),
+                'reason_for_recall': d.get('reason_for_recall'),
+                'manufacturer_name': d.get('openfda', {}).get('manufacturer_name'),
+                'recall_initiation_date': d.get('recall_initiation_date'),
+                'classification': d.get('classification'),
+                'product_description': d.get('product_description'),
+                'code_info': d.get('code_info'),
+                'voluntary_mandated': d.get('voluntary_mandated'),
+                'initial_firm_notification': d.get('initial_firm_notification'),
+                'report_date': d.get('report_date'),
+                'recall_initiation_date': d.get('recall_initiation_date'),
+            }
+            results.append(clean_data)
+        return results
+
+    def yes_or_no(self, value):
+        if value == "1":
+            return "Yes"
+        elif value == "2":
+            return "No"
+
+    def male_or_female(self, value):
+        if value == 1:
+            return 'Male'
+        elif value == 2:
+            return 'Female'
+        elif value == 0:
+            return 'Unknown'
