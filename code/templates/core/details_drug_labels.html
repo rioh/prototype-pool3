@@ -42,16 +42,16 @@
                                     {% for key, value in result.items %}
                                         <div class="row">
                                             <div class="col-sm-3 col-xs-12">
-                                                <strong>{{ key|replace_underscores }}</strong>
+                                                <strong>{{ key|replace_underscores|capfirst }}</strong>
                                             </div>
                                             <div class="col-sm-9 col-xs-12 cell">
                                                 <div class="text">
                                                   {% if value|is_list %}
                                                     {% for val in value %}
-                                                      {{ val|default_if_none:"N/A" }}<br />
+                                                      {{ val|default:"N/A" }}<br />
                                                     {% endfor %}
                                                   {% else %}
-                                                    {{ value|default_if_none:"N/A" }}
+                                                    {{ value|default:"N/A" }}
                                                   {% endif %}
                                                 </div>
                                                 <span class="more">More...</span>
@@ -89,13 +89,13 @@
                         <tbody>
                           {% for key, value in result.safety_data.items %}
                           <tr>
-                            <td>{{ key|replace_underscores }}</td>
+                            <td>{{ key|replace_underscores|capfirst }}</td>
                             <td>{% if value|is_list %}
                                   {% for val in value %}
-                                    {{ val|default_if_none:"N/A" }}<br />
+                                    {{ val|default:"N/A" }}<br />
                                   {% endfor %}
                                 {% else %}
-                                  {{ value|default_if_none:"N/A" }}
+                                  {{ value|default:"N/A" }}
                                 {% endif %}
                             </td>
                           </tr>
@@ -109,13 +109,13 @@
                       <tbody>
                           {% for key, value in result.patient_data.items %}
                           <tr>
-                            <td>{{ key|replace_underscores }}</td>
+                            <td>{{ key|replace_underscores|capfirst }}</td>
                             <td>{% if value|is_list %}
                                   {% for val in value %}
-                                    {{ val|default_if_none:"N/A" }}<br />
+                                    {{ val|default:"N/A" }}<br />
                                   {% endfor %}
                                 {% else %}
-                                  {{ value|default_if_none:"N/A" }}
+                                  {{ value|default:"N/A" }}
                                 {% endif %}
                             </td>
                           </tr>
@@ -129,13 +129,13 @@
                       <tbody>
                           {% for key, value in result.label_data.items %}
                           <tr>
-                            <td>{{ key|replace_underscores }}</td>
+                            <td>{{ key|replace_underscores|capfirst }}</td>
                             <td>{% if value|is_list %}
                                   {% for val in value %}
-                                    {{ val|default_if_none:"N/A" }}<br />
+                                    {{ val|default:"N/A" }}<br />
                                   {% endfor %}
                                 {% else %}
-                                  {{ value|default_if_none:"N/A" }}
+                                  {{ value|default:"N/A" }}
                                 {% endif %}
                             </td>
                           </tr>
@@ -169,15 +169,15 @@
                         <tbody>
                         {% for key, value in result.items %}
                           <tr>
-                             <td>{{ key|replace_underscores }}</td>
+                             <td>{{ key|replace_underscores|capfirst }}</td>
                              <td class="cell">
                                <div class="text">
                                   {% if value|is_list %}
                                     {% for val in value %}
-                                      {{ val|default_if_none:"N/A" }}<br />
+                                      {{ val|default:"N/A" }}<br />
                                     {% endfor %}
                                   {% else %}
-                                    {{ value|default_if_none:"N/A" }}
+                                    {{ value|default:"N/A" }}
                                   {% endif %}
                                </div>
                                <span class="more">More...</span>

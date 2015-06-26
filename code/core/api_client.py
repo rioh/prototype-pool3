@@ -153,25 +153,25 @@ class ApiClient(object):
                 "receive_date": d.get('receivedate'),
                 "receipt_date_format": d.get('receiptdateformat'),
                 "seriousness": self.yes_or_no(d.get('seriousness')),
-                "seriousness_details": ["congenital_anomali: %s" % d.get("seriouscongenitalanomali"),
+                "seriousness_details": ["congenital anomali: %s" % d.get("seriouscongenitalanomali"),
                                         "death: %s" % d.get("seriousnessdeath"),
                                         "disabling: %s" % d.get("seriousnessdisabling"),
-                                        "hospitalizationg: %s" % d.get("seriousnesshospitalization"),
-                                        "lifethreatening: %s" % d.get("seriousnesslifethreatening")],
+                                        "hospitalization: %s" % d.get("seriousnesshospitalization"),
+                                        "life threatening: %s" % d.get("seriousnesslifethreatening")],
                 "duplicate_report_source": d.get('reportduplicate.duplicatesource'),
                 "duplicate_report_number": d.get('reportduplicate.duplicatenumb'),
             }
             patient_data = {
-                "patient_onset_age": "%s %s" % (d.get('patient.patientonsetstage'),
-                                                d.get('patinetonsetageunit')),
+                "patient_onset_age": "%s%s" % (d.get('patient.patientonsetstage', ""),
+                                                d.get('patinetonsetageunit', "")),
                 "patient_sex": self.male_or_female(d.get('patient.patientsex')),
                 "patient_death_details": d.get('patient.patientdeath')
             }
             label_data = {
                 "drug_administration_route": d.get('patient.drug.drugadministrationroute'),
                 "actions_taken_with_drug": d.get('patient.drug.actiondrug'),
-                "dosage": "%s %s" % (d.get('patient.drug.drugcumulativedosagenumb'),
-                                     d.get('patient.drug.drugcumulativedosageunit')),
+                "dosage": "%s%s" % (d.get('patient.drug.drugcumulativedosagenumb', ""),
+                                    d.get('patient.drug.drugcumulativedosageunit', "")),
                 "number_of_doses": d.get('patient.drug.drugstructuredosagenumb'),
                 "reported_role_of_the_drug_in_the_adverse_event": d.get('patient.drug.drugcharacterization')
             }
