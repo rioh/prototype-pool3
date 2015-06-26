@@ -1,19 +1,23 @@
-{% extends "core/base.html" %}
+{% extends "core/browse.html" %}
 
 {% load staticfiles %}
 {% load url_tags %}
 
-{% block body %}
+{% block title %}
+<title>FDA Drug Monitor - Enforcement Reports</title>
+{% endblock %}
 
+{% block image %}
     <img src="{% static "images/enforceable.png" %}" class="img-responsive center-block" alt="enforcement reports banner image">
+{% endblock %}
 
+{% block text %}
     <div class="row">
         <div class="col-xs-12">
-            <h3>Enforcement Reports</h3>
+            <h1>Enforcement Reports</h1>
             <p>Select a state on the map to view current enforcement reports</p>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-xs-12">
@@ -25,7 +29,30 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
+{% block browse_body %}
+    <!-- browse list -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <dl class="list-group fda-list-group">
+                        <dt class="list-group-item">
+                            State
+                        </dt>
+                        {% for term in terms %}
+                         <dd class="list-group-item">
+                            <a href="{% url 'search_enforcements' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}
+                                <span class="badge pull-right">{{ term.count }}</span>
+                            </a>
+                        </dd>
+                        {% endfor %}
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extra_js %}

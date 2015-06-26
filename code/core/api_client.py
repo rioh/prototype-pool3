@@ -2,6 +2,7 @@ import requests
 import logging
 import urllib
 import json
+import operator
 
 from django.conf import settings
 
@@ -13,7 +14,13 @@ API_TYPES = {
 BROWSE_TYPES = {
     "events": "patient.reaction.reactionmeddrapt",
     "labels": "openfda.brand_name",
-    "enforcements": "state"}
+    "enforcements": "state",
+    "manufacturers": {
+        "events": "patient.drug.openfda.manufacturer_name",
+        "labels": "openfda.manufacturer_name",
+        "enforcements": "openfda.manufacturer_name"
+    }
+}
 
 
 class ApiClient(object):
@@ -27,10 +34,42 @@ class ApiClient(object):
         self.api_limit = 100
 
     def browse(self, browse_type):
+        if browse_type == 'manufacturers':
+            return self._browse_manufacturers()
+
+        results = {}
         data = requests.get("%s?count=%s.exact" % (API_TYPES.get(browse_type), BROWSE_TYPES.get(browse_type)))
         if data:
             results = data.json()
+
         return results.get('results')
+
+    def _browse_manufacturers(self):
+        """
+        Get each of the manufacturer lists from the api sources. Return the combined json object.
+        :return: list of combined manufacturer names and counts
+        """
+        data = {}
+
+        # get the response from each of the queries
+        for api_type, api_path in BROWSE_TYPES.get('manufacturers').items():
+            self.logger.debug('Browsing for %s' % api_type)
+            api_type_data = requests.get("%s?count=%s.exact" % (API_TYPES.get(api_type), api_path))
+
+            if api_type_data:
+                data[api_type] = api_type_data
+
+        # if we got response(s), flatten them down
+        if data:
+            results = []
+            for api_type, api_response in data.items():
+                results += api_response.json().get('results')
+
+            # and sort the list in number order
+            if results:
+                results = sorted(results, key=operator.itemgetter('count'), reverse=True)
+
+        return results
 
     def search_labels(self, query_term):
         self.logger.debug("Searching for '%s'", query_term)
@@ -84,6 +123,38 @@ class ApiClient(object):
             "%s?search=state:%s%s" % (
                 API_TYPES['enforcements'], query_term, count_string))
         return data
+
+# TODO -- finish this method
+    def search_manufacturers(self, query_term):
+        self.logger.debug("Searching for manufacturer '%s'", query_term)
+        data = {}
+
+        # get labels from this manufacturuer
+        data['labels'] = self.get_sub_data(
+            "%s?search=openfda.brand_name:%s" % (
+                API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0)
+
+        # get additional event info
+        data['events'] = self.get_sub_data(
+            "%s?search=patient.drug.medicinalproduct:%s" % (
+                API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0)
+
+        # get additional enforcement info
+        data['enforcements'] = self.get_sub_data(
+            "%s?search=product_description:%s" % (
+                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0)
+        return data
+
+        data = {}
+
+        # get labels with this manufacturer
+
+        # get adverse events with this manufacturer
+        # https://api.fda.gov/drug/event.json?search=patient.drug.openfda.manufacturer_name:Mylan
+
+        # get enforcement reports with this manufacturer
+        # https://api.fda.gov/drug/enforcement.json?search=recalling_firm:Mylan
+
 
     def get_age_sex(self, api_type, param, filter_string):
         total_male = self.filter_patient(api_type, filter_string, param, 1)

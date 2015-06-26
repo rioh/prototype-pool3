@@ -1,34 +1,41 @@
-{% extends "core/base.html" %}
+{% extends "core/details.html" %}
 
 {% load staticfiles %}
 {% load url_tags %}
 
-{% block body %}
+{% block title %}
+<title>FDA Drug Monitor - Adverse Event Details</title>
+{% endblock %}
 
+{% block image %}
     <img src="{% static "images/reactions.png" %}" class="img-responsive center-block" alt="adverse events banner image">
+{% endblock %}
 
+{% block text %}
     <div class="row">
         <div class="col-xs-12">
-            <h3>Adverse Event Details</h3>
-            <p>Information for {{ q }}</p>
+            <h1>Adverse Event Details
+                <small>Information for <strong>{{ q }}</strong></small>
+            </h1>
         </div>
     </div>
+{% endblock %}
 
+{% block details %}
 <!-- Nav tabs -->
 <div class="panel">
     <div class="panel-body">
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs fda-nav-tab" role="tablist">
             <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
             <li role="presentation"><a href="#drugs" aria-controls="drugs" role="tab" data-toggle="tab">Drugs with this adverse effect</a></li>
         </ul>
 
         <div class="tab-content">
             <!-- tab 1 -->
-            <div role="tabpanel" class="tab-pane active" id="details">
+            <div role="tabpanel" class="tab-pane active fda-table-accordion" id="details">
                 <!-- accordion panel groups -->
                <div class="panel-group" aria-multiselectable="true">
                     {% for result in events %}
-
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -39,82 +46,83 @@
                             </div>
                             <div class="panel-collapse collapse" id="panel{{ forloop.counter }}">
                                 <div class="panel-body">
-                                <table class="table table-striped table-bordered">
-                                 <caption>Reporting Sources</caption>
-                                 <tbody>
-                                   {% for key, value in result.safety_data.items %}
-                                   <tr>
-                                     <td>{{ key|replace_underscores|capfirst }}</td>
-                                     <td>{% if value|is_list %}
-                                           {% for val in value %}
-                                             {{ val|default:"N/A" }}<br />
+                                    <table class="table table-striped table-bordered">
+                                         <caption>Reporting Sources</caption>
+                                         <tbody>
+                                           {% for key, value in result.safety_data.items %}
+                                           <tr>
+                                             <th scope="row">{{ key|replace_underscores|capfirst }}</th>
+                                             <td>{% if value|is_list %}
+                                                   {% for val in value %}
+                                                     {{ val|default:"N/A" }}<br />
+                                                   {% endfor %}
+                                                 {% else %}
+                                                   {{ value|default:"N/A" }}
+                                                 {% endif %}
+                                             </td>
+                                           </tr>
                                            {% endfor %}
-                                         {% else %}
-                                           {{ value|default:"N/A" }}
-                                         {% endif %}
-                                     </td>
-                                   </tr>
-                                   {% endfor %}
-                               </tbody>
-                             </table>
-                             <table class="table table-striped table-bordered">
-                               <caption>
-                                 Patient Data
-                               </caption>
-                               <tbody>
-                                   {% for key, value in result.patient_data.items %}
-                                   <tr>
-                                     <td>{{ key|replace_underscores|capfirst }}</td>
-                                     <td>{% if value|is_list %}
-                                           {% for val in value %}
-                                             {{ val|default:"N/A" }}<br />
+                                         </tbody>
+                                    </table>
+                                    <table class="table table-striped table-bordered">
+                                        <caption>
+                                         Patient Data
+                                        </caption>
+                                        <tbody>
+                                           {% for key, value in result.patient_data.items %}
+                                           <tr>
+                                             <th scope="row">{{ key|replace_underscores|capfirst }}</th>
+                                             <td>{% if value|is_list %}
+                                                   {% for val in value %}
+                                                     {{ val|default:"N/A" }}<br />
+                                                   {% endfor %}
+                                                 {% else %}
+                                                   {{ value|default:"N/A" }}
+                                                 {% endif %}
+                                             </td>
+                                           </tr>
                                            {% endfor %}
-                                         {% else %}
-                                           {{ value|default:"N/A" }}
-                                         {% endif %}
-                                     </td>
-                                   </tr>
-                                   {% endfor %}
-                               </tbody>
-                             </table>
-                             <table class="table table-striped table-bordered">
-                               <caption>
-                                 Drug Data
-                               </caption>
-                               <tbody>
-                                   {% for key, value in result.label_data.items %}
-                                   <tr>
-                                     <td>{{ key|replace_underscores|capfirst }}</td>
-                                     <td>{% if value|is_list %}
-                                           {% for val in value %}
-                                             {{ val|default:"N/A" }}<br />
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-striped table-bordered">
+                                        <caption>
+                                         Drug Data
+                                        </caption>
+                                        <tbody>
+                                           {% for key, value in result.label_data.items %}
+                                           <tr>
+                                             <th scope="row">{{ key|replace_underscores|capfirst }}</th>
+                                             <td>{% if value|is_list %}
+                                                   {% for val in value %}
+                                                     {{ val|default:"N/A" }}<br />
+                                                   {% endfor %}
+                                                 {% else %}
+                                                   {{ value|default:"N/A" }}
+                                                 {% endif %}
+                                             </td>
+                                           </tr>
                                            {% endfor %}
-                                         {% else %}
-                                           {{ value|default:"N/A" }}
-                                         {% endif %}
-                                     </td>
-                                   </tr>
-                                   {% endfor %}
-                               </tbody>
-                             </table>
-                           </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
-            </div>
+            </div><!-- end tab 1 -->
 
             <!-- tab 2 -->
             <div role="tabpanel" class="tab-pane" id="drugs">
-                <p>This chart will allow clicking through to another chart to get additional detail</p>
-                <div id="adverseChart"></div>
-                <br/>
-                <div id="productChart"></div><br/>
-            </div>
-
-        </div>
-    </div>
-</div>
-
+                <div class="panel-group">
+                    <p>This chart will allow clicking through to another chart to get additional detail</p>
+                    <div id="adverseChart"></div>
+                    <br/>
+                    <div id="productChart"></div><br/>
+                </div>
+            </div><!-- end tab 2 -->
+        </div><!-- end tab content -->
+    </div><!-- end panel-body-->
+</div><!-- end panel -->
 {% endblock %}
 
 {% block extra_js %}

@@ -23,8 +23,10 @@ def browse(request, browse_type):
         return render(request, 'core/landing_enforcement_reports.html', data)
     elif browse_type == 'events':
         return render(request, 'core/landing_adverse_events.html', data)
-    else:
+    elif browse_type == 'labels':
         return render(request, 'core/landing_drug_labels.html', data)
+    else:
+        return render(request, 'core/landing_manufacturers.html', data)
 
 
 def search_labels(request):
@@ -58,6 +60,15 @@ def search_enforcements(request):
     data = client.search_enforcements(query_term)
     data['q'] = query_term
     return render(request, 'core/details_enforcement_reports.html', data)
+
+
+# TODO -- add this method
+def search_manufacturers(request):
+    client = ApiClient()
+    query_term = request.GET.get('q')
+    data = client.search_manufacturers(query_term)
+    data['q'] = query_term
+    return render(request, 'core/details_manufacturers.html', data)
 
 
 def search_detail(request):

@@ -4,18 +4,18 @@
 {% load url_tags %}
 
 {% block title %}
-<title>FDA Drug Monitor - Adverse Events</title>
+<title>FDA Drug Monitor - Manufacturers</title>
 {% endblock %}
 
 {% block image %}
-    <img src="{% static "images/reactions.png" %}" class="img-responsive center-block" alt="adverse events banner image">
+    <img src="{% static "images/manufacturers.png" %}" class="img-responsive center-block" alt="manufacturers labels banner image">
 {% endblock %}
 
 {% block text %}
     <div class="row">
         <div class="col-xs-12">
-            <h1>Adverse Events</h1>
-            <p>Select an event from the list to view current event-related information</p>
+            <h1>Manufacturers</h1>
+            <p>Select a manufacturer from the list to view current drug-related information</p>
         </div>
     </div>
 {% endblock %}
@@ -28,11 +28,11 @@
                 <div class="panel-body">
                     <dl class="list-group fda-list-group">
                         <dt class="list-group-item">
-                            Adverse Event
+                            Manufacturer Name
                         </dt>
                         {% for term in terms %}
                          <dd class="list-group-item">
-                            <a href="{% url 'search_events' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}
+                            <a href="{% url 'search_manufacturers' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}
                                 <span class="badge pull-right">{{ term.count }}</span>
                             </a>
                         </dd>

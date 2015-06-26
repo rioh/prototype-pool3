@@ -3,81 +3,31 @@
 {% load staticfiles %}
 {% block body %}
 
-    <img src="{% static "images/home.png" %}" class="img-responsive center-block" alt="home banner image">
+    <div class="row">
+        <img src="{% static "images/home.png" %}" class="img-responsive center-block" alt="home banner image">
+    </div>
+
+    {% include 'core/searchbar.html' %}
 
     <div class="row">
         <div class="col-xs-12">
-            <h3>Welcome to the FDA Drug Monitor</h3>
-            <p>The information provided by FDA Drug Monitor is the latest and most relevant data available based on the
-                OpenFDA data source. Please note that the information provided is not intended for medical advice,
-                diagnosis, or treatment. Always consult your physician before making drug or treatment decisions.</p>
-            <p>Begin your request for FDA drug-related information by entering a search term and choosing a category from
-                the dropdown menu</p>
+            <h1>Welcome to the FDA Drug Monitor</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
+                mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
+                ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
+                ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla. Aliquam rutrum
+                nunc et nisi venenatis, sed feugiat mi aliquet. Fusce et risus massa. Donec suscipit volutpat quam,
+                ac maximus mauris facilisis sit amet. Maecenas sed lobortis turpis, non sagittis nulla. </p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
+                mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
+                ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
+                ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla.</p>
+
         </div>
     </div>
-
-    <form action="" method="get" name="main_search" id="mainsearch">
-        <div class="row">
-            <div class="col-xs-12 col-sm-7">
-                <div class="panel" id="search">
-                    <div class="panel-body">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                            <input type="text" class="form-control" name="q" id='search-term' placeholder="Search for...">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default dropdown-toggle" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" id="select-category">Select a Category</button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li><a href="#" data-value="search_labels">DRUG NAMES</a></li>
-                                        <li><a href="#" data-value="search_events">ADVERSE EVENTS</a></li>
-                                        <li><a href="#" data-value="search_enforcements">ENFORCEMENT REPORTS</a></li>
-                                    </ul>
-                                <button class="btn btn-primary" type="submit" id="search-category">GO</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </form>
 
 {% endblock %}
 
 {% block extra_js %}
-<script>
-// update button with chosen selection
-var searchOptions = ['search_labels', 'search_events', 'search_enforcements'];
-
-// search category onclick handler
-$(".dropdown-menu li a").click(function(){
-    $(this).parents(".input-group-btn").find('#select-category').text($(this).text());
-    $(this).parents(".input-group-btn").find('#select-category').val($(this).data('value'));
-});
-
-// search go button onclick handler
-$("#search-category").click(function() {
-    var url_category = $('#select-category').val();
-    var search_term = $('#search-term').val();
-
-    // stop the click event if the search term or category is falsey.
-    if(!search_term || !url_category) {
-        return false;
-    }
-
-    if (url_category === 'search_labels') {
-        $('form').attr("action", "{% url 'search_labels' %}").submit();
-    }
-    else if (url_category === 'search_events') {
-        $('form').attr("action", "{% url 'search_events' %}").submit();
-    }
-    else if (url_category === 'search_enforcements') {
-        $('form').attr("action", "{% url 'search_enforcements' %}").submit();
-    } else {
-        console.log('unknown category' + url_category);
-        return false;
-    }
-});
-
-</script>
 {% endblock %}

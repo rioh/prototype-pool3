@@ -1,34 +1,47 @@
-{% extends "core/base.html" %}
+{% extends "core/details.html" %}
 
 {% load staticfiles %}
 {% load url_tags %}
 
-{% block body %}
+{% block title %}
+<title>FDA Drug Monitor - Enforcement Report Details</title>
+{% endblock %}
 
+{% block image %}
     <img src="{% static "images/drugs.png" %}" class="img-responsive center-block" alt="drug labels banner image">
+{% endblock %}
 
+{% block text %}
     <div class="row">
         <div class="col-xs-12">
-            <h3>Enforcement Report Details</h3>
-            <p>Information for <strong>{{ q }}</strong></p>
+            <h1>Enforcement Report Details
+                <br/>
+                <small>Information for <strong>{{ q }}</strong></small>
+            </h1>
+            <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a magna ullamcorper, commodo nunc consectetur,
+            pretium elit. Integer purus elit, commodo sed interdum in, aliquet sed erat. Donec quis quam vel massa
+            consequat dictum eget in diam.
+            </p>
         </div>
     </div>
+{% endblock %}
 
+{% block details %}
   <!-- Nav tabs -->
 <div class="panel">
     <div class="panel-body">
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs fda-nav-tab" role="tablist">
             <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
             <li role="presentation"><a href="#drugs" aria-controls="drugs" role="tab" data-toggle="tab">Drugs with enforcement reports in state</a></li>
         </ul>
 
         <div class="tab-content">
             <!-- tab 1 -->
-            <div role="tabpanel" class="tab-pane active" id="details">
+            <div role="tabpanel" class="tab-pane active fda-table-accordion" id="details">
                 <!-- accordion panel groups -->
                <div class="panel-group" aria-multiselectable="true">
                     {% for result in enforcements %}
-
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -39,49 +52,52 @@
                             </div>
                             <div class="panel-collapse collapse" id="panel{{ forloop.counter }}">
                                 <div class="panel-body">
-                                    {% for key, value in result.items %}
-                                        <div class="row">
-                                            <div class="col-sm-3 col-xs-12">
-                                                <strong>{{ key|replace_underscores|capfirst }}</strong>
-                                            </div>
-                                            <div class="col-sm-9 col-xs-12 cell">
-                                                <div class="text">
-                                                        {% if value|is_list %}
-                                                        {% for val in value %}
-                                                        {{ val }}
-                                                        {% endfor %}
-                                                        {% else %}
-                                                        {{ value }}
-                                                        {% endif %}
-                                                </div>
-                                                <span class="more">More...</span>
-                                                <span class="less" style="display:none;">Less...</span>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
+                                    <table class="table table-striped table-bordered">
+                                        <caption class="sr-only">Recall Number: {{ result.recall_number }}</caption>
+                                        <tbody>
+                                            {% for key, value in result.items %}
+                                                <tr>
+                                                    <th scope="row"><strong>{{ key|replace_underscores|capfirst }}</strong></th>
+                                                    <td class="cell">
+                                                        <div class="text">
+                                                            {% if value|is_list %}
+                                                                {% for val in value %}
+                                                                    {{ val }}
+                                                                {% endfor %}
+                                                            {% else %}
+                                                                {{ value }}
+                                                            {% endif %}
+                                                        </div>
+                                                        <span class="more">More...</span>
+                                                        <span class="less" style="display:none;">Less...</span>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-
                     {% endfor %}
                 </div>
-            </div>
+            </div><!-- end tab 1-->
 
             <!-- tab 2 -->
             <div role="tabpanel" class="tab-pane" id="drugs">
-            <p>This chart will allow clicking through to another chart to get additional detail</p>
-            <div id="adverseChart"></div><br/>
-            <div id="productChart"></div><br/>
-            {% for results in events %}<br />
-            {% for key, value in results.items %}
-            {{ key }}: {{ value }}<br />
-            {% endfor %}
-            {% endfor %}
-            </div>
-        </div>
-
-    </div>
-</div>
+                <div class="panel-group">
+                    <p>This chart will allow clicking through to another chart to get additional detail</p>
+                        <div id="adverseChart"></div><br/>
+                        <div id="productChart"></div><br/>
+                        {% for results in events %}<br />
+                        {% for key, value in results.items %}
+                        {{ key }}: {{ value }}<br />
+                        {% endfor %}
+                        {% endfor %}
+                 </div>
+            </div><!-- end tab 2 -->
+        </div><!-- end tab content -->
+    </div><!-- end panel-body -->
+</div><!-- end panel -->
 
 {% endblock %}
 

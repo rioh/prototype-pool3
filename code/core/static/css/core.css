@@ -16,8 +16,17 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     color: #212121;
 }
 
-h3, .h3 {
+h1 {
     font-size: 24px;
+}
+
+h1 small{
+    color: #212121;
+}
+
+caption {
+    color: #212121;
+    font-weight: bold;
 }
 
 .footer {
@@ -30,6 +39,7 @@ h3, .h3 {
     border-top: 1px solid #dddddd;
 }
 
+/* navbar styling */
 .navbar {
     border-radius: 0;
     background-color: #9E9E9E;
@@ -44,10 +54,102 @@ h3, .h3 {
     background-color: #FFF
 }
 
+.fda-nav-tab {
+    margin-bottom: 15px;
+}
+
 .btn-default {
     background-color: #F5F5F5;
 }
 
+/* search bar styling  */
+#searchbar {
+    margin-bottom: 0px;
+}
+
+#searchbar input {
+    padding-left: 5px;
+}
+#select-category {
+    margin-right: 10px;
+
+}
+option {
+    font-size: 14px;
+    font-family: inherit;
+}
+
+
+
+/* list-group styling */
+.fda-list-group dt.list-group-item {
+    padding: 15px;
+    background-color: #2196F3;
+    color: #FFF;
+
+}
+
+.fda-list-group .list-group-item {
+    padding: 0px;
+}
+
+.fda-list-group .list-group-item a {
+    display: block;
+    padding: 15px;
+}
+
+.fda-list-group .list-group-item a:hover {
+    background-color: #f5f5f5;
+    text-decoration: none;
+}
+
+/* accordion with nested table styling */
+.fda-table-accordion .panel-body .row:nth-child(odd),
+#details .panel-body .row:nth-child(odd)  {
+    background-color: #F9F9F9;
+}
+
+.fda-table-accordion .panel-heading {
+    background-color: #FFFFFF;
+    padding: 0px;
+}
+
+.fda-table-accordion .panel-heading:hover {
+    background-color: #f5f5f5;
+}
+
+.fda-table-accordion .panel-title a {
+    font-weight: normal;
+    line-height: 1.846;
+    display: block;
+    padding: 15px;
+}
+
+.fda-table-accordion .panel-title a:hover {
+    text-decoration: none;
+}
+
+.fda-table-accordion .panel {
+    margin: 0px;
+    border: 1px solid #DDDDDD;
+    border-top: none;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+.fda-table-accordion table {
+    border-top: none;
+}
+
+.fda-table-accordion .panel-group .panel:first-of-type {
+    border-top: 1px solid #DDDDDD;
+}
+
+.fda-table-accordion .panel-group .panel + .panel {
+    margin-top: 0px;
+}
+
+/* show/hide text styling */
 .cell .text {
     max-height: 55px;
     overflow: hidden;
@@ -63,20 +165,30 @@ h3, .h3 {
     color: #0D87E9;
 }
 
-#search .panel-body {
-    padding: 6px;
+/* responsive accordion tables */
+.fda-table-accordion table,
+.fda-table-accordion tbody,
+.fda-table-accordion tr,
+.fda-table-accordion th,
+.fda-table-accordion td {
+    display: block;
 }
 
-#search input {
-    box-shadow: none;
-}
+@media (min-width: 768px) {
+    .fda-table-accordion table {
+        display: table;
+    }
+    .fda-table-accordion tbody {
+        display: table-row-group;
+    }
+    .fda-table-accordion tr {
+        display: table-row;
+    }
+    .fda-table-accordion th {
+        display: table-cell;
+    }
+    .fda-table-accordion td {
+        display:table-cell;
+    }
 
-#labels .panel, #details .panel {
-    margin-top: 15px;
 }
-
-#labels .panel-body .row:nth-child(odd),
-#details .panel-body .row:nth-child(odd)  {
-    background-color: #F9F9F9;
-}
-

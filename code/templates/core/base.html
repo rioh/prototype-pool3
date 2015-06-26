@@ -8,7 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Artemisconsultinginc.com -->
+
+    {% block title %}
     <title>FDA Drug Monitor</title>
+    {% endblock %}
+
     <link href="{% static "bootstrap-3.3.5-dist/css/paper.css" %}" rel="stylesheet">
     <link href="{% static "css/core.css" %}" rel="stylesheet">
 
@@ -24,6 +28,7 @@
 <head>
 
 <body>
+    <header>
     <nav class="navbar navbar-default">
         <div class="container" style="max-width:1024px;">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -37,21 +42,23 @@
             </div>
             <div id="bs-example-navbar-collapse-9" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li> <a href="{% url 'homepage' %}">Search</a> </li>
                     <li> <a href="{% url 'browse_labels' %}">Drug Names</a> </li>
                     <li> <a href="{% url 'browse_events' %}">Adverse Events</a> </li>
                     <li> <a href="{% url 'browse_enforcements' %}">Enforcement Reports</a> </li>
-                    <!--<li> <a href="manufacturers.html">Drug Manufacturers</a> </li>-->
+                    <li> <a href="{% url 'browse_manufacturers' %}">Drug Manufacturers</a> </li>
                 </ul>
             </div>
         </div>
     </nav>
+    </header>
 
     <!-- end nav/begin body -->
-    <div class="container" style="max-width:1024px;">
-        {% block body %}
-        {% endblock %}
-    </div>
+    <main role="main">
+        <div class="container" style="max-width:1024px;">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </main>
 
     <!-- end body/begin footer -->
     <footer class="footer">
@@ -78,6 +85,33 @@
     <script src="{% static "bootstrap-3.3.5-dist/js/bootstrap.min.js" %}"></script>
 
     <script>
+    // search bar functionality
+    var searchOptions = ['search_labels', 'search_events', 'search_enforcements'];
+
+    // search go button onclick handler
+    $("#search-category").click(function() {
+        var url_category = $('#select-category').val();
+        var search_term = $('#search-term').val();
+
+        // stop the click event if the search term or category is falsey.
+        if(!search_term || !url_category) {
+            return false;
+        }
+
+        if (url_category === 'search_labels') {
+            $('form').attr("action", "{% url 'search_labels' %}").submit();
+        }
+        else if (url_category === 'search_events') {
+            $('form').attr("action", "{% url 'search_events' %}").submit();
+        }
+        else if (url_category === 'search_enforcements') {
+            $('form').attr("action", "{% url 'search_enforcements' %}").submit();
+        } else {
+            console.log('unknown category' + url_category);
+            return false;
+        }
+    });
+
     // functionality to support expand/collapse of divs for large bodies of text
         $(".panel-title a").click(function() {
             var panelTitle = this;

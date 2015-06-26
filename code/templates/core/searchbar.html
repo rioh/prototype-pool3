@@ -1,0 +1,25 @@
+{# searchbar for use throughout the site#}
+
+<div class="row" style="margin-top:15px;">
+    <div class="panel" id="searchbar">
+    <div class="panel-body">
+    <form class="form-inline" action="" method="get" name="main_search" id="mainsearch">
+        <div class="form-group">
+            <select class="form-control" id="select-category">
+                <option>Select a search category</option>
+                <option value="search_labels">Drug Names</option>
+                <option value="search_events">Adverse Events</option>
+                <option value="search_enforcements">Enforcement Reports</option>
+                <option value="search_manufacturers">Manufacturers</option>
+            </select>
+            <div class="input-group">
+                <input type="search" class="form-control" name="q" id='search-term' placeholder="Enter keyword">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit" id="search-category">GO</button>
+                </span>
+            </div>
+        </div>
+    </form>
+    </div>
+    </div>
+</div>

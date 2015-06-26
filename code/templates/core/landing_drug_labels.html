@@ -1,34 +1,45 @@
-{% extends "core/base.html" %}
+{% extends "core/browse.html" %}
 
 {% load staticfiles %}
 {% load url_tags %}
 
-{% block body %}
+{% block title %}
+<title>FDA Drug Monitor - Drug Names</title>
+{% endblock %}
 
+{% block image %}
     <img src="{% static "images/drugs.png" %}" class="img-responsive center-block" alt="drug labels banner image">
+{% endblock %}
 
+{% block text %}
     <div class="row">
         <div class="col-xs-12">
-            <h3>Drug Names</h3>
+            <h1>Drug Names</h1>
             <p>Select a drug from the list to view current drug-related information</p>
         </div>
     </div>
+{% endblock %}
 
+{% block browse_body %}
+    <!-- browse list -->
     <div class="row">
         <div class="col-xs-12">
-           <div class="panel">
+            <div class="panel">
                 <div class="panel-body">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item active">Drug Name (generic/brand)</a>
+                    <dl class="list-group fda-list-group">
+                        <dt class="list-group-item">
+                            Drug Name (generic/brand)
+                        </dt>
                         {% for term in terms %}
-                            <a href="{% url 'search_labels' %}?q={{ term.term|replace_spaces|urlencode }}" class="list-group-item">{{ term.term }}
-                                <span class="badge">{{ term.count }}</span>
+                         <dd class="list-group-item">
+                            <a href="{% url 'search_labels' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}
+                                <span class="badge pull-right">{{ term.count }}</span>
                             </a>
+                        </dd>
                         {% endfor %}
-                    </div>
+                    </dl>
                 </div>
-           </div>
+            </div>
         </div>
     </div>
-
 {% endblock %}
