@@ -79,18 +79,19 @@ class ApiClient(object):
 
         # get general drug info
         data['labels'] = self.clean_labels(self.get_sub_data(
-            "%s?search=openfda.brand_name:%s" % (
+            "%s?search=openfda.brand_name:\"%s\"" % (
                 API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0))
 
         # get additional event info
         data['events'] = self.clean_events(self.get_sub_data(
-            "%s?search=patient.drug.medicinalproduct:%s" % (
+            "%s?search=patient.drug.medicinalproduct:\"%s\"" % (
                 API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0))
 
         # get additional enforcement info
         data['enforcements'] = self.clean_enforcements(self.get_sub_data(
-            "%s?search=product_description:%s" % (
+            "%s?search=product_description:\"%s\"" % (
                 API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0))
+
         return data
 
     def search_events(self, query_term):
@@ -100,11 +101,11 @@ class ApiClient(object):
         # get events counts
         count_string = "&count=patient.drug.openfda.substance_name"
         data['events_count'] = self.get_count_data(
-            "%s?search=patient.reaction.reactionmeddrapt:%s%s" % (
+            "%s?search=patient.reaction.reactionmeddrapt:\"%s\"%s" % (
                 API_TYPES['events'], query_term, count_string))
 
         data['events'] = self.clean_events(self.get_sub_data(
-            "%s?search=patient.reaction.reactionmeddrapt:%s" % (
+            "%s?search=patient.reaction.reactionmeddrapt:\"%s\"" % (
                 API_TYPES['events'], query_term), self.api_limit, 0))
         return data
 
@@ -114,47 +115,42 @@ class ApiClient(object):
 
         # get general enforcement info
         data['enforcements'] = self.clean_enforcements(self.get_sub_data(
-            "%s?search=state:%s" % (
+            "%s?search=state:\"%s\"" % (
                 API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0))
 
         # get drug counts
         count_string = "&count=openfda.brand_name"
         data['drugs_count'] = self.get_count_data(
-            "%s?search=state:%s%s" % (
+            "%s?search=state:\"%s\"%s" % (
                 API_TYPES['enforcements'], query_term, count_string))
         return data
 
-# TODO -- finish this method
     def search_manufacturers(self, query_term):
         self.logger.debug("Searching for manufacturer '%s'", query_term)
         data = {}
 
-        # get labels from this manufacturuer
-        data['labels'] = self.get_sub_data(
-            "%s?search=openfda.brand_name:%s" % (
-                API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0)
+        # get labels from this manufacturer
+        data['labels'] = self.clean_labels(self.get_sub_data(
+            "%s?search=openfda.manufacturer_name:\"%s\"" % (
+                API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0))
 
         # get additional event info
-        data['events'] = self.get_sub_data(
-            "%s?search=patient.drug.medicinalproduct:%s" % (
-                API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0)
+        data['events'] = self.clean_events(self.get_sub_data(
+            "%s?search=patient.drug.openfda.manufacturer_name:\"%s\"" % (
+                API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0))
 
-        # get additional enforcement info
-        data['enforcements'] = self.get_sub_data(
-            "%s?search=product_description:%s" % (
-                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0)
+        # get additional enforcement info. we search for the name as manufacturer
+        # Our original search was for manufacturer or recalling firm for this api, but the 'or'
+        # query does not work.
+        # Eg, https://api.fda.gov/drug/enforcement.json?search=openfda.manufacturer_name:
+        # %22Pharmacia+and+Upjohn+Company%22+recalling_firm:%22Target%22 is broken
+
+        data['enforcements'] = self.clean_enforcements(self.get_sub_data(
+            "%s?search=openfda.manufacturer_name:\"%s\"" % (
+                API_TYPES['enforcements'], urllib.quote(query_term)
+                ), self.api_limit, 0))
+
         return data
-
-        data = {}
-
-        # get labels with this manufacturer
-
-        # get adverse events with this manufacturer
-        # https://api.fda.gov/drug/event.json?search=patient.drug.openfda.manufacturer_name:Mylan
-
-        # get enforcement reports with this manufacturer
-        # https://api.fda.gov/drug/enforcement.json?search=recalling_firm:Mylan
-
 
     def get_age_sex(self, api_type, param, filter_string):
         total_male = self.filter_patient(api_type, filter_string, param, 1)
@@ -184,7 +180,7 @@ class ApiClient(object):
             resp = requests.get(url).json().get('results')
             return resp
         self.logger.info('no results found for %s', query_string)
-        return None
+        return []
 
     def get_count_data(self, query_url):
         self.logger.debug("url: %s", query_url)

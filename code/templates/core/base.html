@@ -106,7 +106,11 @@
         }
         else if (url_category === 'search_enforcements') {
             $('form').attr("action", "{% url 'search_enforcements' %}").submit();
-        } else {
+        }
+        else if (url_category === 'search_manufacturers') {
+            $('form').attr("action", "{% url 'search_manufacturers' %}").submit();
+        }
+        else {
             console.log('unknown category' + url_category);
             return false;
         }
