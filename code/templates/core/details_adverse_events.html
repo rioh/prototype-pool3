@@ -33,36 +33,72 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a role="button" data-toggle="collapse" href="#panel{{ forloop.counter }}" aria-expanded="false">
-                                        Safety Report ID: {{ result.safetyreportid }}
+                                        Safety Report ID: {{ result.safety_data.safety_report }}
                                     </a>
                                 </h4>
                             </div>
                             <div class="panel-collapse collapse" id="panel{{ forloop.counter }}">
                                 <div class="panel-body">
-                                    {% for key, value in result.items %}
-                                        <div class="row">
-                                            <div class="col-sm-3 col-xs-12">
-                                                <strong>{{ key|replace_underscores }}</strong>
-                                            </div>
-                                            <div class="col-sm-9 col-xs-12 cell">
-                                                <div class="text">
-                                                        {% if value|is_list %}
-                                                        {% for val in value %}
-                                                        {{ val }}
-                                                        {% endfor %}
-                                                        {% else %}
-                                                        {{ value }}
-                                                        {% endif %}
-                                                </div>
-                                                <span class="more">More...</span>
-                                                <span class="less" style="display:none;">Less...</span>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
+                                <table class="table table-striped table-bordered">
+                                 <caption>Reporting Sources</caption>
+                                 <tbody>
+                                   {% for key, value in result.safety_data.items %}
+                                   <tr>
+                                     <td>{{ key|replace_underscores }}</td>
+                                     <td>{% if value|is_list %}
+                                           {% for val in value %}
+                                             {{ val|default_if_none:"N/A" }}<br />
+                                           {% endfor %}
+                                         {% else %}
+                                           {{ value|default_if_none:"N/A" }}
+                                         {% endif %}
+                                     </td>
+                                   </tr>
+                                   {% endfor %}
+                               </tbody>
+                             </table>
+                             <table class="table table-striped table-bordered">
+                               <caption>
+                                 Patient Data
+                               </caption>
+                               <tbody>
+                                   {% for key, value in result.patient_data.items %}
+                                   <tr>
+                                     <td>{{ key|replace_underscores }}</td>
+                                     <td>{% if value|is_list %}
+                                           {% for val in value %}
+                                             {{ val|default_if_none:"N/A" }}<br />
+                                           {% endfor %}
+                                         {% else %}
+                                           {{ value|default_if_none:"N/A" }}
+                                         {% endif %}
+                                     </td>
+                                   </tr>
+                                   {% endfor %}
+                               </tbody>
+                             </table>
+                             <table class="table table-striped table-bordered">
+                               <caption>
+                                 Drug Data
+                               </caption>
+                               <tbody>
+                                   {% for key, value in result.label_data.items %}
+                                   <tr>
+                                     <td>{{ key|replace_underscores }}</td>
+                                     <td>{% if value|is_list %}
+                                           {% for val in value %}
+                                             {{ val|default_if_none:"N/A" }}<br />
+                                           {% endfor %}
+                                         {% else %}
+                                           {{ value|default_if_none:"N/A" }}
+                                         {% endif %}
+                                     </td>
+                                   </tr>
+                                   {% endfor %}
+                               </tbody>
+                             </table>
+                           </div>
                         </div>
-
                     {% endfor %}
                 </div>
             </div>
