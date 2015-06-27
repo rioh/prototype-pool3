@@ -29,6 +29,10 @@ caption {
     font-weight: bold;
 }
 
+a, a:focus {
+    color: #197ac7;
+}
+
 .footer {
     position: absolute;
     bottom: 0;
@@ -38,6 +42,34 @@ caption {
     background-color: #FFF;
     border-top: 1px solid #dddddd;
 }
+
+.btn-primary {
+    background-color: #197ac7;
+    color: #ffffff;
+}
+
+.btn-primary:hover, .btn-primary:active:hover, .btn-primary:focus {
+    background-color: #0f6bbd;
+}
+
+/* tab styling */
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus {
+    border: medium none;
+    box-shadow: 0 -2px 0 #197ac7 inset;
+    color: #197ac7;
+}
+
+.nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus:hover {
+    border: medium none;
+    color: #197ac7;
+}
+
+.nav-tabs > li > a:hover, .nav-tabs > li > a:focus:hover {
+    background-color: transparent;
+    box-shadow: 0 -2px 0 #197ac7 inset;
+    color: #197ac7;
+}
+
 
 /* navbar styling */
 .navbar {
@@ -62,29 +94,50 @@ caption {
     background-color: #F5F5F5;
 }
 
-/* search bar styling  */
+/* search bar and form styling  */
 #searchbar {
     margin-bottom: 0px;
 }
 
-#searchbar input {
-    padding-left: 5px;
-}
 #select-category {
     margin-right: 10px;
 
 }
+
+#searchbar input,
+#contact-form input,
+#contact-form textarea {
+    padding-left: 5px;
+}
+
 option {
     font-size: 14px;
     font-family: inherit;
 }
 
+select:focus, select.form-control:focus {
+    box-shadow: 0 -2px 0 #197ac7 inset;
+}
 
+textarea:focus,
+textarea.form-control:focus,
+input.form-control:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+.form-control[type="text"]:focus,
+.form-control[type="password"]:focus,
+.form-control[type="email"]:focus,
+.form-control[type="tel"]:focus,
+.form-control[contenteditable]:focus {
+    box-shadow: 0 -2px 0 #197ac7 inset;
+}
 
 /* list-group styling */
 .fda-list-group dt.list-group-item {
     padding: 15px;
-    background-color: #2196F3;
+    background-color: #197ac7;
     color: #FFF;
 
 }
@@ -102,6 +155,7 @@ option {
     background-color: #f5f5f5;
     text-decoration: none;
 }
+
 
 /* accordion with nested table styling */
 .fda-table-accordion .panel-body .row:nth-child(odd),
@@ -162,7 +216,7 @@ option {
 
 .more, .less {
     cursor: pointer;
-    color: #0D87E9;
+    color: #197ac7;
 }
 
 /* responsive accordion tables */

@@ -5,6 +5,8 @@ from . import views
 urlpatterns = patterns(
     '',
     url(r'^$', views.homepage, name='homepage'),
+    url(r'^about/$', views.about, name='about'),
+    url(r'^contact/$', views.contact, name='contact'),
     url(r'^browse/events/$', views.browse, {'browse_type': "events"}, name='browse_events'),
     url(r'^browse/labels/$', views.browse, {'browse_type': "labels"}, name='browse_labels'),
     url(r'^browse/enforcements/$', views.browse, {'browse_type': "enforcements"},

@@ -41,7 +41,7 @@
                 <!-- tab 1 -->
                 <div role="tabpanel" class="tab-pane active fda-table-accordion" id="labels">
                     <!-- accordion panel groups -->
-                    <div class="panel-group" aria-multiselectable="true">
+                    <div class="panel-group" role="tablist" aria-multiselectable="true">
                         {% for result in labels %}
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -86,7 +86,7 @@
             <!-- tab 2 -->
             <div role="tabpanel" class="tab-pane fda-table-accordion" id="events">
                 <!-- accordion panel groups -->
-                <div class="panel-group" aria-multiselectable="true">
+                <div class="panel-group" role="tablist" aria-multiselectable="true">
                 {% for result in events %}
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -166,7 +166,7 @@
             <!-- tab 3 -->
             <div role="tabpanel" class="tab-pane fda-table-accordion" id="enforcements">
                 <!-- accordion panel groups -->
-                <div class="panel-group" aria-multiselectable="true">
+                <div class="panel-group" role="tablist" aria-multiselectable="true">
                 {% for result in enforcements %}
                     <div class="panel panel-default">
                         <div class="panel-heading">

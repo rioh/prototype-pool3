@@ -25,7 +25,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-<head>
+</head>
 
 <body>
     <header>
@@ -52,6 +52,13 @@
     </nav>
     </header>
 
+    <!-- javascript enabled message -->
+    <noscript>
+        <div class="alert alert-warning">
+            <p class="text-center"><strong>For a better browsing experience, please enable javascript</strong></p>
+        </div>
+    </noscript>
+
     <!-- end nav/begin body -->
     <main role="main">
         <div class="container" style="max-width:1024px;">
@@ -66,14 +73,14 @@
             <div class="row" style="margin-top:15px;">
                 <div class="col-xs-12 text-center">
                     <ul class="list-inline">
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
                     </ul>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <p>Copyright Information/Licensing Information</p>
+                    <p>Licensing Information</p>
                 </div>
 
             </div>

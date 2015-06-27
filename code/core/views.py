@@ -1,7 +1,7 @@
 import logging
 
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 
 from .api_client import ApiClient
 
@@ -11,6 +11,19 @@ logger = logging.getLogger(__name__)
 
 def homepage(request):
     return render(request, 'core/homepage.html')
+
+
+def about(request):
+    return render(request, 'core/about.html')
+
+
+# TODO -- create form and finish this method
+def contact(request):
+    if request.method == 'POST':
+        logger.debug(request.POST)
+        return HttpResponseRedirect('/')
+
+    return render(request, 'core/contact.html')
 
 
 def browse(request, browse_type):

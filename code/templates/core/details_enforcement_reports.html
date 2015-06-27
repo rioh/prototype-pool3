@@ -40,7 +40,7 @@
             <!-- tab 1 -->
             <div role="tabpanel" class="tab-pane active fda-table-accordion" id="details">
                 <!-- accordion panel groups -->
-               <div class="panel-group" aria-multiselectable="true">
+               <div class="panel-group" role="tablist" aria-multiselectable="true">
                     {% for result in enforcements %}
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -84,7 +84,7 @@
 
             <!-- tab 2 -->
             <div role="tabpanel" class="tab-pane" id="drugs">
-                <div class="panel-group">
+                <div class="panel-group" role="tablist">
                     <p>This chart will allow clicking through to another chart to get additional detail</p>
                         <div id="adverseChart"></div><br/>
                         <div id="productChart"></div><br/>

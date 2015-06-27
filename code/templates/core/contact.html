@@ -1,0 +1,60 @@
+{% extends "core/base.html" %}
+
+{% load staticfiles %}
+{% block body %}
+
+    <div class="row">
+        <img src="{% static "images/home.png" %}" class="img-responsive center-block" alt="home banner image">
+    </div>
+
+    {% include 'core/searchbar.html' %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Contact Us</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
+                mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
+                ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
+                ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla. Aliquam rutrum
+                nunc et nisi venenatis, sed feugiat mi aliquet. Fusce et risus massa. Donec suscipit volutpat quam,
+                ac maximus mauris facilisis sit amet. Maecenas sed lobortis turpis, non sagittis nulla. </p>
+
+            <div class="panel">
+                <div class="panel-body">
+                    <form name="contact-form" action="{% url 'contact' %}" method="post" id="contact-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="sr-only" for="contact-name">Name</label>
+                            <input type="text" class="form-control" name="contact_name" id="contact-name" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="contact-email">Email</label>
+                            <input type="email" class="form-control" name="contact_email" id="contact-email" placeholder="Email" required="true">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="contact-comment">Comment</label>
+                            <textarea class="form-control" rows="3" name="contact_comment" id="contact-comment" placeholder="Comment"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// validate email address and text area before submitting form
+    $('#contact-form').submit(function() {
+        // check that the email is valid
+        alert('NAME' + $('#contact-name').value());
+        alert('EMAIL' + $('#contact-email').value());
+        // check that something was entered in the text box
+
+        // submit the form
+    });
+</script>
+
+{% endblock %}
