@@ -120,6 +120,7 @@ select:focus, select.form-control:focus {
 }
 
 textarea:focus,
+textarea:focus,
 textarea.form-control:focus,
 input.form-control:focus,
 input[type="text"]:focus,
@@ -132,6 +133,10 @@ input[type="number"]:focus,
 .form-control[type="tel"]:focus,
 .form-control[contenteditable]:focus {
     box-shadow: 0 -2px 0 #197ac7 inset;
+}
+
+.ui-menu-item {
+    background: #FFF;
 }
 
 /* list-group styling */

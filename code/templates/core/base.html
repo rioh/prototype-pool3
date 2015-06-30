@@ -14,6 +14,7 @@
     {% endblock %}
 
     <link href="{% static "bootstrap-3.3.5-dist/css/paper.css" %}" rel="stylesheet">
+    <link href="{% static "jquery-ui-1.11.4.custom/jquery-ui.css" %}" rel="stylesheet">
     <link href="{% static "css/core.css" %}" rel="stylesheet">
 
     {% block extra_css %}
@@ -88,8 +89,10 @@
     </footer>
 
     <script src="{% static "js/jquery-2.1.3.min.js" %}"></script>
+    <script src="{% static "jquery-ui-1.11.4.custom/jquery-ui.min.js" %}"></script>
     <script src="{% static "highcharts-4.1.6/highcharts.js" %}"></script>
     <script src="{% static "bootstrap-3.3.5-dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/states.js" %}"></script>
 
     <script>
     // search bar functionality
@@ -99,9 +102,22 @@
     $("#search-category").click(function() {
         var url_category = $('#select-category').val();
         var search_term = $('#search-term').val();
+        var search_state = $('#search-state').val();
+
+        // if user types something or uses autocomplete, look for it in states
+        if (search_state) {
+            $(usStates).each(function() {
+                if (search_state == this.value || search_state == this.label) {
+                    search_state = this.value;
+                    $('#search-state').val(search_state);
+                }
+            });
+        }
 
         // stop the click event if the search term or category is falsey.
-        if(!search_term || !url_category) {
+        var search_input = search_term || search_state;
+
+        if(!search_input || !url_category) {
             return false;
         }
 
@@ -123,7 +139,34 @@
         }
     });
 
-    // functionality to support expand/collapse of divs for large bodies of text
+    // search bar typeahead using jquery-ui and states list in json
+    $("#search-state").autocomplete({
+        source: usStates,
+        delay: 200,
+        minLength: 1,
+        change: function(event, ui) {
+            console.log(ui);
+        }
+    });
+
+    // function to switch the text input from general to state with typeahead
+    function changeInput() {
+        if ($('#select-category').val() === 'search_enforcements') {
+           $('#search-term').hide().prop('name', '').val('');
+           $('#search-state').show().prop('name', 'q');
+        }
+        else {
+            $('#search-state').hide().prop('name', '').val('');
+            $('#search-term').show().prop('name', 'q');
+        }
+    }
+
+    // call change input to determine which text input to show/hide at page load and on change
+    changeInput();
+
+    $('#select-category').change(changeInput);
+
+    // functionality to support accordion expand/collapse of divs for large bodies of text
         $(".panel-title a").click(function() {
             var panelTitle = this;
             setTimeout(function() {
