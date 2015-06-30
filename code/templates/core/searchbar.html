@@ -8,10 +8,10 @@
             <label class="sr-only" for="select-category">Search Category</label>
             <select class="form-control" id="select-category">
                 <option>Select a search category</option>
-                <option value="search_labels">Drug Names</option>
-                <option value="search_events">Adverse Events</option>
-                <option value="search_enforcements">Enforcement Reports</option>
-                <option value="search_manufacturers">Manufacturers</option>
+                <option value="search_labels" {% if browse_type == 'labels' %} selected="selected" {% endif %}>Drug Names</option>
+                <option value="search_events" {% if browse_type == 'events' %} selected="selected" {% endif %}>Adverse Events</option>
+                <option value="search_enforcements" {% if browse_type == 'enforcements' %} selected="selected" {% endif %}>Enforcement Reports</option>
+                <option value="search_manufacturers" {% if browse_type == 'manufacturers' %} selected="selected" {% endif %}>Manufacturers</option>
             </select>
             <div class="input-group">
                 <label class="sr-only" for="search-term">Search Term</label>
