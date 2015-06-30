@@ -15,7 +15,8 @@
     <div class="row">
         <div class="col-xs-12">
             <h1>Drug Names</h1>
-            <p>Select a drug from the list to view current drug-related information</p>
+            <p>Select a drug from the list below or enter a drug name into the search above
+                to view current related information</p>
         </div>
     </div>
 {% endblock %}
@@ -26,6 +27,9 @@
         <div class="col-xs-12">
             <div class="panel">
                 <div class="panel-body">
+
+                    {% include 'core/alphanav.html' %}
+
                     <dl class="list-group fda-list-group">
                         <dt class="list-group-item">
                             Drug Name (generic/brand)

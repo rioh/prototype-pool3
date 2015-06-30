@@ -17,6 +17,10 @@ def about(request):
     return render(request, 'core/about.html')
 
 
+def accessibility(request):
+    return render(request, 'core/accessibility.html')
+
+
 # TODO -- create form and finish this method
 def contact(request):
     if request.method == 'POST':

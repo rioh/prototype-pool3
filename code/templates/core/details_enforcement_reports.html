@@ -41,6 +41,11 @@
             <div role="tabpanel" class="tab-pane active fda-table-accordion" id="details">
                 <!-- accordion panel groups -->
                <div class="panel-group" role="tablist" aria-multiselectable="true">
+
+                    {% if enforcements|length == 0 %}
+                        <p class="text-info">No results found for state: {{ q|replace_plus_signs }}</p>
+                    {% endif %}
+
                     {% for result in enforcements %}
                         <div class="panel panel-default">
                             <div class="panel-heading">
