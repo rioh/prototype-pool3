@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 {% load url_tags %}
+{% load humanize %}
 
 {% block title %}
 <title>FDA Drug Monitor - Manufacturer Details</title>
@@ -112,6 +113,7 @@
                                     <caption>Reporting Sources</caption>
                                     <tbody>
                                       {% for key, value in result.safety_data.items %}
+                                      {% if key != 'safety_report' %}
                                       <tr>
                                         <th scope="row">{{ key|replace_underscores|capfirst }}</th>
                                         <td>{% if value|is_list %}
@@ -119,10 +121,11 @@
                                                 {{ val|default:"N/A" }}<br />
                                               {% endfor %}
                                             {% else %}
-                                              {{ value|default:"N/A" }}
+                                                {{ value|default:"N/A" }}
                                             {% endif %}
                                         </td>
                                       </tr>
+                                      {% endif %}
                                       {% endfor %}
                                   </tbody>
                                 </table>

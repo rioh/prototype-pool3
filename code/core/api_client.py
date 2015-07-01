@@ -16,9 +16,18 @@ BROWSE_TYPES = {
     "labels": "openfda.brand_name",
     "enforcements": "state",
     "manufacturers": {
-        "events": "patient.drug.openfda.manufacturer_name",
         "labels": "openfda.manufacturer_name",
-        "enforcements": "openfda.manufacturer_name"
+#        "events": "patient.drug.openfda.manufacturer_name",
+#        "enforcements": "openfda.manufacturer_name"
+    }
+}
+
+PARAMETER_MAPPINGS = {
+    "serious": {
+        "1": "The adverse event resulted in death, a life threatening condition, " +
+             "hospitalization, disability, congenital anomali, or other serious condition.",
+        "2": "The adverse event did not result in death, a life threatening condition, " +
+             "hospitalization, disability, congenital anomali, or other serious condition."
     }
 }
 
@@ -53,7 +62,7 @@ class ApiClient(object):
 
         # get the response from each of the queries
         for api_type, api_path in BROWSE_TYPES.get('manufacturers').items():
-            self.logger.debug('Browsing for %s' % api_type)
+            self.logger.debug('Browsing for manufacturers by %s' % api_type)
             api_type_data = requests.get("%s?count=%s.exact" % (API_TYPES.get(api_type), api_path))
 
             if api_type_data:
@@ -65,11 +74,13 @@ class ApiClient(object):
             for api_type, api_response in data.items():
                 results += api_response.json().get('results')
 
-            # and sort the list in number order
+            # and sort the list in alphabetical order
             if results:
-                results = sorted(results, key=operator.itemgetter('count'), reverse=True)
+                results = sorted(results, key=operator.itemgetter('term'))
 
-        return results
+            return results
+
+        return None
 
     def search_labels(self, query_term):
         self.logger.debug("Searching for '%s'", query_term)
@@ -217,14 +228,14 @@ class ApiClient(object):
             safety_data = {
                 "safety_report": d.get('safetyreportid'),
                 "safety_report_version": d.get('safetyreportversion'),
-                "receive_date": d.get('receivedate'),
+                "receive_date": self.format_date(d.get('receivedate')),
                 "receipt_date_format": d.get('receiptdateformat'),
-                "seriousness": self.yes_or_no(d.get('seriousness')),
-                "seriousness_details": ["congenital anomali: %s" % d.get("seriouscongenitalanomali"),
-                                        "death: %s" % d.get("seriousnessdeath"),
-                                        "disabling: %s" % d.get("seriousnessdisabling"),
-                                        "hospitalization: %s" % d.get("seriousnesshospitalization"),
-                                        "life threatening: %s" % d.get("seriousnesslifethreatening")],
+                "serious": self.format_field_from_parameter_mapping('serious', d.get('serious')),
+                "seriousness_details": ["congenital anomali: %s" % self.yes_or_no(d.get("seriouscongenitalanomali")),
+                                        "death: %s" % self.yes_or_no(d.get("seriousnessdeath")),
+                                        "disabling: %s" % self.yes_or_no(d.get("seriousnessdisabling")),
+                                        "hospitalization: %s" % self.yes_or_no(d.get("seriousnesshospitalization")),
+                                        "life threatening: %s" % self.yes_or_no(d.get("seriousnesslifethreatening"))],
                 "duplicate_report_source": d.get('reportduplicate.duplicatesource'),
                 "duplicate_report_number": d.get('reportduplicate.duplicatenumb'),
             }
@@ -258,14 +269,13 @@ class ApiClient(object):
                 'recalling_firm': d.get('recalling_firm'),
                 'reason_for_recall': d.get('reason_for_recall'),
                 'manufacturer_name': d.get('openfda', {}).get('manufacturer_name'),
-                'recall_initiation_date': d.get('recall_initiation_date'),
+                'recall_initiation_date': self.format_date(d.get('recall_initiation_date')),
                 'classification': d.get('classification'),
                 'product_description': d.get('product_description'),
                 'code_info': d.get('code_info'),
                 'voluntary_mandated': d.get('voluntary_mandated'),
                 'initial_firm_notification': d.get('initial_firm_notification'),
-                'report_date': d.get('report_date'),
-                'recall_initiation_date': d.get('recall_initiation_date'),
+                'report_date': self.format_date(d.get('report_date')),
             }
             results.append(clean_data)
         return results
@@ -283,3 +293,26 @@ class ApiClient(object):
             return 'Female'
         elif value == 0:
             return 'Unknown'
+
+    def format_date(self, value):
+        """
+        Convert value in date format YYYYMMDD to expected date format YYYY-MM-DD
+        """
+        if value and len(value) == 8:
+            return "{0}-{1}-{2}".format(value[:4], value[4:6], value[6:])
+        else:
+            return "Unknown"
+
+    def format_field_from_parameter_mapping(self, key, value):
+        """
+        Convert the given field into the value given in the parameter mapping or return the value
+        as provided if no field is found matching the key
+        :param key:
+        :param value:
+        :return:
+        """
+        parameter_values = PARAMETER_MAPPINGS.get(key, None)
+        if parameter_values:
+            return parameter_values.get(value, value)
+
+        return value

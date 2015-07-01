@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 {% load url_tags %}
+{% load humanize %}
 
 {% block title %}
 <title>FDA Drug Monitor - Adverse Events</title>
@@ -37,7 +38,7 @@
                         {% for term in terms %}
                          <dd class="list-group-item">
                             <a href="{% url 'search_events' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}
-                                <span class="badge pull-right">{{ term.count }}</span>
+                                <span class="badge pull-right">{{ term.count|intcomma }}</span>
                             </a>
                         </dd>
                         {% endfor %}

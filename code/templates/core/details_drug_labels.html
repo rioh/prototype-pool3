@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 {% load url_tags %}
+{% load humanize %}
 
 {% block title %}
 <title>FDA Drug Monitor - Drug Details</title>
@@ -112,17 +113,19 @@
                                     <caption>Reporting Sources</caption>
                                     <tbody>
                                       {% for key, value in result.safety_data.items %}
-                                      <tr>
-                                        <th scope="row">{{ key|replace_underscores|capfirst }}</th>
-                                        <td>{% if value|is_list %}
-                                              {% for val in value %}
-                                                {{ val|default:"N/A" }}<br />
-                                              {% endfor %}
-                                            {% else %}
-                                              {{ value|default:"N/A" }}
-                                            {% endif %}
-                                        </td>
-                                      </tr>
+                                      {% if key != 'safety_report' %}
+                                          <tr>
+                                            <th scope="row">{{ key|replace_underscores|capfirst }}</th>
+                                            <td>{% if value|is_list %}
+                                                  {% for val in value %}
+                                                    {{ val|default:"N/A" }}<br />
+                                                  {% endfor %}
+                                                {% else %}
+                                                    {{ value|default:"N/A" }}
+                                                {% endif %}
+                                            </td>
+                                          </tr>
+                                      {% endif %}
                                       {% endfor %}
                                   </tbody>
                                 </table>
