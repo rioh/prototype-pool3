@@ -39,6 +39,30 @@
 
                     {% if events|length == 0 %}
                         <p class="text-info">No results found for adverse event: {{ q|replace_plus_signs }}</p>
+                    {% else %}
+                    <span>{{ events_paginator.page_display }}</span>
+                    {% if events_paginator.pages > 1 %}
+                    <nav>
+                      <ul class="pagination pagination-sm">
+                          <li {% if events_paginator.has_previous %}{% else %}class="disabled"{% endif %}><a href="?q={{q}}&amp;page={{events_paginator.prev}}" class="prev">prev</a></li>
+                         
+                          {% for page_number in events_paginator.pagination_display %}
+                    
+                          {% ifequal page_number "..." %}
+                          <li><span>...</span></li>
+                          {% else %}
+                          {% ifequal page_number events_paginator.page %}
+                          <li class="disabled"><span>{{page_number}}</span></li>
+                          {% else %}
+                          <li><a href="?q={{q}}&amp;page={{page_number}}">{{page_number}}</a></li>
+                          {% endifequal %}
+                          {% endifequal %}
+                          {% endfor %}
+                                
+                          <li {% if events_paginator.has_next %}{% else %}class="disabled"{% endif %}><a href="?q={{q}}&amp;page={{events_paginator.next}}" class="next">next</a></li>
+                      </ul>
+                    </nav>
+                    {% endif %}
                     {% endif %}
 
                     {% for result in events %}

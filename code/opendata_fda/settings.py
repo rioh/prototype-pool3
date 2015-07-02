@@ -174,7 +174,6 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
-"""
 
 memcachedcloud_service = json.loads(os.environ['VCAP_SERVICES'])['memcachedcloud'][0]
 credentials = memcachedcloud_service['credentials']
@@ -187,6 +186,7 @@ CACHES = {
     }
   }
 }
+"""
 
 CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24  # cache for a day
 
@@ -196,4 +196,5 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 FDA_DRUG_API_EVENT_URL = "https://api.fda.gov/drug/event.json"  # adverse events
 FDA_DRUG_API_LABEL_URL = "https://api.fda.gov/drug/label.json"  # drug labeling
 FDA_DRUG_API_ENFORCEMENT_URL = "https://api.fda.gov/drug/enforcement.json"  # drug enforcement reports
+RESULTS_PER_PAGE = 10 
 #FDA_DRUG_API_KEY = ""
