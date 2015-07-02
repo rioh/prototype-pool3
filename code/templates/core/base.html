@@ -27,7 +27,7 @@
     <script src="{% static "js/less-1.4.2.js" %}" type="text/javascript"></script>
 
     <!-- else -->
-    <!-- <link href='css/style.css' type='text/css' rel="stylesheet"/> -->
+    <!-- <link href="{% static "css/style.css" %}" type='text/css' rel="stylesheet"/> -->
     <!-- endif -->
 
 {# TODO -- download actual files below--not CDN #}
@@ -42,7 +42,7 @@
 <body>
 <div class="container">
     <header class="fdahead">
-		<button class="fdahead-nav-toggle"><span>show navigation</span></button>
+    	<button class="fdahead-nav-toggle"><span>show navigation</span></button>
 		<span class="fdahead-logo"><a href="/"><img title="Official FDA Logo" width="92" height="38" alt="" src="{% static "images/fda-logo.png" %}"> <span>Drug Monitor</span></a></span>
 		<nav class="fdahead-nav">
 			<ul class="">

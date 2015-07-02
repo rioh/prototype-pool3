@@ -53,10 +53,10 @@
         padding: 0;
         .box-sizing;
         text-align:center;
-        //&.one   {background-color: lighten(@fda_blue, 10%)};
-        //&.two   {background-color: lighten(@fda_blue, 5%)};
-        //&.three {background-color: lighten(@fda_blue, 0%)};
-        //&.four  {background-color: darken(@fda_blue, 5%)};
+        &.one   {background-color: @fda_blue_lighten_10;};
+        &.two   {background-color: @fda_blue_lighten_5;};
+        &.three {background-color: @fda_blue;};
+        &.four  {background-color: @fda_blue_darken_5;};
         a {
           display:block;
           color: @white;
@@ -90,6 +90,10 @@
     position:absolute;
     right: @gutter;
     top: 20px;
+    ::-webkit-input-placeholder {color: @charcoal;};
+    :-moz-placeholder {color: @charcoal;};
+    ::-moz-placeholder {color: @charcoal;};
+    :-ms-input-placeholder {color: @charcoal;};
     form {
       margin: 0;
       input,
@@ -102,10 +106,6 @@
       input {
         width: 300px;
       };
-      ::-webkit-input-placeholder {color: @charcoal;}
-      :-moz-placeholder {color: @charcoal;}
-      ::-moz-placeholder {color: @charcoal;}
-      :-ms-input-placeholder {color: @charcoal;}
       button {
         span {
             position: absolute;

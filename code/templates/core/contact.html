@@ -3,52 +3,37 @@
 {% load staticfiles %}
 {% block body %}
 
-    <div class="row">
-        <img src="{% static "images/home.png" %}" class="img-responsive center-block" alt="home banner image">
-    </div>
+   
+    <h1>Contact Us</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
+        mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
+        ante iaculis lacinia.</p>
 
-    {% include 'core/searchbar.html' %}
 
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>Contact Us</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
-                mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
-                ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
-                ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla. Aliquam rutrum
-                nunc et nisi venenatis, sed feugiat mi aliquet. Fusce et risus massa. Donec suscipit volutpat quam,
-                ac maximus mauris facilisis sit amet. Maecenas sed lobortis turpis, non sagittis nulla. </p>
+    {% if errors|length > 0 %}
+        <div class="errors text-warning">
+            Please correct the following:
+            {{ errors }}
 
-            <div class="panel">
-                <div class="panel-body">
-                    {% if errors|length > 0 %}
-                        <div class="errors text-warning">
-                            Please correct the following:
-                            {{ errors }}
-
-                            {{ form_data }}
-                        </div>
-                    {% endif %}
-                    <form name="contact-form" action="{% url 'contact' %}" method="post" id="contact-form">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label class="sr-only" for="contact-name">Name</label>
-                            <input type="text" class="form-control" name="contact_name" id="contact-name" placeholder="Name">
-                        </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="contact-email">Email</label>
-                            <input type="text" class="form-control" name="contact_email" id="contact-email" placeholder="Email" required="true">
-                        </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="contact-comment">Comment</label>
-                            <textarea class="form-control" rows="3" name="contact_comment" id="contact-comment" placeholder="Comment" required="true"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-                </div>
-            </div>
+            {{ form_data }}
         </div>
-    </div>
+    {% endif %}
+    <form name="contact-form" action="{% url 'contact' %}" method="post" id="contact-form">
+        {% csrf_token %}
+        <p>
+            <label class="sr-only" for="contact-name">Name</label><br />
+            <input type="text" class="width-60-percent" name="contact_name" id="contact-name" placeholder="Name">
+        </p>
+        <p>
+            <label class="sr-only" for="contact-email">Email</label><br />
+            <input type="text" class="width-60-percent" name="contact_email" id="contact-email" placeholder="Email" required="true">
+        </p>
+        <p>
+            <label class="sr-only" for="contact-comment">Comment</label><br />
+            <textarea class="width-60-percent" rows="6" name="contact_comment" id="contact-comment" placeholder="Comment" required="true"></textarea>
+        </p>
+        <button type="submit" class="">Submit</button>
+    </form>
 
 {% endblock %}
 
