@@ -1,28 +1,16 @@
 {# searchbar for use throughout the site#}
-
-<div class="panel" id="searchbar">
-<div class="panel-body">
-<form class="form-inline" action="#" method="get" name="main_search" id="mainsearch">
-    <div class="form-group">
-        <label class="sr-only" for="select-category">Search Category</label>
-        <select class="form-control" id="select-category">
+<div class="fdahead-search">
+{# TODO -- update the logic here. We moved the js out into it's own file, so the templated urls don't work #}
+    <form class="" action="{{ search_action }}" method="get" name="main_search" id="mainsearch">
+        <select class="" id="select-category">
             <option>Select a search category</option>
             <option value="search_labels" {% if search_category == 'labels' %} selected="selected" {% endif %}>Drug Names</option>
             <option value="search_events" {% if search_category == 'events' %} selected="selected" {% endif %}>Adverse Events</option>
             <option value="search_enforcements" {% if search_category == 'enforcements' %} selected="selected" {% endif %}>Enforcement Reports</option>
             <option value="search_manufacturers" {% if search_category == 'manufacturers' %} selected="selected" {% endif %}>Manufacturers</option>
-        </select>
-        <div class="input-group">
-            <label class="sr-only" for="search-term">Search Term</label>
-            <input type="search" class="form-control" name="q" id='search-term' placeholder="Enter keyword">
-            <label class="sr-only" for="search-state">Search State</label>
-            <input class="form-control" type="text" id='search-state' placeholder="Enter US state" style="display:none">
-            <span class="input-group-btn">
-                <button class="btn btn-primary" type="submit" id="search-category">GO</button>
-            </span>
-        </div>
-    </div>
-</form>
+        </select><!--
+        --><input type="search" class="" name="q" id="search-term" placeholder="Enter keyword"><!--
+        --><input class="" type="text" id='search-state' placeholder="Enter US state" style="display:none">
+        <button class="" type="submit" id="search-category"><span>GO</span><i></i></button>
+    </form>
 </div>
-</div>
-

@@ -8,6 +8,10 @@
 <title>FDA Drug Monitor - Enforcement Reports</title>
 {% endblock %}
 
+{% block searchbar %}
+    {% include 'core/searchbar.html' with search_category='enforcements'%}
+{% endblock %}
+
 {% block text %}
     <h1 class="page-title">Enforcement Reports</h1>
     <p class="page-description">Select a state from the map below or enter a state into the search above

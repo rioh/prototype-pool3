@@ -14,7 +14,6 @@
     <title>FDA Drug Monitor</title>
     {% endblock %}
 
-
     <link href="{% static "jquery-ui-1.11.4.custom/jquery-ui.css" %}" rel="stylesheet">
     <!-- if (development) -->
     <link href="{% static "css/style.less" %}" type='text/css' rel="stylesheet/less"/>
@@ -26,6 +25,7 @@
         };
     </script>
     <script src="{% static "js/less-1.4.2.js" %}" type="text/javascript"></script>
+
     <!-- else -->
     <!-- <link href='css/style.css' type='text/css' rel="stylesheet"/> -->
     <!-- endif -->
@@ -52,19 +52,11 @@
 				<li class="four"><a href="{% url 'browse_manufacturers' %}">Drug Manufacturers</a> </li>
 			</ul>
 		</nav>
-		<div class="fdahead-search">
-			<form class="" action="" method="get" name="main_search" id="mainsearch">
-				<select class="" id="select-category">
-					<option>Select a search category</option>
-					<option value="search_labels">Drug Names</option>
-					<option value="search_events">Adverse Events</option>
-					<option value="search_enforcements">Enforcement Reports</option>
-					<option value="search_manufacturers">Manufacturers</option>
-				</select><!--
-				--><input type="search" class="" name="q" id="search-term" placeholder="Enter keyword"><!--
-				--><button class="" type="submit" id="search-category"><span>GO</span><i></i></button>
-			</form>
-		</div>
+
+        {% block searchbar %}
+            {% include 'core/searchbar.html' %}
+        {% endblock %}
+
 	</header>
 
 

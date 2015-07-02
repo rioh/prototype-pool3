@@ -8,6 +8,10 @@
 <title>FDA Drug Monitor - Drug Names</title>
 {% endblock %}
 
+{% block searchbar %}
+    {% include 'core/searchbar.html' with search_category='labels'%}
+{% endblock %}
+
 {% block text %}
     <h1 class="page-title">Drug Names</h1>
     <p class="page-description">Select a drug from the list below or enter a drug name into the search above

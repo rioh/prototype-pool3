@@ -47,15 +47,19 @@ $(document).ready(function(){
 
         if (url_category === 'search_labels') {
             $('form').attr("action", "{% url 'search_labels' %}").submit();
+            alert(url_category + ' ' + search_input)
         }
         else if (url_category === 'search_events') {
             $('form').attr("action", "{% url 'search_events' %}").submit();
+            console.log(url_category + ' ' + search_input)
         }
         else if (url_category === 'search_enforcements') {
             $('form').attr("action", "{% url 'search_enforcements' %}").submit();
+            console.log(url_category + ' ' + search_input)
         }
         else if (url_category === 'search_manufacturers') {
             $('form').attr("action", "{% url 'search_manufacturers' %}").submit();
+            console.log(url_category + ' ' + search_input)
         }
         else {
             console.log('unknown category' + url_category);
@@ -95,12 +99,17 @@ $(document).ready(function(){
     $(".alpha-nav a").click(function() {
         var filter = $(this).data("filter");
 
+        // make the clicked letter have active color
+        $(".alpha-nav>li.selected").removeClass();
+        $(this).parent().addClass("selected");
+
+
         if(filter === "all") {
-            $(".letter").show();    // show all
+            $(".letter").show();    // show all results
         }
         else {
             $(".letter").hide();    // hide all
-            $("." + filter).show(); // show the one
+            $("." + filter).show(); // show the one set of results
         }
         return false;
     });
@@ -117,10 +126,10 @@ $(document).ready(function(){
     });
 
 // functionality to support accordion expand/collapse of divs for large bodies of text
-    $(".panel-title a").click(function() {
-        var panelTitle = this;
+    $(".fda-accordion-interface h3").click(function() {
+        var accordionTitle = this;
         setTimeout(function() {
-            $(panelTitle).parents('.panel').first().find('.cell').each(function () {
+            $(accordionTitle).parents('.fda-tabs-interface').first().find('.cell').each(function () {
                 var cell = this;
                 var text = $(cell).find(".text");
                 var more = $(cell).find(".more");
@@ -147,7 +156,3 @@ $(document).ready(function(){
         }, 0);
     });
 
-// functionality for +/- on accordion divs
-    $('.panel-title a').click(function() {
-        $(this).find(".glyphicon-menu-right, .glyphicon-menu-down").toggle();
-    });

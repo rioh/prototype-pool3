@@ -8,6 +8,10 @@
 <title>FDA Drug Monitor - Drug Details</title>
 {% endblock %}
 
+{% block searchbar %}
+    {% include 'core/searchbar.html' with search_category='labels'%}
+{% endblock %}
+
 {% block text %}
     <div class="row">
         <div class="col-xs-12">
@@ -49,7 +53,7 @@
             <!-- accordion panel groups -->
            {% include 'core/tab_enforcements.html' with prefix='enforce'%}
         </div><!-- end tab 3 -->
-    </div> <!-- end panel -->
+    </div>
 {% endblock %}
 
 {% block extra_js %}

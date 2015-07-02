@@ -8,6 +8,10 @@
 <title>FDA Drug Monitor - Adverse Events</title>
 {% endblock %}
 
+{% block searchbar %}
+    {% include 'core/searchbar.html' with search_category='events'%}
+{% endblock %}
+
 {% block text %}
     <h1 class="page-title">Adverse Events</h1>
     <p class="page-description">Select an adverse event from the list below or enter an event into the search

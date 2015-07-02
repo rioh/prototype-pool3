@@ -26,5 +26,5 @@ def format_yes(value):
     """
     Filter to change the format of strings with Yes results to include bold/red styling
     """
-    result = re.sub(r'Yes$', '<span style="color:#FF0000;font-weight:bold;">Yes</span>', value)
+    result = re.sub(r'Yes$', '<span style="color:#990000;font-weight:bold;">Yes</span>', value)
     return mark_safe(result)

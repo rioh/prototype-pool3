@@ -8,6 +8,10 @@
 <title>FDA Drug Monitor - Manufacturer Details</title>
 {% endblock %}
 
+{% block searchbar %}
+    {% include 'core/searchbar.html' with search_category='manufacturers'%}
+{% endblock %}
+
 {% block text %}
     <div class="row">
         <div class="col-xs-12">
@@ -26,35 +30,30 @@
 
 {% block details %}
 <!-- Nav tabs -->
-    <div class="panel">
-        <div class="panel-body">
-            <ul class="nav nav-tabs fda-nav-tab" role="tablist">
-                <li role="presentation" class="active"><a href="#labels" aria-controls="labels" role="tab" data-toggle="tab">Labels</a></li>
-                <li role="presentation"><a href="#events" aria-controls="events" role="tab" data-toggle="tab">Adverse Events</a></li>
-                <li role="presentation"><a href="#enforcements" aria-controls="enforcements" role="tab" data-toggle="tab">Enforcement Reports</a></li>
-            </ul>
+    <div id="fda-tabs-interface" class="fda-tabs-interface">
+        <ul>
+            <li><a href="#labels">Labels</a></li>
+            <li><a href="#events">Adverse Events</a></li>
+            <li><a href="#enforcements">Enforcement Reports</a></li>
+        </ul>
+        <!-- tab 1 -->
+        <div class="fda-accordion-interface" id="labels">
+            <!-- accordion panel groups -->
+            {% include 'core/tab_labels.html' with prefix='labels' %}
+        </div><!-- end tab 1 -->
 
-            <div class="tab-content">
-                <!-- tab 1 -->
-                <div role="tabpanel" class="tab-pane active fda-table-accordion" id="labels">
-                    <!-- accordion panel groups -->
-                    {% include 'core/tab_labels.html' with prefix='labels' %}
-                </div><!-- end tab 1 -->
+        <!-- tab 2 -->
+        <div class="fda-accordion-interface" id="events">
+            <!-- accordion panel groups -->
+           {% include 'core/tab_events.html' with prefix='events'%}
+        </div><!-- end tab 2 -->
 
-            <!-- tab 2 -->
-            <div role="tabpanel" class="tab-pane fda-table-accordion" id="events">
-                <!-- accordion panel groups -->
-                   {% include 'core/tab_events.html' with prefix='events'%}
-            </div><!-- end tab 2 -->
-
-            <!-- tab 3 -->
-            <div role="tabpanel" class="tab-pane fda-table-accordion" id="enforcements">
-                <!-- accordion panel groups -->
-                   {% include 'core/tab_enforcements.html' with prefix='enforce'%}
-            </div><!-- end tab 3 -->
-            </div> <!-- end tab content -->
-        </div> <!-- end panel-body -->
-    </div> <!-- end panel -->
+        <!-- tab 3 -->
+        <div class="fda-accordion-interface" id="enforcements">
+            <!-- accordion panel groups -->
+           {% include 'core/tab_enforcements.html' with prefix='enforce'%}
+        </div><!-- end tab 3 -->
+    </div>
 {% endblock %}
 
 {% block extra_js %}

@@ -8,6 +8,11 @@
 <title>FDA Drug Monitor - Enforcement Report Details</title>
 {% endblock %}
 
+
+{% block searchbar %}
+    {% include 'core/searchbar.html' with search_category='enforcements'%}
+{% endblock %}
+
 {% block text %}
     <div class="row">
         <div class="col-xs-12">
@@ -26,36 +31,29 @@
 
 {% block details %}
   <!-- Nav tabs -->
-<div class="panel">
-    <div class="panel-body">
-        <ul class="nav nav-tabs fda-nav-tab" role="tablist">
-            <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
-            <li role="presentation"><a href="#drugs" aria-controls="drugs" role="tab" data-toggle="tab">Drugs with enforcement reports in state</a></li>
+    <div id="fda-tabs-interface" class="fda-tabs-interface">
+        <ul>
+            <li><a href="#details">Details</a></li>
+            <li><a href="#drugs">Drugs with enforcement reports in state</a></li>
         </ul>
+        <!-- tab 1 -->
+        <div class="fda-accordion-interface" id="details">
+            <!-- accordion panel groups -->
+            {% include 'core/tab_enforcements.html' with prefix='enforcements' %}
+        </div><!-- end tab 1 -->
 
-        <div class="tab-content">
-            <!-- tab 1 -->
-            <div role="tabpanel" class="tab-pane active fda-table-accordion" id="details">
-                <!-- accordion panel groups -->
-               {% include 'core/tab_enforcements.html' with prefix='enforce'%}
-            </div><!-- end tab 1-->
-
-            <!-- tab 2 -->
-            <div role="tabpanel" class="tab-pane" id="drugs">
-                <div class="panel-group" role="tablist">
-                    <p>This chart will allow clicking through to another chart to get additional detail</p>
-                        <div id="adverseChart"></div><br/>
-                        <div id="productChart"></div><br/>
-                        {% for results in events %}<br />
-                        {% for key, value in results.items %}
-                        {{ key }}: {{ value }}<br />
-                        {% endfor %}
-                        {% endfor %}
-                 </div>
-            </div><!-- end tab 2 -->
-        </div><!-- end tab content -->
-    </div><!-- end panel-body -->
-</div><!-- end panel -->
+        <!-- tab 2 -->
+        <div id="drugs">
+            <p>This chart will allow clicking through to another chart to get additional detail</p>
+                <div id="adverseChart"></div><br/>
+                <div id="productChart"></div><br/>
+                {% for results in events %}<br />
+                {% for key, value in results.items %}
+                {{ key }}: {{ value }}<br />
+                {% endfor %}
+                {% endfor %}
+        </div><!-- end tab 2 -->
+    </div><!-- end panel -->
 
 {% endblock %}
 

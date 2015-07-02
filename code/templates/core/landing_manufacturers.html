@@ -8,6 +8,10 @@
 <title>FDA Drug Monitor - Manufacturers</title>
 {% endblock %}
 
+{% block searchbar %}
+    {% include 'core/searchbar.html' with search_category='manufacturers'%}
+{% endblock %}
+
 {% block text %}
     <h1 class="page-title">Manufacturers</h1>
     <p class="page-description">Select a manufacturer from the list below or enter a manufacturer name into the search above
