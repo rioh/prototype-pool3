@@ -29,6 +29,12 @@
         .box-sizing;
         text-align: center;
         color: @fda_blue;
+        &.alpha-disabled {
+          color: @gray;
+          border-color: @gray;
+          background-color: @white_smoke;
+          cursor:not-allowed;
+        };
       };
       &.selected {
         a {
