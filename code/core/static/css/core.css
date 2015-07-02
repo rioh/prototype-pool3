@@ -24,6 +24,10 @@ h1 small{
     color: #212121;
 }
 
+h2 {
+    font-size: 20px;
+}
+
 caption {
     color: #212121;
     font-weight: bold;
@@ -231,6 +235,23 @@ input[type="number"]:focus,
 .fda-table-accordion th,
 .fda-table-accordion td {
     display: block;
+}
+
+/* alphabet navigation */
+.alpha-nav {
+    padding: 10px;
+}
+
+.alpha-nav ul {
+    margin: 0;
+}
+
+.alpha-grey,
+.alpha-grey:hover,
+.alpha-grey:visited,
+.alpha-grey:focus {
+    color: #ccc;
+    text-decoration: none;
 }
 
 @media (min-width: 768px) {

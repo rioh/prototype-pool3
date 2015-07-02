@@ -1,4 +1,4 @@
-{% extends "core/details.html" %}
+{% extends "core/base.html" %}
 
 {% load staticfiles %}
 {% load url_tags %}
@@ -9,7 +9,11 @@
 {% endblock %}
 
 {% block image %}
-    <img src="{% static "images/drugs.png" %}" class="img-responsive center-block" alt="drug labels banner image">
+    <img src="{% static "images/drugs-short.png" %}" class="img-responsive center-block" alt="drug labels banner image">
+{% endblock %}
+
+{% block search %}
+    {% include 'core/searchbar.html' with search_category='labels'%}
 {% endblock %}
 
 {% block text %}
@@ -42,6 +46,7 @@
                 <!-- tab 1 -->
                 <div role="tabpanel" class="tab-pane active fda-table-accordion" id="labels">
                     <!-- accordion panel groups -->
+<<<<<<< HEAD
                     <div class="panel-group" role="tablist" aria-multiselectable="true">
 
                         {% if labels|length == 0 %}
@@ -256,48 +261,22 @@
                    </nav>
                    {% endif %}
                 {% endif %}
+=======
+                    {% include 'core/tab_labels.html' with prefix='labels' %}
+                </div><!-- end tab 1 -->
 
-                {% for result in enforcements %}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" href="#tab3_panel{{ forloop.counter }}" aria-expanded="false">
-                                Recall Number: {{ result.recall_number }} [{{ result.report_date }}: {{ result.city }}, {{ result.state }}]
-                            </a>
-                            </h4>
-                        </div>
-                        <div class="panel-collapse collapse" id="tab3_panel{{ forloop.counter }}">
-                          <div class="panel-body">
-                              <table class="table table-striped table-bordered">
-                                  <caption class="sr-only"> Recall Number: {{ result.recall_number }}</caption>
-                                  <tbody>
-                                    {% for key, value in result.items %}
-                                        <tr>
-                                            <th scope="row">{{ key|replace_underscores|capfirst }}
-                                            </th>
-                                            <td class="cell">
-                                                <div class="text">
-                                                  {% if value|is_list %}
-                                                    {% for val in value %}
-                                                      {{ val|default:"N/A" }}<br />
-                                                    {% endfor %}
-                                                  {% else %}
-                                                    {{ value|default:"N/A" }}
-                                                  {% endif %}
-                                                </div>
-                                                <span class="more">More...</span>
-                                                <span class="less" style="display:none;">Less...</span>
-                                             </td>
-                                        </tr>
-                                    {% endfor %}
-                                  </tbody>
-                              </table>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-                </div>
-              </div><!-- end tab 3 -->
+                <!-- tab 2 -->
+                <div role="tabpanel" class="tab-pane fda-table-accordion" id="events">
+                    <!-- accordion panel groups -->
+                   {% include 'core/tab_events.html' with prefix='events'%}
+                </div><!-- end tab 2 -->
+>>>>>>> 547dcb185589325baf3aa63742c7a200d8f90867
+
+                <!-- tab 3 -->
+                <div role="tabpanel" class="tab-pane fda-table-accordion" id="enforcements">
+                    <!-- accordion panel groups -->
+                   {% include 'core/tab_enforcements.html' with prefix='enforce'%}
+                </div><!-- end tab 3 -->
             </div> <!-- end tab content -->
         </div> <!-- end panel-body -->
     </div> <!-- end panel -->
