@@ -68,7 +68,7 @@ def search_labels(request):
 
 def search_label_events(request):
     client = ApiClient()
-    query_string = request.GET.get('q')
+    query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
     data = client.search_labels(query_term, int(page))
     return HttpResponse(data, content_type='application/json')

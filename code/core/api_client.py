@@ -35,6 +35,8 @@ PARAMETER_MAPPINGS = {
 }
 
 
+# TODO: pull out some of the url strings
+
 class ApiClient(object):
     """
     API client code for consuming FDA opendata apis
@@ -189,6 +191,7 @@ class ApiClient(object):
         return data
 
     def get_age_sex(self, api_type, param, filter_string):
+        # TODO: implement grouping by age group
         total_male = self.filter_patient(api_type, filter_string, param, 1)
         total_female = self.filter_patient(api_type, filter_string, param, 2)
 
@@ -209,6 +212,9 @@ class ApiClient(object):
         return resp_json['meta']['results']['total']
 
     def get_sub_data(self, query_string, page):
+        """
+        This is used by search to call the fda API
+        """
         url = '%s&limit=%s&skip=%s' % (query_string, self.api_limit, (page - 1) * self.api_limit)
         self.logger.debug("url: %s", url)
         resp = requests.get(url)
@@ -219,6 +225,9 @@ class ApiClient(object):
         return None
 
     def get_count_data(self, query_url):
+        """
+        This is used by browse to call the fda API
+        """
         self.logger.debug("url: %s", query_url)
         resp = requests.get(query_url).json().get('results')
         return resp
@@ -269,7 +278,7 @@ class ApiClient(object):
 
             patient_data = OrderedDict()
             patient_data["patient_onset_age"] = "%s%s" % (d.get('patient.patientonsetstage', ""),
-                                           d.get('patinetonsetageunit', ""))
+                                                          d.get('patinetonsetageunit', ""))
             patient_data["patient_sex"] = self.male_or_female(d.get('patient.patientsex'))
             patient_data["patient_death_details"] = d.get('patient.patientdeath')
 
@@ -277,7 +286,7 @@ class ApiClient(object):
             label_data["drug_administration_route"] = d.get('patient.drug.drugadministrationroute')
             label_data["actions_taken_with_drug"] = d.get('patient.drug.actiondrug')
             label_data["dosage"] = "%s%s" % (d.get('patient.drug.drugcumulativedosagenumb', ""),
-                                d.get('patient.drug.drugcumulativedosageunit', ""))
+                                             d.get('patient.drug.drugcumulativedosageunit', ""))
             label_data["number_of_doses"] = d.get('patient.drug.drugstructuredosagenumb')
             label_data["reported_role_of_the_drug_in_the_adverse_event"] = d.get('patient.drug.drugcharacterization')
 
