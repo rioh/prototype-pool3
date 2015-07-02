@@ -8,39 +8,13 @@
 <title>FDA Drug Monitor - Adverse Events</title>
 {% endblock %}
 
-{% block image %}
-    <img src="{% static "images/reactions-short.png" %}" class="img-responsive center-block" alt="adverse events banner image">
-{% endblock %}
-
-{% block search %}
-    {% include 'core/searchbar.html' with search_category='events'%}
-{% endblock %}
-
 {% block text %}
-    <h1>Adverse Events</h1>
-    <p>Select an adverse event from the list below or enter an event into the search
+    <h1 class="page-title">Adverse Events</h1>
+    <p class="page-description">Select an adverse event from the list below or enter an event into the search
     above to view current related information
 {% endblock %}
 
 {% block details %}
     <!-- browse list -->
-    <div class="panel">
-        <div class="panel-body">
-
-            {% include 'core/alphanav.html' %}
-
-            <dl class="list-group fda-list-group">
-                <dt class="list-group-item">
-                    Adverse Event
-                </dt>
-                {% for term in terms %}
-                 <dd class="list-group-item letter {{ term.term.0|lower }}">
-                    <a href="{% url 'search_events' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}
-                        <span class="badge pull-right">{{ term.count|intcomma }}</span>
-                    </a>
-                </dd>
-                {% endfor %}
-            </dl>
-        </div>
-    </div>
+    {% include 'core/browse.html' with search_url='search_events' show_count=True%}
 {% endblock %}

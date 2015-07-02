@@ -1,0 +1,166 @@
+.fdahead {
+   clear:both;
+   padding: 0 @gutter 10px;
+   position:relative;
+  .fdahead-logo {
+    font-size: 24px;
+    a {
+      display:inline-block;
+      color: @charcoal;
+      text-decoration: none;
+      padding: 20px 0 15px;
+      img {
+        vertical-align: middle;
+      };
+      span {
+        display:inline-block;
+        vertical-align: middle;
+      };
+      @media @tablet {
+        padding: 10px 0 10px;
+      };
+    };
+  };
+  .fdahead-nav-toggle {
+    display:none;
+    span {
+      position: absolute;
+      left: 0;
+      top: -5000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    };
+    @media @tablet {
+      display:inline-block;
+      width: 20px;
+      height:17px;
+      margin-right: 20px;
+      background: transparent url(sprite-fda.png) 0 0 no-repeat;
+      .button-transparent;
+    };
+  };
+  .fdahead-nav {
+    background-color: @fda_blue;
+    ul {
+      .plain;
+      .inline;
+      overflow:hidden;
+      li {
+        width: 25%;
+        float:left;
+        margin: 0;
+        padding: 0;
+        .box-sizing;
+        text-align:center;
+        &.one   {background-color: lighten(@fda_blue, 10%)};
+        &.two   {background-color: lighten(@fda_blue, 5%)};
+        &.three {background-color: lighten(@fda_blue, 0%)};
+        &.four  {background-color: darken(@fda_blue, 5%)};
+        a {
+          display:block;
+          color: @white;
+          padding: 15px 0;
+          .box-sizing;
+          &:focus,
+          &:hover {
+            background-color: @fda_navy;
+          };
+        };
+        @media @tablet {
+          width: 100%;
+          float: none;
+          text-align:left;
+          a {
+            padding: 15px 20px;
+          };
+        };
+      };
+    };
+    @media @tablet {
+      display:none;
+      &.active {
+        display:block;
+      };
+    };
+  };
+  .fdahead-search {
+    background-color: @lighter_gray;
+    border-radius: 5px;
+    position:absolute;
+    right: @gutter;
+    top: 20px;
+    form {
+      margin: 0;
+      input,
+      button,
+      select {
+        border: none;
+        background-color: transparent;
+        .box-sizing;
+      };
+      input {
+        width: 300px;
+      };
+      button {
+        span {
+            position: absolute;
+            left: 0;
+            top: -5000px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        };
+        i {
+          display: inline-block;
+          width: 14px;
+          height: 13px;
+          background: transparent url(sprite-fda.png) -14px -60px no-repeat;  
+        };
+      };
+    };
+    @media @tablet {
+      position: static;
+      overflow: hidden;
+      margin-bottom: 15px;
+      form {
+        overflow: hidden;
+        select {
+          width: 40%;
+        };
+        input {
+          width: 55%;
+        };
+        button {
+          width: 5%;
+        };
+      };
+    };
+    @media @phone-large {
+      form {
+        select {
+          width: 40%;
+        };
+        input {
+          width: 53%;
+        };
+        button {
+          width: 7%;
+        };
+      };
+    };
+    @media @phone {
+      form {
+        select {
+          width: 40%;
+        };
+        input {
+          width: 50%;
+        };
+        button {
+          width: 10%;
+        };
+      };
+    };
+  };
+};

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Version: $Id: build.xml 635 2012-10-23 16:16:56Z jlug $ -->
+<project name="share" default="build">
+	<tstamp/>
+    
+    <description> Build file for the Share Tool </description>
+    <!-- LOCAL PROPERTIES TO ALLOW YOU TO OVERRIDE THE VALUES, IGNORED BY SVN -->
+    <property file="local.properties" />
+    <property file="build.properties" />
+	
+    <target name="init">
+        <tstamp/>
+
+        <property name='maincssfile' value='locstandard-1.0.css' />
+
+        <property
+            name="yui-compressor.jar"
+            location="${file.reference.yuicompressor.jar}" />
+        <property
+            name="yui-compressor-ant-task.jar"
+            location="${file.reference.yui-compressor-ant-task.jar}" />
+
+	        <property
+	            name="ant-contrib.jar"
+	            location="${file.reference.ant-contrib.jar}" />
+         
+        <echo message="Defining yui-compressor task" />
+        <taskdef
+            name="yui-compressor"
+            classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
+        
+            <classpath>
+                <pathelement location="${yui-compressor.jar}" />
+                <pathelement location="${yui-compressor-ant-task.jar}" />
+            </classpath>
+        </taskdef>
+
+        <echo message="Defining ant-contrib tasks" />
+        <taskdef resource="net/sf/antcontrib/antlib.xml">
+            <classpath>
+                <pathelement location="${ant-contrib.jar}"/>
+            </classpath>
+        </taskdef>
+    </target>
+    
+    <target name="build" depends="init">
+	    <for param="file">
+	        <path>
+	            <fileset dir="." includes="**/*.less"/>
+	        </path>
+	        <sequential>
+				<echo message="processed: @{file}"/>
+				<propertyregex override="yes"
+				      property="filename"  input="@{file}"
+				      regexp="(.*)\.less" replace="\1.css"/>
+			    <exec executable="${file.reference.lessc}" dir="." failonerror="on">
+					<arg value="@{file}"/>
+					<arg value="${filename}"/>
+			    </exec>
+		        <yui-compressor 
+		            warn="false" 
+		            charset="UTF-8" 
+		            fromdir="." 
+		            todir=".">
+
+		            <include name="${maincssfile}"/>
+		        </yui-compressor>
+	        </sequential>
+	    </for>
+	</target>
+	
+	<target name="test">
+		<echo message="${name}"/>
+	</target>
+	
+</project>

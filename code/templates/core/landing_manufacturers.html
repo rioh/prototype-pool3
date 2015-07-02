@@ -8,45 +8,14 @@
 <title>FDA Drug Monitor - Manufacturers</title>
 {% endblock %}
 
-{% block image %}
-    <img src="{% static "images/manufacturers-short.png" %}" class="img-responsive center-block" alt="manufacturers labels banner image">
-{% endblock %}
-
-{% block search %}
-    {% include 'core/searchbar.html' with search_category='manufacturers'%}
-{% endblock %}
-
 {% block text %}
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>Manufacturers</h1>
-            <p>Select a manufacturer from the list below or enter a manufacturer name into the search above
-                to view current related information</p>
-        </div>
-    </div>
+    <h1 class="page-title">Manufacturers</h1>
+    <p class="page-description">Select a manufacturer from the list below or enter a manufacturer name into the search above
+        to view current related information</p>
+
 {% endblock %}
 
 {% block details %}
     <!-- browse list -->
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="panel">
-                <div class="panel-body">
-
-                    {% include 'core/alphanav.html' %}
-
-                    <dl class="list-group fda-list-group">
-                        <dt class="list-group-item">
-                            Manufacturer Name
-                        </dt>
-                        {% for term in terms %}
-                         <dd class="list-group-item letter {{ term.term.0|lower }}">
-                            <a href="{% url 'search_manufacturers' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}</a>
-                        </dd>
-                        {% endfor %}
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'core/browse.html' with search_url='search_manufacturers' show_count=False %}
 {% endblock %}

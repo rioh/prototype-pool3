@@ -1,7 +1,9 @@
 {# alphabet navigation for use throughout the site #}
-<div class="alpha-nav text-center">
-    <ul class="list-inline">
-        <li><a data-filter="all" href="#">All</a></li>
+<nav class="fda-alpha-nav">
+    <h2>A-Z</h2>
+    <ol class="alpha-nav">
+        <li class="double selected"><a data-filter="all" id="show-all" href="#">All</a></li>
+        <li class="double"><a data-filter="num" id="show-nums" href="#">0-9</a></li>
         <li><a data-filter="a" href="#">A</a></li>
         <li><a data-filter="b" href="#">B</a></li>
         <li><a data-filter="c" href="#">C</a></li>
@@ -12,8 +14,8 @@
         <li><a data-filter="h" href="#">H</a></li>
         <li><a data-filter="i" href="#">I</a></li>
         <li><a data-filter="j" href="#">J</a></li>
-        <li><a data-filter="k" href="#">K</a></li>
-        <li><a data-filter="l" href="#">L</a></li>
+	    <li class="K"><a data-filter="k" id="show-k" href="#">K</a></li>
+	    <li class="L"><a data-filter="l" id="show-l" href="#">L</a></li>
         <li><a data-filter="m" href="#">M</a></li>
         <li><a data-filter="n" href="#">N</a></li>
         <li><a data-filter="o" href="#">O</a></li>
@@ -28,5 +30,5 @@
         <li><a data-filter="x" href="#">X</a></li>
         <li><a data-filter="y" href="#">Y</a></li>
         <li><a data-filter="z" href="#">Z</a></li>
-    </ul>
-</div>
+    </ol>
+</nav>

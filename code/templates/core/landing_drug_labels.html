@@ -8,47 +8,13 @@
 <title>FDA Drug Monitor - Drug Names</title>
 {% endblock %}
 
-{% block image %}
-    <img src="{% static "images/drugs-short.png" %}" class="img-responsive center-block" alt="drug labels banner image">
-{% endblock %}
-
-{% block search %}
-    {% include 'core/searchbar.html' with search_category='labels'%}
-{% endblock %}
-
 {% block text %}
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>Drug Names</h1>
-            <p>Select a drug from the list below or enter a drug name into the search above
-                to view current related information</p>
-        </div>
-    </div>
+    <h1 class="page-title">Drug Names</h1>
+    <p class="page-description">Select a drug from the list below or enter a drug name into the search above
+        to view current related information</p>
 {% endblock %}
 
 {% block details %}
     <!-- browse list -->
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="panel">
-                <div class="panel-body">
-
-                    {% include 'core/alphanav.html' %}
-
-                    <dl class="list-group fda-list-group">
-                        <dt class="list-group-item">
-                            Drug Name (generic/brand)
-                        </dt>
-                        {% for term in terms %}
-                         <dd class="list-group-item letter {{ term.term.0|lower }}">
-                            <a href="{% url 'search_labels' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}
-                                <span class="badge pull-right">{{ term.count|intcomma }}</span>
-                            </a>
-                        </dd>
-                        {% endfor %}
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'core/browse.html' with search_url='search_labels' show_count=True %}
 {% endblock %}

@@ -1,0 +1,21 @@
+{# browse list used on all landing pages #}
+{% load url_tags %}
+{% load humanize %}
+
+<article>
+    {% include 'core/alphanav.html' %}
+
+    <ul class="fda-list-group">
+        {% for term in terms %}
+         <li class="letter {{ term.term.0|lower }}">
+            <a href="{% url search_url %}?q={{ term.term|replace_spaces|urlencode }}">
+                {{ term.term }}
+                {% if show_count %}
+                    <span class="count">{{ term.count|intcomma }}</span>
+                {% endif %}
+            </a>
+
+         </li>
+        {% endfor %}
+    </ul>
+</article>
