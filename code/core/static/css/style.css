@@ -2302,12 +2302,15 @@ input[type="checkbox"][readonly] {
   }
   .fdahead .fdahead-search form select {
     width: 40%;
+    float: left;
   }
   .fdahead .fdahead-search form input {
     width: 55%;
+    float: left;
   }
   .fdahead .fdahead-search form button {
     width: 5%;
+    float: right;
   }
 }
 @media screen and (max-width: 650px) {
@@ -2887,9 +2890,17 @@ label.readonly {
     width: 20%;
   }
   .fda-alpha-nav ol li.K {
-    border-right: none;
+    border-right: 2px solid #FFFFFF;
   }
   .fda-alpha-nav ol li.L {
+    border-left: 2px solid #FFFFFF;
+  }
+  .fda-alpha-nav ol li.F,
+  .fda-alpha-nav ol li.P {
+    border-right: none;
+  }
+  .fda-alpha-nav ol li.G,
+  .fda-alpha-nav ol li.Q {
     border-left: none;
   }
 }
