@@ -1,4 +1,4 @@
-{% extends "core/browse.html" %}
+{% extends "core/base.html" %}
 
 {% load staticfiles %}
 {% load url_tags %}
@@ -9,7 +9,11 @@
 {% endblock %}
 
 {% block image %}
-    <img src="{% static "images/manufacturers.png" %}" class="img-responsive center-block" alt="manufacturers labels banner image">
+    <img src="{% static "images/manufacturers-short.png" %}" class="img-responsive center-block" alt="manufacturers labels banner image">
+{% endblock %}
+
+{% block search %}
+    {% include 'core/searchbar.html' with search_category='manufacturers'%}
 {% endblock %}
 
 {% block text %}
@@ -22,7 +26,7 @@
     </div>
 {% endblock %}
 
-{% block browse_body %}
+{% block details %}
     <!-- browse list -->
     <div class="row">
         <div class="col-xs-12">
@@ -36,7 +40,7 @@
                             Manufacturer Name
                         </dt>
                         {% for term in terms %}
-                         <dd class="list-group-item">
+                         <dd class="list-group-item letter {{ term.term.0|lower }}">
                             <a href="{% url 'search_manufacturers' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}</a>
                         </dd>
                         {% endfor %}

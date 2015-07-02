@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import requests
 import logging
 import urllib
@@ -17,17 +18,17 @@ BROWSE_TYPES = {
     "enforcements": "state",
     "manufacturers": {
         "labels": "openfda.manufacturer_name",
-#        "events": "patient.drug.openfda.manufacturer_name",
-#        "enforcements": "openfda.manufacturer_name"
+        #        "events": "patient.drug.openfda.manufacturer_name",
+        #        "enforcements": "openfda.manufacturer_name"
     }
 }
 
 PARAMETER_MAPPINGS = {
     "serious": {
         "1": "The adverse event resulted in death, a life threatening condition, " +
-             "hospitalization, disability, congenital anomali, or other serious condition.",
-        "2": "The adverse event did not result in death, a life threatening condition, " +
-             "hospitalization, disability, congenital anomali, or other serious condition."
+             "hospitalization, disability, congenital anomaly, or other serious condition.",
+        "2": "The adverse event did NOT result in death, a life threatening condition, " +
+             "hospitalization, disability, congenital anomaly, or other serious condition."
     }
 }
 
@@ -159,7 +160,7 @@ class ApiClient(object):
         data['enforcements'] = self.clean_enforcements(self.get_sub_data(
             "%s?search=openfda.manufacturer_name:\"%s\"" % (
                 API_TYPES['enforcements'], urllib.quote(query_term)
-                ), self.api_limit, 0))
+            ), self.api_limit, 0))
 
         return data
 
@@ -225,34 +226,39 @@ class ApiClient(object):
     def clean_events(self, data):
         results = []
         for d in data:
-            safety_data = {
-                "safety_report": d.get('safetyreportid'),
-                "safety_report_version": d.get('safetyreportversion'),
-                "receive_date": self.format_date(d.get('receivedate')),
-                "receipt_date_format": d.get('receiptdateformat'),
-                "serious": self.format_field_from_parameter_mapping('serious', d.get('serious')),
-                "seriousness_details": ["congenital anomali: %s" % self.yes_or_no(d.get("seriouscongenitalanomali")),
-                                        "death: %s" % self.yes_or_no(d.get("seriousnessdeath")),
-                                        "disabling: %s" % self.yes_or_no(d.get("seriousnessdisabling")),
-                                        "hospitalization: %s" % self.yes_or_no(d.get("seriousnesshospitalization")),
-                                        "life threatening: %s" % self.yes_or_no(d.get("seriousnesslifethreatening"))],
-                "duplicate_report_source": d.get('reportduplicate.duplicatesource'),
-                "duplicate_report_number": d.get('reportduplicate.duplicatenumb'),
-            }
-            patient_data = {
-                "patient_onset_age": "%s%s" % (d.get('patient.patientonsetstage', ""),
-                                                d.get('patinetonsetageunit', "")),
-                "patient_sex": self.male_or_female(d.get('patient.patientsex')),
-                "patient_death_details": d.get('patient.patientdeath')
-            }
-            label_data = {
-                "drug_administration_route": d.get('patient.drug.drugadministrationroute'),
-                "actions_taken_with_drug": d.get('patient.drug.actiondrug'),
-                "dosage": "%s%s" % (d.get('patient.drug.drugcumulativedosagenumb', ""),
-                                    d.get('patient.drug.drugcumulativedosageunit', "")),
-                "number_of_doses": d.get('patient.drug.drugstructuredosagenumb'),
-                "reported_role_of_the_drug_in_the_adverse_event": d.get('patient.drug.drugcharacterization')
-            }
+            safety_data = OrderedDict()
+            safety_data["safety_report"] = d.get('safetyreportid')
+            safety_data["safety_report_version"] = d.get('safetyreportversion')
+            safety_data["receive_date"] = self.format_date(d.get('receivedate'))
+            safety_data["receipt_date_format"] = d.get('receiptdateformat')
+            safety_data["seriousness"] = self.format_field_from_parameter_mapping('serious', d.get('serious'))
+            safety_data["seriousness_details"] = \
+                ["congenital anomaly: %s" % self.yes_or_no(d.get("seriouscongenitalanomali")),
+                 "death: %s" % self.yes_or_no(d.get("seriousnessdeath")),
+                 "disabling: %s" % self.yes_or_no(d.get("seriousnessdisabling")),
+                 "hospitalization: %s" % self.yes_or_no(d.get("seriousnesshospitalization")),
+                 "life threatening: %s" % self.yes_or_no(d.get("seriousnesslifethreatening"))]
+            safety_data["duplicate_report_source"] = d.get('reportduplicate.duplicatesource')
+            safety_data["duplicate_report_number"] = d.get('reportduplicate.duplicatenumb')
+
+            patient_data = OrderedDict()
+            patient_data["patient_onset_age"] = "%s%s" % (d.get('patient.patientonsetstage', ""),
+                                           d.get('patinetonsetageunit', ""))
+            patient_data["patient_sex"] = self.male_or_female(d.get('patient.patientsex'))
+            patient_data["patient_death_details"] = d.get('patient.patientdeath')
+
+            label_data = OrderedDict()
+            label_data["drug_administration_route"] = d.get('patient.drug.drugadministrationroute')
+            label_data["actions_taken_with_drug"] = d.get('patient.drug.actiondrug')
+            label_data["dosage"] = "%s%s" % (d.get('patient.drug.drugcumulativedosagenumb', ""),
+                                d.get('patient.drug.drugcumulativedosageunit', ""))
+            label_data["number_of_doses"] = d.get('patient.drug.drugstructuredosagenumb')
+            label_data["reported_role_of_the_drug_in_the_adverse_event"] = d.get('patient.drug.drugcharacterization')
+
+            # suppress details when seriousness is minor
+            if safety_data["seriousness"] != PARAMETER_MAPPINGS.get('serious').get('1'):
+                safety_data.pop("seriousness_details")
+
             results.append({'safety_data': safety_data,
                             'patient_data': patient_data,
                             'label_data': label_data})

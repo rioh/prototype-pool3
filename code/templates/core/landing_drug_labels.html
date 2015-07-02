@@ -1,4 +1,4 @@
-{% extends "core/browse.html" %}
+{% extends "core/base.html" %}
 
 {% load staticfiles %}
 {% load url_tags %}
@@ -9,7 +9,11 @@
 {% endblock %}
 
 {% block image %}
-    <img src="{% static "images/drugs.png" %}" class="img-responsive center-block" alt="drug labels banner image">
+    <img src="{% static "images/drugs-short.png" %}" class="img-responsive center-block" alt="drug labels banner image">
+{% endblock %}
+
+{% block search %}
+    {% include 'core/searchbar.html' with search_category='labels'%}
 {% endblock %}
 
 {% block text %}
@@ -22,7 +26,7 @@
     </div>
 {% endblock %}
 
-{% block browse_body %}
+{% block details %}
     <!-- browse list -->
     <div class="row">
         <div class="col-xs-12">
@@ -36,7 +40,7 @@
                             Drug Name (generic/brand)
                         </dt>
                         {% for term in terms %}
-                         <dd class="list-group-item">
+                         <dd class="list-group-item letter {{ term.term.0|lower }}">
                             <a href="{% url 'search_labels' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}
                                 <span class="badge pull-right">{{ term.count|intcomma }}</span>
                             </a>

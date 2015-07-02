@@ -1,4 +1,4 @@
-{% extends "core/browse.html" %}
+{% extends "core/base.html" %}
 
 {% load staticfiles %}
 {% load url_tags %}
@@ -9,42 +9,38 @@
 {% endblock %}
 
 {% block image %}
-    <img src="{% static "images/reactions.png" %}" class="img-responsive center-block" alt="adverse events banner image">
+    <img src="{% static "images/reactions-short.png" %}" class="img-responsive center-block" alt="adverse events banner image">
+{% endblock %}
+
+{% block search %}
+    {% include 'core/searchbar.html' with search_category='events'%}
 {% endblock %}
 
 {% block text %}
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>Adverse Events</h1>
-            <p>Select an adverse event from the list below or enter an event into the search
-                above to view current related information
-        </div>
-    </div>
+    <h1>Adverse Events</h1>
+    <p>Select an adverse event from the list below or enter an event into the search
+    above to view current related information
 {% endblock %}
 
-{% block browse_body %}
+{% block details %}
     <!-- browse list -->
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="panel">
-                <div class="panel-body">
+    <div class="panel">
+        <div class="panel-body">
 
-                    {% include 'core/alphanav.html' %}
+            {% include 'core/alphanav.html' %}
 
-                    <dl class="list-group fda-list-group">
-                        <dt class="list-group-item">
-                            Adverse Event
-                        </dt>
-                        {% for term in terms %}
-                         <dd class="list-group-item">
-                            <a href="{% url 'search_events' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}
-                                <span class="badge pull-right">{{ term.count|intcomma }}</span>
-                            </a>
-                        </dd>
-                        {% endfor %}
-                    </dl>
-                </div>
-            </div>
+            <dl class="list-group fda-list-group">
+                <dt class="list-group-item">
+                    Adverse Event
+                </dt>
+                {% for term in terms %}
+                 <dd class="list-group-item letter {{ term.term.0|lower }}">
+                    <a href="{% url 'search_events' %}?q={{ term.term|replace_spaces|urlencode }}">{{ term.term }}
+                        <span class="badge pull-right">{{ term.count|intcomma }}</span>
+                    </a>
+                </dd>
+                {% endfor %}
+            </dl>
         </div>
     </div>
 {% endblock %}

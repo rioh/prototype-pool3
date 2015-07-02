@@ -64,8 +64,34 @@
     <!-- end nav/begin body -->
     <main role="main">
         <div class="container" style="max-width:1024px;">
-            {% block body %}
-            {% endblock %}
+        {% block body %}
+
+            <div class="row">
+                {% block image %}
+                {% endblock %}
+            </div>
+
+            <div class="row" style="margin-top:15px;">
+                {% block search %}
+                    {% include 'core/searchbar.html' %}
+                {% endblock %}
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    {% block text %}
+                    {% endblock %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    {% block details %}
+                    {% endblock %}
+                </div>
+            </div>
+
+        {% endblock %}
         </div>
     </main>
 
@@ -103,7 +129,7 @@
     <script src="{% static "js/states.js" %}"></script>
 
     <script>
-    // search bar functionality
+// search bar functionality
     var searchOptions = ['search_labels', 'search_events', 'search_enforcements'];
 
     // search go button onclick handler
@@ -174,37 +200,68 @@
 
     $('#select-category').change(changeInput);
 
-    // functionality to support accordion expand/collapse of divs for large bodies of text
-        $(".panel-title a").click(function() {
-            var panelTitle = this;
-            setTimeout(function() {
-                $(panelTitle).parents('.panel').first().find('.cell').each(function () {
-                    var cell = this;
-                    var text = $(cell).find(".text");
-                    var more = $(cell).find(".more");
-                    var less = $(cell).find(".less");
+// alpha navigation functionality
+    // show only items for the clicked letter
+    $(".alpha-nav a").click(function() {
+        var filter = $(this).data("filter");
 
-                    // correct for resizing
-                    if ($(text).height() < 55) {
-                        $(more).hide();
-                        $(text).removeClass("text");
-                    }
+        if(filter === "all") {
+            $(".letter").show();    // show all
+        }
+        else {
+            $(".letter").hide();    // hide all
+            $("." + filter).show(); // show the one
+        }
+        return false;
+    });
 
-                    $(more).click(function () {
-                        $(cell).addClass("expanded");
-                        $(more).toggle();
-                        $(less).toggle();
-                    });
+    // grey out letters without matches
+    $(".alpha-nav a").each(function() {
+        var filter = $(this).data("filter");
+        if (filter != "all") {
+            var count = $("." + filter).length;
+            if (count == 0) {
+                $(this).addClass("alpha-grey");
+            }
+        }
 
-                    $(less).click(function () {
-                        $(cell).removeClass("expanded");
-                        $(more).toggle();
-                        $(less).toggle();
-                    });
+    });
+
+// functionality to support accordion expand/collapse of divs for large bodies of text
+    $(".panel-title a").click(function() {
+        var panelTitle = this;
+        setTimeout(function() {
+            $(panelTitle).parents('.panel').first().find('.cell').each(function () {
+                var cell = this;
+                var text = $(cell).find(".text");
+                var more = $(cell).find(".more");
+                var less = $(cell).find(".less");
+
+                // correct for resizing
+                if ($(text).height() < 55) {
+                    $(more).hide();
+                    $(text).removeClass("text");
+                }
+
+                $(more).click(function () {
+                    $(cell).addClass("expanded");
+                    $(more).toggle();
+                    $(less).toggle();
                 });
-            }, 0);
-        });
 
+                $(less).click(function () {
+                    $(cell).removeClass("expanded");
+                    $(more).toggle();
+                    $(less).toggle();
+                });
+            });
+        }, 0);
+    });
+
+// functionality for +/- on accordion divs
+    $('.panel-title a').click(function() {
+        $(this).find(".glyphicon-menu-right, .glyphicon-menu-down").toggle();
+    });
     </script>
 
     {% block extra_js %}

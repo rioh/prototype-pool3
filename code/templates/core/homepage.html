@@ -1,33 +1,26 @@
 {% extends "core/base.html" %}
 
 {% load staticfiles %}
-{% block body %}
 
-    <div class="row">
-        <img src="{% static "images/home.png" %}" class="img-responsive center-block" alt="home banner image">
-    </div>
-
-    {% include 'core/searchbar.html' %}
-
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>Welcome to the FDA Drug Monitor</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
-                mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
-                ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
-                ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla. Aliquam rutrum
-                nunc et nisi venenatis, sed feugiat mi aliquet. Fusce et risus massa. Donec suscipit volutpat quam,
-                ac maximus mauris facilisis sit amet. Maecenas sed lobortis turpis, non sagittis nulla. </p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
-                mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
-                ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
-                ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla.</p>
-
-        </div>
-    </div>
-
+{% block image %}
+    <img src="{% static "images/home-short.png" %}" class="img-responsive center-block" alt="home banner image">
 {% endblock %}
 
-{% block extra_js %}
+{% block search %}
+    {% include 'core/searchbar.html' %}
+{% endblock %}
+
+{% block text %}
+    <h1>Welcome to the FDA Drug Monitor</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
+        mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
+        ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
+        ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla. Aliquam rutrum
+        nunc et nisi venenatis, sed feugiat mi aliquet. Fusce et risus massa. Donec suscipit volutpat quam,
+        ac maximus mauris facilisis sit amet. Maecenas sed lobortis turpis, non sagittis nulla. </p>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
+        mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
+        ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
+        ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla.</p>
 {% endblock %}
