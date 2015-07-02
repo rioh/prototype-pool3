@@ -1,6 +1,4 @@
-import logging
-
-from django.conf import settings
+import math
 
 
 class Paginator(object):
@@ -10,8 +8,9 @@ class Paginator(object):
     def __init__(self, meta_dict):
         self.skip = meta_dict.get('skip', 0)
         self.limit = meta_dict.get('limit', 0)
-        self.total = meta_dict.get('total', 0)
-        self.pages = int(self.total / self.limit) + 1
+        # FIXME: We're capping at 5000 which is the FDA API limit
+        self.total = min(meta_dict.get('total', 0), 5000)
+        self.pages = int(math.ceil(float(self.total) / self.limit))
 
     def has_previous(self):
         return self.page() != 1
@@ -25,7 +24,7 @@ class Paginator(object):
     def page_display(self):
         bottom_range = self.skip + 1
         top_range = min(self.skip + self.limit, self.total)
-        
+
         return "%s to %s of %s" % (bottom_range, top_range, self.total)
 
     def pagination_display(self):

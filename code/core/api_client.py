@@ -36,6 +36,7 @@ PARAMETER_MAPPINGS = {
 
 
 # TODO: pull out some of the url strings
+# TODO: we need to limit the number of results returned since the API only supports 5000 or less
 
 class ApiClient(object):
     """
