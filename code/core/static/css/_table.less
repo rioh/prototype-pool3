@@ -26,3 +26,17 @@
     };
   };
 };
+.cell .text {
+    max-height: 55px;
+    overflow: hidden;
+}
+
+.expanded .text {
+    max-height: none;
+    overflow: visible;
+}
+
+.more, .less {
+    cursor: pointer;
+    color: @link_color;
+}
