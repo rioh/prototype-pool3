@@ -33,9 +33,9 @@ def contact(request):
             contact_form.save()
             return HttpResponseRedirect('/')
         else:
-            logger.debug('Form error: %s' % contact_form.errors)
+            # pass the errors and data back to the form; the template will escape html as needed
             data['errors'] = contact_form.errors
-            data['form'] = contact_form.data
+            data['formdata'] = request.POST
 
     return render(request, 'core/contact.html', data)
 
