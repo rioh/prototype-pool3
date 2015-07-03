@@ -5,12 +5,36 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedire
 
 from .api_client import ApiClient
 from core.forms import ContactInformationForm
-from core.models import ContactInformation
 
 
 logger = logging.getLogger(__name__)
 
 
+STATUS_CODES = {
+    'HTTP_200_OK': 200,
+    'HTTP_400_BAD_REQUEST': 400,
+    'HTTP_404_NOT_FOUND': 404,
+    'HTTP_405_METHOD_NOT_ALLOWED': 405,
+    'HTTP_500_INTERNAL_SERVER_ERROR': 500
+}
+
+# custom error views
+def error400(request):
+    data = {'code': STATUS_CODES['HTTP_400_BAD_REQUEST'], 'detail': 'Bad request.'}
+    return render(request, 'core/error.html', status=STATUS_CODES['HTTP_400_BAD_REQUEST'], context=data)
+
+
+def error404(request):
+    data = {'code': STATUS_CODES['HTTP_404_NOT_FOUND'], 'detail': 'The page you are looking for cannot be found.'}
+    return render(request, 'core/error.html', status=STATUS_CODES['HTTP_404_NOT_FOUND'], context=data)
+
+
+def error500(request):
+    data = {'code': STATUS_CODES['HTTP_500_INTERNAL_SERVER_ERROR'], 'detail': 'Internal server error. Please try your request again.'}
+    return render(request, 'core/error.html', status=STATUS_CODES['HTTP_500_INTERNAL_SERVER_ERROR'], context=data)
+
+
+# site views
 def homepage(request):
     return render(request, 'core/homepage.html')
 
@@ -23,8 +47,6 @@ def accessibility(request):
     return render(request, 'core/accessibility.html')
 
 
-# TODO -- create form and finish this method
-# TODO -- strip html entities and sql injection check
 def contact(request):
     data = {}
     if request.method == 'POST':
