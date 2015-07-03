@@ -1,7 +1,8 @@
 # Django settings for opendata_fda project.
 import os
-import urlparse
 import json
+import re
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -14,17 +15,37 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'opendatafda',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+if 'VCAP_SERVICES' in os.environ and 'elephantsql' in os.environ['VCAP_SERVICES']:
+    # This section used for PWS elephantsql service
+    DATABASES = {'default': dj_database_url.config()}
+    #elephantsql_service = json.loads(os.environ['VCAP_SERVICES'])['elephantsql'][0]
+    #uri = elephantsql_service['credentials']['uri']
+    #pattern = re.compile('postgres://(\w*):(\w*)@([.\w]*):(\d{4})')
+    #credentials = pattern.match(uri)
+
+    #DATABASES = {
+    #    'default': {
+    #        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #        'NAME': elephantsql_service['name'],                      # Or path to database file if using sqlite3.
+    #        # The following settings are not used with sqlite3:
+    #        'USER': credentials.group(1),
+    #        'PASSWORD': credentials.group(2),
+    #        'HOST': credentials.group(3),                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    #        'PORT': credentials.group(4),                      # Set to empty string for default.
+    #    }
+    #}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'prototype',                      # Or path to database file if using sqlite3.
+            # The following settings are not used with sqlite3:
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+            'PORT': '',                      # Set to empty string for default.
+        }
     }
-}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -166,27 +187,25 @@ LOGGING = {
     },
 }
 
-"""
-Use this for local caching
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+if 'VCAP_SERVICES' in os.environ and 'memcachedcloud' in os.environ['VCAP_SERVICES']:
+    # This section uses PWS
+    memcachedcloud_service = json.loads(os.environ['VCAP_SERVICES'])['memcachedcloud'][0]
+    credentials = memcachedcloud_service['credentials']
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': credentials['servers'].split(','),
+            'OPTIONS': {'username': credentials['username'],
+                        'password': credentials['password']}
+        }
     }
-}
-
-memcachedcloud_service = json.loads(os.environ['VCAP_SERVICES'])['memcachedcloud'][0]
-credentials = memcachedcloud_service['credentials']
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': credentials['servers'].split(','),
-        'OPTIONS': {'username': credentials['username'],
-                    'password': credentials['password']
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+        }
     }
-  }
-}
-"""
 
 CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24  # cache for a day
 
@@ -196,5 +215,6 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 FDA_DRUG_API_EVENT_URL = "https://api.fda.gov/drug/event.json"  # adverse events
 FDA_DRUG_API_LABEL_URL = "https://api.fda.gov/drug/label.json"  # drug labeling
 FDA_DRUG_API_ENFORCEMENT_URL = "https://api.fda.gov/drug/enforcement.json"  # drug enforcement reports
-RESULTS_PER_PAGE = 10 
-#FDA_DRUG_API_KEY = ""
+RESULTS_PER_PAGE = 10
+# TODO: add api key
+# FDA_DRUG_API_KEY = ""

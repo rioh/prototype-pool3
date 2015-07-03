@@ -17,3 +17,7 @@ selenium==2.44.0
 
 # Used to support memcached
 python-memcached==1.54
+
+# Used for postgresql
+psycopg2==2.6.1
+dj-database-url==0.3.0
