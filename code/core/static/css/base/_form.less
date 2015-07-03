@@ -287,9 +287,25 @@ input[type="checkbox"][readonly] {
 }
 
 // Error 
-.box-error * {
+.box-error {
   color:@text_error_color;
-}
+  border: 1px solid @text_error_color;
+  .margin-bottom-quad;
+  padding:20px;
+  h2 {
+    .mimic-h3;
+    color: @text_error_color;
+  };
+  ul {
+    margin-bottom: 0;
+    li {
+      a {
+        color: @text_error_color;
+        text-decoration: underline;
+      };
+    };
+  };
+};
 .error {
   > span:first-child {
     color:@text_error_color;

@@ -8,6 +8,14 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
         mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
         ante iaculis lacinia.</p>
+    <div class="box-error">
+    	<h2>There was a problem with the form.</h2>
+    	<ul>
+    		<li><a href="#contact-name">Enter a valid name.</a></li>
+    		<li><a href="#contact-email">Enter a valid email address.</a></li>
+    		<li><a href="#contact-comment">Enter a valid comment.</a></li>
+    	</ul>
+    </div>
 
     <form name="contact-form" action="{% url 'contact' %}" method="post" id="contact-form">
         {% csrf_token %}
