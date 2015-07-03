@@ -61,7 +61,7 @@
     <!-- javascript enabled message -->
     <noscript>
         <div class="alert">
-            <p class="text-alert"><strong>For a better browsing experience, please enable javascript</strong></p>
+            <p style="background-color:red;"><strong>For a better browsing experience, please enable javascript</strong></p>
         </div>
     </noscript>
 
@@ -72,17 +72,13 @@
         {% block body %}
 
             <div class="row">
-                <div class="col-xs-12">
-                    {% block text %}
-                    {% endblock %}
-                </div>
+                {% block text %}
+                {% endblock %}
             </div>
 
             <div class="row">
-                <div class="col-xs-12">
-                    {% block details %}
-                    {% endblock %}
-                </div>
+                {% block details %}
+                {% endblock %}
             </div>
 
         {% endblock %}
