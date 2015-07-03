@@ -141,6 +141,9 @@ class ApiClient(object):
         self.logger.debug("Searching for manufacturer '%s'", query_term)
         data = {}
 
+        # strip commas - api can't handle them in search terms
+        query_term = query_term.replace(",", '')
+
         # get labels from this manufacturer
         data['labels'] = self.clean_labels(self.get_sub_data(
             "%s?search=openfda.manufacturer_name:\"%s\"" % (

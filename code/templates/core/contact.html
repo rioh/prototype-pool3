@@ -9,28 +9,22 @@
         mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
         ante iaculis lacinia.</p>
 
-
-    {% if errors|length > 0 %}
-        <div class="errors text-warning">
-            Please correct the following:
-            {{ errors }}
-
-            {{ form_data }}
-        </div>
-    {% endif %}
     <form name="contact-form" action="{% url 'contact' %}" method="post" id="contact-form">
         {% csrf_token %}
         <p>
-            <label class="sr-only" for="contact-name">Name</label><br />
-            <input type="text" class="width-60-percent" name="contact_name" id="contact-name" placeholder="Name">
+            <label for="contact-name">Name</label><br />
+            <input type="text" class="width-60-percent" name="contact_name" id="contact-name" placeholder="Name" value="{{ formdata.contact_name }}" required="true" autofocus>
+            <span class="text-error">{{ errors.contact_name.0 }}</span>
         </p>
         <p>
-            <label class="sr-only" for="contact-email">Email</label><br />
-            <input type="text" class="width-60-percent" name="contact_email" id="contact-email" placeholder="Email" required="true">
+            <label for="contact-email">Email</label><br />
+            <input type="email" class="width-60-percent" name="contact_email" id="contact-email" placeholder="Email" value="{{ formdata.contact_email }}" required="true">
+            <span class="text-error">{{ errors.contact_email.0 }}</span>
         </p>
         <p>
-            <label class="sr-only" for="contact-comment">Comment</label><br />
-            <textarea class="width-60-percent" rows="6" name="contact_comment" id="contact-comment" placeholder="Comment" required="true"></textarea>
+            <label for="contact-comment">Comment</label><br />
+            <textarea class="width-60-percent" rows="6" name="contact_comment" id="contact-comment" placeholder="Comment" required="true">{{ formdata.contact_comment }}</textarea>
+            <span class="text-error">{{ errors.contact_comment.0 }}</span>
         </p>
         <button type="submit" class="">Submit</button>
     </form>

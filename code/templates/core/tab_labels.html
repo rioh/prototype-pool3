@@ -1,5 +1,9 @@
 {% load url_tags %}
 
+{% if labels|length == 0 %}
+    <p class="">No results found for: {{ q|replace_plus_signs }}</p>
+{% endif %}
+
 {% for result in labels %}
     <h3><i></i>{{ result.brand_name.0 }} ({{ result.manufacturer.0 }}) &mdash; SPL-ID {{ result.id }}</h3>
     <div id="{{ prefix }}_panel{{ forloop.counter }}">
