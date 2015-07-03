@@ -1,38 +1,31 @@
 {% extends "core/base.html" %}
 
 {% load staticfiles %}
-{% block body %}
 
-    <div class="row">
-        <img src="{% static "images/home.png" %}" class="img-responsive center-block" alt="home banner image">
-    </div>
+{% block text %}
 
-    {% include 'core/searchbar.html' %}
+    <h1 class="page-title">About</h1>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>About</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
-                mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
-                ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
-                ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla. Aliquam rutrum
-                nunc et nisi venenatis, sed feugiat mi aliquet. Fusce et risus massa. Donec suscipit volutpat quam,
-                ac maximus mauris facilisis sit amet. Maecenas sed lobortis turpis, non sagittis nulla. </p>
+    <p>We know you take your health seriously. Having the latest Drug related
+    information and tools at your fingertips is a critical part of you
+    overall health and well-being. The information provided by the FDA Drug
+    Monitor is the latest and most relevant in our database. Use it along
+    with your physicians advice to make informed decisions about the drugs
+    you take.</p>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
-                mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
-                ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
-                ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla.</p>
+    <p>Please note that the information provided here is for reference only and
+    is not intended as medical advice or diagnosis. Always consult with your
+    physician before making drug related decisions.).</p>
 
-            <a name="anchor1" id="anchor1">Licensing Information</a>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
-                mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
-                ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
-                ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla.</p>
-        </div>
-    </div>
+    <p>For more information regarding your health visit <a href="http://www.fda.gov">www.fda.gov</a></p>
 
-{% endblock %}
+    <p>This application was designed and build by Artemis Consulting, Inc. For
+    more information visit <a href="http://www.artemisconsultinginc.com">www.artemisconsultinginc.com</a></p>
 
-{% block extra_js %}
+    <h2><a name="anchor1" id="anchor1">Licensing Information</a></h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
+        mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
+        ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
+        ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla.</p>
+
 {% endblock %}

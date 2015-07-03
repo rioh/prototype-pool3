@@ -15,11 +15,13 @@ $(document).ready(function(){
 	$( ".fda-tabs-interface" ).tabs();
 	$( ".fda-accordion-interface" ).accordion({
 		collapsible: true,
-		heightStyle: "content"
+        active: false,
+		heightStyle: "content",
+        animate: 100,
+        activate: accordionActivate
 	});
-});
   
-// search bar functionality
+    // search bar functionality
     var searchOptions = ['search_labels', 'search_events', 'search_enforcements'];
 
     // search go button onclick handler
@@ -46,20 +48,16 @@ $(document).ready(function(){
         }
 
         if (url_category === 'search_labels') {
-            $('form').attr("action", "{% url 'search_labels' %}").submit();
-            alert(url_category + ' ' + search_input)
+            $('form').attr("action", urlLabels).submit();
         }
         else if (url_category === 'search_events') {
-            $('form').attr("action", "{% url 'search_events' %}").submit();
-            console.log(url_category + ' ' + search_input)
+            $('form').attr("action", urlEvents).submit();
         }
         else if (url_category === 'search_enforcements') {
-            $('form').attr("action", "{% url 'search_enforcements' %}").submit();
-            console.log(url_category + ' ' + search_input)
+            $('form').attr("action", urlEnforcements).submit();
         }
         else if (url_category === 'search_manufacturers') {
-            $('form').attr("action", "{% url 'search_manufacturers' %}").submit();
-            console.log(url_category + ' ' + search_input)
+            $('form').attr("action", urlManufacturers).submit();
         }
         else {
             console.log('unknown category' + url_category);
@@ -71,10 +69,7 @@ $(document).ready(function(){
     $("#search-state").autocomplete({
         source: usStates,
         delay: 200,
-        minLength: 1,
-        change: function(event, ui) {
-            console.log(ui);
-        }
+        minLength: 1
     });
 
     // function to switch the text input from general to state with typeahead
@@ -94,13 +89,13 @@ $(document).ready(function(){
 
     $('#select-category').change(changeInput);
 
-// alpha navigation functionality
+    // alpha navigation functionality
     // show only items for the clicked letter
     $(".alpha-nav a").click(function() {
         var filter = $(this).data("filter");
 
         // make the clicked letter have active color
-        $(".alpha-nav>li.selected").removeClass();
+        $(".alpha-nav>li.selected").removeClass("selected");
         $(this).parent().addClass("selected");
 
 
@@ -125,34 +120,40 @@ $(document).ready(function(){
         }
     });
 
-// functionality to support accordion expand/collapse of divs for large bodies of text
-    $(".fda-accordion-interface h3").click(function() {
-        var accordionTitle = this;
-        setTimeout(function() {
-            $(accordionTitle).parents('.fda-tabs-interface').first().find('.cell').each(function () {
-                var cell = this;
-                var text = $(cell).find(".text");
-                var more = $(cell).find(".more");
-                var less = $(cell).find(".less");
-
-                // correct for resizing
-                if ($(text).height() < 55) {
-                    $(more).hide();
-                    $(text).removeClass("text");
-                }
-
-                $(more).click(function () {
-                    $(cell).addClass("expanded");
-                    $(more).toggle();
-                    $(less).toggle();
-                });
-
-                $(less).click(function () {
-                    $(cell).removeClass("expanded");
-                    $(more).toggle();
-                    $(less).toggle();
-                });
-            });
-        }, 0);
+    // attach onclick handlers for more/less text in accordions
+    $(".cell .more").click(function () {
+        $(this).prev(".text").addClass("expanded");
+        $(this).toggle();
+        $(this).next(".less").toggle();
     });
+
+    $(".cell .less").click(function () {
+        $(this).prevAll(".text").removeClass("expanded");
+        $(this).toggle();
+        $(this).prev(".more").toggle();
+    });
+
+    // functionality to support accordion expand/collapse of divs for large bodies of text
+    function accordionActivate(event, ui) {
+        $(ui.newPanel).find('.cell').each(function () {
+            var cell = this;
+            var text = $(cell).find(".text");
+            var more = $(cell).find(".more");
+            var less = $(cell).find(".less");
+
+            // correct for resizing
+            if ($(text).height() < 55) {
+                //$(more).hide();
+                $(text).removeClass("text");
+            }
+            else {
+                if(!$(less).is(":visible")) {
+                    $(more).show();
+                }
+            }
+        });
+
+    }
+});
+
 

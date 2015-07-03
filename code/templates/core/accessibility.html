@@ -1,33 +1,19 @@
 {% extends "core/base.html" %}
 
 {% load staticfiles %}
-{% block body %}
+{% block text %}
+    <h1 class="page-title">Accessibility</h1>
 
-    <div class="row">
-        <img src="{% static "images/home.png" %}" class="img-responsive center-block" alt="home banner image">
-    </div>
+    <h2>Access to Our Web Site</h2>
+    <p>We believe that our web site is compliant with Section 508 and W3C accessibility design guidelines.
+        Artemis Consulting is making every effort to make its FDA Drug Monitor available to all members of
+        the public.</p>
 
-    {% include 'core/searchbar.html' %}
+    <p>If you are a person with a disability and you have trouble using our web site&ndash;or if you experience
+        difficulty using any of our services, products, or facilities&ndash;please tell us about the problem.
 
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>Accessibility</h1>
-
-            <h2>Access to Our Web Site</h2>
-            <p>We believe that our web site is compliant with Section 508 and W3C accessibility design guidelines.
-                Artemis Consulting is making every effort to make its FDA Drug Monitor available to all members of
-                the public.</p>
-
-            <p>If you are a person with a disability and you have trouble using our web site&ndash;or if you experience
-                difficulty using any of our services, products, or facilities&ndash;please tell us about the problem.
-
-            <p>Send us an e-mail message at:
-            <a href="mailto:accessibility-feedback@artemisconsultinginc.com">accessibility-feedback@artemisconsultinginc.com</a>
-            </p>
-        </div>
-    </div>
-
+    <p>Send us an e-mail message at:
+    <a href="mailto:accessibility-feedback@artemisconsultinginc.com">accessibility-feedback@artemisconsultinginc.com</a>
+    </p>
 {% endblock %}
 
-{% block extra_js %}
-{% endblock %}

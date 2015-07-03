@@ -1,7 +1,7 @@
 {# searchbar for use throughout the site#}
 <div class="fdahead-search">
 {# TODO -- update the logic here. We moved the js out into it's own file, so the templated urls don't work #}
-    <form class="" action="{{ search_action }}" method="get" name="main_search" id="mainsearch">
+    <form class="" action="" method="get" name="main_search" id="mainsearch">
         <select class="" id="select-category">
             <option>Select a search category</option>
             <option value="search_labels" {% if search_category == 'labels' %} selected="selected" {% endif %}>Drug Names</option>
