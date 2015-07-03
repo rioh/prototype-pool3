@@ -7,6 +7,8 @@ import operator
 
 from django.conf import settings
 
+from .paginator import Paginator
+
 API_TYPES = {
     "events": settings.FDA_DRUG_API_EVENT_URL,
     "labels": settings.FDA_DRUG_API_LABEL_URL,
@@ -33,6 +35,9 @@ PARAMETER_MAPPINGS = {
 }
 
 
+# TODO: pull out some of the url strings
+# TODO: we need to limit the number of results returned since the API only supports 5000 or less
+
 class ApiClient(object):
     """
     API client code for consuming FDA opendata apis
@@ -41,7 +46,7 @@ class ApiClient(object):
 
     def __init__(self, **kwargs):
         self.kwargs = kwargs
-        self.api_limit = 100
+        self.api_limit = 10
 
     def browse(self, browse_type):
         if browse_type == 'manufacturers':
@@ -83,30 +88,36 @@ class ApiClient(object):
 
         return None
 
-    def search_labels(self, query_term):
+    def search_labels(self, query_term, page):
         self.logger.debug("Searching for '%s'", query_term)
         data = {}
-
-        # TODO: need to add pagination
-
         # get general drug info
-        data['labels'] = self.clean_labels(self.get_sub_data(
-            "%s?search=openfda.brand_name:\"%s\"" % (
-                API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0))
+        sub_data = self.get_sub_data("%s?search=openfda.brand_name:\"%s\"" % (
+            API_TYPES['labels'], urllib.quote(query_term)), page)
+        if sub_data:
+            label_pagination, labels = self.clean_labels(sub_data)
+            data['labels'] = labels
+            data['labels_paginator'] = Paginator(label_pagination)
 
         # get additional event info
-        data['events'] = self.clean_events(self.get_sub_data(
-            "%s?search=patient.drug.medicinalproduct:\"%s\"" % (
-                API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0))
+        sub_data = self.get_sub_data("%s?search=patient.drug.medicinalproduct:\"%s\"" % (
+            API_TYPES['events'], urllib.quote(query_term)), page)
+        if sub_data:
+            events_pagination, events = self.clean_events(sub_data)
+            data['events'] = events
+            data['events_paginator'] = Paginator(events_pagination)
 
         # get additional enforcement info
-        data['enforcements'] = self.clean_enforcements(self.get_sub_data(
-            "%s?search=product_description:\"%s\"" % (
-                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0))
+        sub_data = self.get_sub_data("%s?search=product_description:\"%s\"" % (
+            API_TYPES['enforcements'], urllib.quote(query_term)), page)
+        if sub_data:
+            enforcements_pagination, enforcements = self.clean_enforcements(sub_data)
+            data['enforcements'] = enforcements
+            data['enforcements_paginator'] = Paginator(enforcements_pagination)
 
         return data
 
-    def search_events(self, query_term):
+    def search_events(self, query_term, page):
         self.logger.debug("Searching for event '%s'", query_term)
         data = {}
 
@@ -116,19 +127,27 @@ class ApiClient(object):
             "%s?search=patient.reaction.reactionmeddrapt:\"%s\"%s" % (
                 API_TYPES['events'], query_term, count_string))
 
-        data['events'] = self.clean_events(self.get_sub_data(
-            "%s?search=patient.reaction.reactionmeddrapt:\"%s\"" % (
-                API_TYPES['events'], query_term), self.api_limit, 0))
+        # get events info
+        sub_data = self.get_sub_data("%s?search=patient.reaction.reactionmeddrapt:\"%s\"" % (
+            API_TYPES['events'], query_term), page)
+        if sub_data:
+            events_pagination, events = self.clean_events(sub_data)
+            data['events'] = events
+            data['events_paginator'] = Paginator(events_pagination)
+
         return data
 
-    def search_enforcements(self, query_term):
+    def search_enforcements(self, query_term, page):
         self.logger.debug("Searching for enforcement '%s'", query_term)
         data = {}
 
         # get general enforcement info
-        data['enforcements'] = self.clean_enforcements(self.get_sub_data(
-            "%s?search=state:\"%s\"" % (
-                API_TYPES['enforcements'], urllib.quote(query_term)), self.api_limit, 0))
+        sub_data = self.get_sub_data("%s?search=state:\"%s\"" % (
+            API_TYPES['enforcements'], urllib.quote(query_term)), page)
+        if sub_data:
+            enforcements_pagination, enforcements = self.clean_enforcements(sub_data)
+            data['enforcements'] = enforcements
+            data['enforcements_paginator'] = Paginator(enforcements_pagination)
 
         # get drug counts
         count_string = "&count=openfda.brand_name"
@@ -137,7 +156,7 @@ class ApiClient(object):
                 API_TYPES['enforcements'], query_term, count_string))
         return data
 
-    def search_manufacturers(self, query_term):
+    def search_manufacturers(self, query_term, page):
         self.logger.debug("Searching for manufacturer '%s'", query_term)
         data = {}
 
@@ -145,14 +164,20 @@ class ApiClient(object):
         query_term = query_term.replace(",", '')
 
         # get labels from this manufacturer
-        data['labels'] = self.clean_labels(self.get_sub_data(
-            "%s?search=openfda.manufacturer_name:\"%s\"" % (
-                API_TYPES['labels'], urllib.quote(query_term)), self.api_limit, 0))
+        sub_data = self.get_sub_data("%s?search=openfda.manufacturer_name:\"%s\"" % (
+            API_TYPES['labels'], urllib.quote(query_term)), page)
+        if sub_data:
+            labels_pagination, labels = self.clean_labels(sub_data)
+            data['labels'] = labels
+            data['labels_paginator'] = Paginator(labels_pagination)
 
         # get additional event info
-        data['events'] = self.clean_events(self.get_sub_data(
-            "%s?search=patient.drug.openfda.manufacturer_name:\"%s\"" % (
-                API_TYPES['events'], urllib.quote(query_term)), self.api_limit, 0))
+        sub_data = self.get_sub_data("%s?search=patient.drug.openfda.manufacturer_name:\"%s\"" % (
+            API_TYPES['events'], urllib.quote(query_term)), page)
+        if sub_data:
+            events_pagination, events = self.clean_events(sub_data)
+            data['events'] = events
+            data['events_paginator'] = Paginator(events_pagination)
 
         # get additional enforcement info. we search for the name as manufacturer
         # Our original search was for manufacturer or recalling firm for this api, but the 'or'
@@ -160,14 +185,17 @@ class ApiClient(object):
         # Eg, https://api.fda.gov/drug/enforcement.json?search=openfda.manufacturer_name:
         # %22Pharmacia+and+Upjohn+Company%22+recalling_firm:%22Target%22 is broken
 
-        data['enforcements'] = self.clean_enforcements(self.get_sub_data(
-            "%s?search=openfda.manufacturer_name:\"%s\"" % (
-                API_TYPES['enforcements'], urllib.quote(query_term)
-            ), self.api_limit, 0))
+        sub_data = self.get_sub_data("%s?search=openfda.manufacturer_name:\"%s\"" % (
+            API_TYPES['enforcements'], urllib.quote(query_term)), page)
+        if sub_data:
+            enforcements_pagination, enforcements = self.clean_enforcements(sub_data)
+            data['enforcement'] = enforcements
+            data['enforcements_paginator'] = Paginator(enforcements_pagination)
 
         return data
 
     def get_age_sex(self, api_type, param, filter_string):
+        # TODO: implement grouping by age group
         total_male = self.filter_patient(api_type, filter_string, param, 1)
         total_female = self.filter_patient(api_type, filter_string, param, 2)
 
@@ -187,24 +215,31 @@ class ApiClient(object):
         resp_json = resp.json()
         return resp_json['meta']['results']['total']
 
-    def get_sub_data(self, query_string, limit, skip):
-        url = '%s&limit=%s&skip=%s' % (query_string, limit, skip)
+    def get_sub_data(self, query_string, page):
+        """
+        This is used by search to call the fda API
+        """
+        url = '%s&limit=%s&skip=%s' % (query_string, self.api_limit, (page - 1) * self.api_limit)
         self.logger.debug("url: %s", url)
         resp = requests.get(url)
         if resp.status_code == 200:
-            resp = requests.get(url).json().get('results')
+            resp = requests.get(url).json()
             return resp
         self.logger.info('no results found for %s', query_string)
-        return []
+        return None
 
     def get_count_data(self, query_url):
+        """
+        This is used by browse to call the fda API
+        """
         self.logger.debug("url: %s", query_url)
         resp = requests.get(query_url).json().get('results')
         return resp
 
     def clean_labels(self, data):
         results = []
-        for d in data:
+        meta = data.get('meta').get('results')
+        for d in data.get('results'):
             clean_data = {
                 "id": d.get('id', {}),
                 "brand_name": d.get('openfda', {}).get('brand_name'),
@@ -224,11 +259,12 @@ class ApiClient(object):
                 "pharmacokinetics": d.get('pharmacokinetics'),
             }
             results.append(clean_data)
-        return results
+        return meta, results
 
     def clean_events(self, data):
         results = []
-        for d in data:
+        meta = data.get('meta').get('results')
+        for d in data.get('results'):
             safety_data = OrderedDict()
             safety_data["safety_report"] = d.get('safetyreportid')
             safety_data["safety_report_version"] = d.get('safetyreportversion')
@@ -246,7 +282,7 @@ class ApiClient(object):
 
             patient_data = OrderedDict()
             patient_data["patient_onset_age"] = "%s%s" % (d.get('patient.patientonsetstage', ""),
-                                           d.get('patinetonsetageunit', ""))
+                                                          d.get('patinetonsetageunit', ""))
             patient_data["patient_sex"] = self.male_or_female(d.get('patient.patientsex'))
             patient_data["patient_death_details"] = d.get('patient.patientdeath')
 
@@ -254,7 +290,7 @@ class ApiClient(object):
             label_data["drug_administration_route"] = d.get('patient.drug.drugadministrationroute')
             label_data["actions_taken_with_drug"] = d.get('patient.drug.actiondrug')
             label_data["dosage"] = "%s%s" % (d.get('patient.drug.drugcumulativedosagenumb', ""),
-                                d.get('patient.drug.drugcumulativedosageunit', ""))
+                                             d.get('patient.drug.drugcumulativedosageunit', ""))
             label_data["number_of_doses"] = d.get('patient.drug.drugstructuredosagenumb')
             label_data["reported_role_of_the_drug_in_the_adverse_event"] = d.get('patient.drug.drugcharacterization')
 
@@ -265,11 +301,12 @@ class ApiClient(object):
             results.append({'safety_data': safety_data,
                             'patient_data': patient_data,
                             'label_data': label_data})
-        return results
+        return meta, results
 
     def clean_enforcements(self, data):
         results = []
-        for d in data:
+        meta = data.get('meta').get('results')
+        for d in data.get('results'):
             clean_data = {
                 'event_id': d.get('event_id'),
                 'status': d.get('status'),
@@ -287,7 +324,7 @@ class ApiClient(object):
                 'report_date': self.format_date(d.get('report_date')),
             }
             results.append(clean_data)
-        return results
+        return meta, results
 
     def yes_or_no(self, value):
         if value == "1":

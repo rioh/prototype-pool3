@@ -81,7 +81,8 @@ def browse(request, browse_type):
 def search_labels(request):
     client = ApiClient()
     query_term = request.GET.get('q')
-    data = client.search_labels(query_term)
+    page = request.GET.get('page', '1')
+    data = client.search_labels(query_term, int(page))
     data['q'] = query_term
     data['browse_type'] = 'labels'
     return render(request, 'core/details_drug_labels.html', data)
@@ -89,17 +90,17 @@ def search_labels(request):
 
 def search_label_events(request):
     client = ApiClient()
-    query_string = request.GET.get('q')
-    limit = request.GET.get('limit')
-    skip = request.GET.get('skip')
-    data = client.search_label_events(query_string, limit, skip)
+    query_term = request.GET.get('q')
+    page = request.GET.get('page', '1')
+    data = client.search_labels(query_term, int(page))
     return HttpResponse(data, content_type='application/json')
 
 
 def search_events(request):
     client = ApiClient()
     query_term = request.GET.get('q')
-    data = client.search_events(query_term)
+    page = request.GET.get('page', '1')
+    data = client.search_events(query_term, int(page))
     data['q'] = query_term
     data['browse_type'] = 'events'
     return render(request, 'core/details_adverse_events.html', data)
@@ -108,7 +109,8 @@ def search_events(request):
 def search_enforcements(request):
     client = ApiClient()
     query_term = request.GET.get('q')
-    data = client.search_enforcements(query_term)
+    page = request.GET.get('page', '1')
+    data = client.search_enforcements(query_term, int(page))
     data['q'] = query_term
     data['browse_type'] = 'enforcements'
     return render(request, 'core/details_enforcement_reports.html', data)
@@ -118,7 +120,8 @@ def search_enforcements(request):
 def search_manufacturers(request):
     client = ApiClient()
     query_term = request.GET.get('q')
-    data = client.search_manufacturers(query_term)
+    page = request.GET.get('page', '1')
+    data = client.search_manufacturers(query_term, int(page))
     data['q'] = query_term
     data['browse_type'] = 'manufacturers'
     return render(request, 'core/details_manufacturers.html', data)
