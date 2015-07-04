@@ -310,7 +310,7 @@ class ApiResult(object):
 
             patient_data = OrderedDict()
             patient_data["patient_onset_age"] = "%s%s" % (self.lookup(d, 'patient.patientonsetstage', ""),
-                                                          self.lookup(d, 'patinetonsetageunit', ""))
+                                                          self.lookup(d, 'patientonsetageunit', ""))
             patient_data["patient_sex"] = self.male_or_female(self.lookup(d, 'patient.patientsex'))
             patient_data["patient_death_details"] = self.lookup(d, 'patient.patientdeath')
 
