@@ -32,22 +32,35 @@
             <li><a href="#events">Adverse Events</a></li>
             <li><a href="#enforcements">Enforcement Reports</a></li>
         </ul>
+
         <!-- tab 1 -->
-        <div class="fda-accordion-interface" id="labels">
-            <!-- accordion panel groups -->
-            {% include 'core/tab_labels.html' with prefix='labels' %}
+        <div id="labels">
+            {% include 'core/pagination.html' with result_list=labels result_paginator=labels_paginator %}
+
+            <div class="fda-accordion-interface">
+                <!-- accordion panel groups -->
+                {% include 'core/tab_labels.html' with prefix='labels' %}
+            </div>
         </div><!-- end tab 1 -->
 
         <!-- tab 2 -->
-        <div class="fda-accordion-interface" id="events">
-            <!-- accordion panel groups -->
-           {% include 'core/tab_events.html' with prefix='events'%}
+        <div id="events">
+            {% include 'core/pagination.html' with result_list=events result_paginator=events_paginator %}
+
+            <div class="fda-accordion-interface">
+                <!-- accordion panel groups -->
+               {% include 'core/tab_events.html' with prefix='events'%}
+            </div>
         </div><!-- end tab 2 -->
 
         <!-- tab 3 -->
-        <div class="fda-accordion-interface" id="enforcements">
-            <!-- accordion panel groups -->
-           {% include 'core/tab_enforcements.html' with prefix='enforce'%}
+        <div id="enforcements">
+            {% include 'core/pagination.html' with result_list=enforcements result_paginator=enforcements_paginator %}
+
+            <div class="fda-accordion-interface">
+                <!-- accordion panel groups -->
+               {% include 'core/tab_enforcements.html' with prefix='enforce'%}
+            </div>
         </div><!-- end tab 3 -->
     </div>
 {% endblock %}

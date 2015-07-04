@@ -1,9 +1,5 @@
 {% load url_tags %}
 
-{% if events|length == 0 %}
-    <p class="">No results found for: {{ q|replace_plus_signs }}</p>
-{% endif %}
-
 {% for result in events %}
     <h3><i></i>Safety Report ID: {{ result.safety_data.safety_report }}</h3>
     <div id="{{ prefix }}_panel{{ forloop.counter }}">

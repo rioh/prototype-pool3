@@ -189,7 +189,7 @@ class ApiClient(object):
             API_TYPES['enforcements'], urllib.quote(query_term)), page)
         if sub_data:
             enforcements_pagination, enforcements = self.clean_enforcements(sub_data)
-            data['enforcement'] = enforcements
+            data['enforcements'] = enforcements
             data['enforcements_paginator'] = Paginator(enforcements_pagination)
 
         return data

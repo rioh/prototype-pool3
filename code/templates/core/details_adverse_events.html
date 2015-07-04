@@ -33,9 +33,13 @@
             <li><a href="#drugs">Drugs with this adverse effect</a></li>
         </ul>
         <!-- tab 1 -->
-        <div class="fda-accordion-interface" id="details">
-            <!-- accordion panel groups -->
-            {% include 'core/tab_events.html' with prefix='events' %}
+        <div id="details">
+            {% include 'core/pagination.html' with result_list=events result_paginator=events_paginator %}
+
+            <div class="fda-accordion-interface">
+                <!-- accordion panel groups -->
+                {% include 'core/tab_events.html' with prefix='events' %}
+            </div>
         </div><!-- end tab 1 -->
 
         <!-- tab 2 -->

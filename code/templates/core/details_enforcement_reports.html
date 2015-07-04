@@ -33,9 +33,13 @@
             <li><a href="#drugs">Drugs with enforcement reports in state</a></li>
         </ul>
         <!-- tab 1 -->
-        <div class="fda-accordion-interface" id="details">
-            <!-- accordion panel groups -->
-            {% include 'core/tab_enforcements.html' with prefix='enforcements' %}
+        <div id="details">
+            {% include 'core/pagination.html' with result_list=enforcements result_paginator=enforcements_paginator %}
+
+            <div class="fda-accordion-interface">
+                <!-- accordion panel groups -->
+                {% include 'core/tab_enforcements.html' with prefix='enforcements' %}
+            </div>
         </div><!-- end tab 1 -->
 
         <!-- tab 2 -->

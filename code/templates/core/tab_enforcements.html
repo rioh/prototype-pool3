@@ -1,9 +1,5 @@
 {% load url_tags %}
 
-{% if enforcements|length == 0 %}
-    <p class="">No results found for: {{ q|replace_plus_signs }}</p>
-{% endif %}
-
 {% for result in enforcements %}
     <h3><i></i>Recall Number: {{ result.recall_number }} [{{ result.report_date }}: {{ result.city }}, {{ result.state }}]</h3>
     <div id="{{ prefix }}_panel{{ forloop.counter }}">
