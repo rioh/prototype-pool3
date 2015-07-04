@@ -1,7 +1,7 @@
 ---
 applications:
 - name: opendata
-  instances: 1 
+  instances: 1
   host: opendatafda-artemis-staging
   path: .
   timeout: 120
