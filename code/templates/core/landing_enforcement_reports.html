@@ -36,331 +36,137 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{% static "highmaps-1.1.6/modules/map.js" %}"></script>
-    <script src="{% static "highmaps-1.1.6/modules/data.js" %}"></script>
-    <script src="{% static "highmaps-1.1.6/mapdata/countries/us/us-all.js" %}"></script>
+<script src="{% static "highmaps-1.1.6/modules/map.js" %}"></script>
+<script src="{% static "highmaps-1.1.6/modules/data.js" %}"></script>
+<script src="{% static "highmaps-1.1.6/mapdata/countries/us/us-all.js" %}"></script>
 
-    <script>
-		var mapdata = [
-			    {
-			      "code": "fl",
-			      "value": 416
-			    },
-			    {
-			      "code": "il",
-			      "value": 343
-			    },
-			    {
-			      "code": "tn",
-			      "value": 339
-			    },
-			    {
-			      "code": "wa",
-			      "value": 297
-			    },
-			    {
-			      "code": "nj",
-			      "value": 230
-			    },
-			    {
-			      "code": "mi",
-			      "value": 163
-			    },
-			    {
-			      "code": "pa",
-			      "value": 157
-			    },
-			    {
-			      "code": "nc",
-			      "value": 152
-			    },
-			    {
-			      "code": "ca",
-			      "value": 127
-			    },
-			    {
-			      "code": "ny",
-			      "value": 122
-			    },
-			    {
-			      "code": "or",
-			      "value": 116
-			    },
-			    {
-			      "code": "tx",
-			      "value": 85
-			    },
-			    {
-			      "code": "nv",
-			      "value": 85
-			    },
-			    {
-			      "code": "ga",
-			      "value": 70
-			    },
-			    {
-			      "code": "ma",
-			      "value": 65
-			    },
-			    {
-			      "code": "oh",
-			      "value": 60
-			    },
-			    {
-			      "code": "ia",
-			      "value": 56
-			    },
-			    {
-			      "code": "ne",
-			      "value": 51
-			    },
-			    {
-			      "code": "in",
-			      "value": 50
-			    },
-			    {
-			      "code": "ok",
-			      "value": 34
-			    },
-			    {
-			      "code": "al",
-			      "value": 34
-			    },
-			    {
-			      "code": "mo",
-			      "value": 25
-			    },
-			    {
-			      "code": "wv",
-			      "value": 24
-			    },
-			    {
-			      "code": "ks",
-			      "value": 24
-			    },
-			    {
-			      "code": "az",
-			      "value": 15
-			    },
-			    // take out pr or it shows up in the upper left :(
-			    // {
-			    //   "code": "pr",
-			    //   "value": 14
-			    // },
-			    {
-			      "code": "co",
-			      "value": 14
-			    },
-			    {
-			      "code": "sc",
-			      "value": 11
-			    },
-			    {
-			      "code": "mn",
-			      "value": 10
-			    },
-			    {
-			      "code": "md",
-			      "value": 10
-			    },
-			    {
-			      "code": "id",
-			      "value": 10
-			    },
-			    {
-			      "code": "ky",
-			      "value": 9
-			    },
-			    {
-			      "code": "wi",
-			      "value": 8
-			    },
-			    {
-			      "code": "va",
-			      "value": 8
-			    },
-			    {
-			      "code": "ct",
-			      "value": 6
-			    },
-			    {
-			      "code": "ut",
-			      "value": 4
-			    },
-			    {
-			      "code": "ar",
-			      "value": 4
-			    },
-			    {
-			      "code": "nh",
-			      "value": 3
-			    },
-			    {
-			      "code": "ms",
-			      "value": 3
-			    },
-			    {
-			      "code": "de",
-			      "value": 3
-			    },
-			    {
-			      "code": "wy",
-			      "value": 1
-			    },
-			    {
-			      "code": "sd",
-			      "value": 1
-			    },
-			    {
-			      "code": "nm",
-			      "value": 1
-			    },
-			    {
-			      "code": "la",
-			      "value": 1
-			    },
-			    {
-			      "code": "vt",
-			      "value": 0
-			    },
-			    {
-			      "code": "me",
-			      "value": 0
-			    },
-			    {
-			    	"code": "mt",
-			    	"value": 0
-			    },
-			    {
-			    	"code": "nd",
-			    	"value": 0
-			    },
-			    {
-			    	"code": "ri",
-			    	"value": 0
-			    },
-			    {
-			    	"code": "hi",
-			    	"value": 0
-			    },
-			    {
-			    	"code": "ak",
-			    	"value": 0
-			    }
-            ];
+<script>
 
-			for (var i=0; i<mapdata.length; i++){
-				mapdata[i]['code'] = mapdata[i]['code'].toUpperCase();
-			}
+    // get data for enforcement map
+    var enforcementData = [
+        {% for result in terms %}
+            {"term": "{{ result.term }}", "count": {{ result.count }}}
+            {% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
 
-    	$(function() {
-            var map_color = '23, 105, 170';
-            $('#map').highcharts('Map', {
-                credits: {
-                    enabled: false
-                },
-                chart: {
-                    style: {
-                        fontFamily: '"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif'
-                    }
-                },
-                title: {
-                    text: 'Enforcement Reports By State'
-                },
-                legend: {
-                    layout: 'horizontal',
-                    borderWidth: 0,
-                    backgroundColor: 'rgba(255, 255, 255, 0.85)',
-                    floating: true,
-                    verticalAlign: 'top',
-                    y: 25,
-                    labelFormatter: function () {
-                        if (this.to === 0) {
-                            return '0';
-                        }
-                        else {
-                            return (this.from || '<') + ' - ' + (this.to || '>');
-                        }
-                    }
-                },
-                mapNavigation: {
-                    enabled: true
-                },
-                colorAxis: {
-                    dataClasses: [{
-                        to: 0,
-                        color: '#9E9E9E'
-                    },
-                    {
-                        from: 1,
-                        to: 3,
-                        color: 'rgba('+map_color+',0.05)'
-                    }, {
-                        from: 3,
-                        to: 10,
-                        color: 'rgba('+map_color+',0.2)'
-                    }, {
-                        from: 10,
-                        to: 30,
-                        color: 'rgba('+map_color+',0.4)'
-                    }, {
-                        from: 30,
-                        to: 100,
-                        color: 'rgba('+map_color+',0.5)'
-                    }, {
-                        from: 100,
-                        to: 300,
-                        color: 'rgba('+map_color+',0.6)'
-                    }, {
-                        from: 300,
-                        to: 1000,
-                        color: 'rgba('+map_color+',0.8)'
-                    }, {
-                        from: 1000,
-                        color: 'rgba('+map_color+',1)'
-                    }]
-                },
-                // plotOptions is where we set click listeners
-                plotOptions: {
-                    series: {
-                        events: {
-                            click: function(e) {
-                                // we want this function to redirect
-                                // to the search url with the parameter of the state
-                                // eg, go to enforcements/?state=NM
-                               // var url = 'https://api.fda.gov/drug/enforcement.json?search=state:' + e.point.code + '&limit=' + e.point.value;
-
-                                window.location = '{% url 'search_enforcements' %}?q=' + e.point.code;
-
-                            }
-                        }
-                    }
-
-                },
-                series: [{
-                    // data is an array of value/states. you need to include all the state or it won't have a label
-                    // ** we also need to make sure puerto rico is excluded ***
-                    data: mapdata,
-                    mapData: Highcharts.maps['countries/us/us-all'],
-                    joinBy: ['postal-code', 'code'],
-                    dataLabels: {
-                        enabled: true,
-                        color: 'black',
-                        format: '{point.code}'
-                    },
-                    name: 'Enforcement Reports',
-                    states: {
-                        hover: {
-                            color: '#E39999'
-                        }
-                    },
-                    tooltip: {
-                        pointFormat: '{point.code}: {point.value}'
-                    }
-                }]
-            });
+    $(enforcementData).each(function() {
+        var dataItem = this;
+        $(stateCounts).each(function() {
+           if (this.code == dataItem.term.toUpperCase()) {
+               this.value = dataItem.count;
+           }
         });
-    </script>
+    });
+
+    $(function() {
+        var map_color = '23, 105, 170';
+        $('#map').highcharts('Map', {
+            credits: {
+                enabled: false
+            },
+            chart: {
+                style: {
+                    fontFamily: '"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif'
+                }
+            },
+            title: {
+                text: 'Enforcement Reports By State'
+            },
+            legend: {
+                layout: 'horizontal',
+                borderWidth: 0,
+                backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                floating: true,
+                verticalAlign: 'top',
+                y: 25,
+                labelFormatter: function () {
+                    if (this.to === 0) {
+                        return '0';
+                    }
+                    else {
+                        return (this.from || '<') + ' - ' + (this.to || '>');
+                    }
+                }
+            },
+            mapNavigation: {
+                enabled: true
+            },
+            colorAxis: {
+                dataClasses: [{
+                    to: 0,
+                    color: '#9E9E9E'
+                },
+                {
+                    from: 1,
+                    to: 3,
+                    color: 'rgba('+map_color+',0.05)'
+                }, {
+                    from: 3,
+                    to: 10,
+                    color: 'rgba('+map_color+',0.2)'
+                }, {
+                    from: 10,
+                    to: 30,
+                    color: 'rgba('+map_color+',0.4)'
+                }, {
+                    from: 30,
+                    to: 100,
+                    color: 'rgba('+map_color+',0.5)'
+                }, {
+                    from: 100,
+                    to: 300,
+                    color: 'rgba('+map_color+',0.6)'
+                }, {
+                    from: 300,
+                    to: 1000,
+                    color: 'rgba('+map_color+',0.8)'
+                }, {
+                    from: 1000,
+                    color: 'rgba('+map_color+',1)'
+                }]
+            },
+            // plotOptions is where we set click listeners
+            plotOptions: {
+                series: {
+                    events: {
+                        click: function(e) {
+                            // we want this function to redirect
+                            // to the search url with the parameter of the state
+                            // eg, go to enforcements/?state=NM
+                           // var url = 'https://api.fda.gov/drug/enforcement.json?search=state:' + e.point.code + '&limit=' + e.point.value;
+
+                            window.location = '{% url 'search_enforcements' %}?q=' + e.point.code;
+
+                        }
+                    }
+                }
+
+            },
+            series: [{
+                // data is an array of value/states. you need to include all the state or it won't have a label
+                // ** we also need to make sure puerto rico is excluded ***
+                data: stateCounts,
+                mapData: Highcharts.maps['countries/us/us-all'],
+                joinBy: ['postal-code', 'code'],
+                dataLabels: {
+                    enabled: true,
+                    color: 'black',
+                    format: '{point.code}'
+                },
+                name: 'Enforcement Reports',
+                states: {
+                    hover: {
+                        color: '#E39999'
+                    }
+                },
+                tooltip: {
+                    pointFormat: '{point.code}: {point.value}'
+                }
+            }]
+        });
+    });
+</script>
 
 {% endblock %}
 

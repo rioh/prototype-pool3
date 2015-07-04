@@ -48,6 +48,11 @@ def accessibility(request):
 
 
 def contact(request):
+    """
+    Contact form view
+    :param request:
+    :return:
+    """
     data = {}
     if request.method == 'POST':
         contact_form = ContactInformationForm(request.POST)
@@ -63,6 +68,12 @@ def contact(request):
 
 
 def browse(request, browse_type):
+    """
+    Get the top 100 items by count based on browse type
+    :param request:
+    :param browse_type:
+    :return:
+    """
     logger.debug("browsing %s", browse_type)
     client = ApiClient()
     data = {'browse_type': browse_type,
@@ -79,6 +90,11 @@ def browse(request, browse_type):
 
 
 def search_labels(request):
+    """
+    Search drug labels api
+    :param request:
+    :return:
+    """
     client = ApiClient()
     query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
@@ -89,6 +105,11 @@ def search_labels(request):
 
 
 def search_label_events(request):
+    """
+    Search events for a given drug label
+    :param request:
+    :return: json response
+    """
     client = ApiClient()
     query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
@@ -97,6 +118,11 @@ def search_label_events(request):
 
 
 def search_events(request):
+    """
+    Search events api
+    :param request:
+    :return:
+    """
     client = ApiClient()
     query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
@@ -107,6 +133,11 @@ def search_events(request):
 
 
 def search_enforcements(request):
+    """
+    Search enforcement api
+    :param request:
+    :return:
+    """
     client = ApiClient()
     query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
@@ -118,6 +149,11 @@ def search_enforcements(request):
 
 # TODO -- add this method
 def search_manufacturers(request):
+    """
+    Search manufacturer api
+    :param request:
+    :return:
+    """
     client = ApiClient()
     query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
@@ -128,6 +164,11 @@ def search_manufacturers(request):
 
 
 def search_detail(request):
+    """
+    Search for details for this browse type using any parameters and filters as needed
+    :param request:
+    :return: json response
+    """
     results = {}
     if request.method == 'GET' and 'q' in request.GET:
         q = request.GET.get('q').strip()

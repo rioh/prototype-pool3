@@ -37,6 +37,9 @@ PARAMETER_MAPPINGS = {
         "2": "Concomitant",
         "3": "Interacting"
     },
+    "drugadministrationroute": {
+        # TODO: add the drug administration route mappings
+    },
     "action": {
         "1": "Drug withdrawn",
         "2": "Dose reduced",
@@ -135,7 +138,7 @@ class ApiClient(object):
         data = {}
 
         # get events counts
-        count_string = "&count=patient.drug.openfda.substance_name"
+        count_string = "&count=patient.drug.openfda.substance_name.exact"
         data['events_count'] = self.get_count_data(
             "%s?search=patient.reaction.reactionmeddrapt:\"%s\"%s" % (
                 API_TYPES['events'], query_term, count_string))
@@ -163,7 +166,7 @@ class ApiClient(object):
             data['enforcements_paginator'] = Paginator(enforcements_pagination)
 
         # get drug counts
-        count_string = "&count=openfda.brand_name"
+        count_string = "&count=openfda.brand_name.exact"
         data['drugs_count'] = self.get_count_data(
             "%s?search=state:\"%s\"%s" % (
                 API_TYPES['enforcements'], query_term, count_string))
@@ -310,7 +313,6 @@ class ApiClient(object):
                     "reported role of drug in adverse event: %s" %
                     self.format_field_from_parameter_mapping('drugcharacterization', drug.get('drugcharacterization'))
                 ]
-                print drug.get('medicinalproduct')
 
             # suppress details when seriousness is minor
             if safety_data["seriousness"] != PARAMETER_MAPPINGS.get('serious').get('1'):

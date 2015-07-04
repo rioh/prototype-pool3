@@ -59,7 +59,7 @@
     var drugNames = 
         [
         {% for results in events_count %}
-        "{{ results.term }}",
+        "{{ results.term }}".toLowerCase(),
         {% endfor %}
     ];
 

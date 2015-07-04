@@ -1,3 +1,4 @@
+// us states for typeahead
 var usStates = [
     {
         "label": "Alabama",
@@ -202,5 +203,209 @@ var usStates = [
     {
         "label": "Wyoming",
         "value": "WY"
+    }
+];
+
+// state counts for state chart
+var stateCounts = [
+    {
+        "code": "FL",
+        "value": 0
+    },
+    {
+        "code": "IL",
+        "value": 0
+    },
+    {
+        "code": "TN",
+        "value": 0
+    },
+    {
+        "code": "WA",
+        "value": 0
+    },
+    {
+        "code": "NJ",
+        "value": 0
+    },
+    {
+        "code": "MI",
+        "value": 0
+    },
+    {
+        "code": "PA",
+        "value": 0
+    },
+    {
+        "code": "NC",
+        "value": 0
+    },
+    {
+        "code": "CA",
+        "value": 0
+    },
+    {
+        "code": "NY",
+        "value": 0
+    },
+    {
+        "code": "OR",
+        "value": 0
+    },
+    {
+        "code": "TX",
+        "value": 0
+    },
+    {
+        "code": "NV",
+        "value": 0
+    },
+    {
+        "code": "GA",
+        "value": 0
+    },
+    {
+        "code": "MA",
+        "value": 0
+    },
+    {
+        "code": "OH",
+        "value": 0
+    },
+    {
+        "code": "IA",
+        "value": 0
+    },
+    {
+        "code": "NE",
+        "value": 0
+    },
+    {
+        "code": "IN",
+        "value": 0
+    },
+    {
+        "code": "OK",
+        "value": 0
+    },
+    {
+        "code": "AL",
+        "value": 0
+    },
+    {
+        "code": "MO",
+        "value": 0
+    },
+    {
+        "code": "WV",
+        "value": 0
+    },
+    {
+        "code": "KS",
+        "value": 0
+    },
+    {
+        "code": "AZ",
+        "value": 0
+    },
+    {
+        "code": "CO",
+        "value": 0
+    },
+    {
+        "code": "SC",
+        "value": 0
+    },
+    {
+        "code": "MN",
+        "value": 0
+    },
+    {
+        "code": "MD",
+        "value": 0
+    },
+    {
+        "code": "ID",
+        "value": 0
+    },
+    {
+        "code": "KY",
+        "value": 0
+    },
+    {
+        "code": "WI",
+        "value": 0
+    },
+    {
+        "code": "VA",
+        "value": 0
+    },
+    {
+        "code": "CT",
+        "value": 0
+    },
+    {
+        "code": "UT",
+        "value": 0
+    },
+    {
+        "code": "AR",
+        "value": 0
+    },
+    {
+        "code": "NH",
+        "value": 0
+    },
+    {
+        "code": "MS",
+        "value": 0
+    },
+    {
+        "code": "DE",
+        "value": 0
+    },
+    {
+        "code": "WY",
+        "value": 0
+    },
+    {
+        "code": "SD",
+        "value": 0
+    },
+    {
+        "code": "NM",
+        "value": 0
+    },
+    {
+        "code": "LA",
+        "value": 0
+    },
+    {
+        "code": "VT",
+        "value": 0
+    },
+    {
+        "code": "ME",
+        "value": 0
+    },
+    {
+        "code": "MT",
+        "value": 0
+    },
+    {
+        "code": "ND",
+        "value": 0
+    },
+    {
+        "code": "RI",
+        "value": 0
+    },
+    {
+        "code": "HI",
+        "value": 0
+    },
+    {
+        "code": "AK",
+        "value": 0
     }
 ];
