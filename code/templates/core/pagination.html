@@ -5,27 +5,27 @@
 {% if result_list|length == 0 %}
     <p class="">No results found for: {{ q|replace_plus_signs }}</p>
 {% else %}
-    <span>{{ result_paginator.page_display }}</span>
-         {% if result_paginator.pages > 1 %}
-        <nav>
-          <ul class="pagination pagination-sm">
-              <li {% if result_paginator.has_previous %}{% else %}class="disabled"{% endif %}><a href="?q={{q}}&amp;page={{result_paginator.prev}}" class="prev">prev</a></li>
-
-              {% for page_number in result_paginator.pagination_display %}
-
-              {% ifequal page_number "..." %}
-              <li><span>...</span></li>
-              {% else %}
-              {% ifequal page_number result_paginator.page %}
-              <li class="disabled"><span>{{page_number}}</span></li>
-              {% else %}
-              <li><a href="?q={{q}}&amp;page={{page_number}}">{{page_number}}</a></li>
-              {% endifequal %}
-              {% endifequal %}
-              {% endfor %}
-
-              <li {% if result_paginator.has_next %}{% else %}class="disabled"{% endif %}><a href="?q={{q}}&amp;page={{result_paginator.next}}" class="next">next</a></li>
-          </ul>
-        </nav>
+	<div class="fda-pagination-bar">
+    	<span class="fda-page-display">{{ result_paginator.page_display }}</span>
+    	{% if result_paginator.pages > 1 %}
+      	<ul class="fda-pagination">
+		  <li {% if result_paginator.has_previous %}{% else %}class="fda-pagination-disabled"{% endif %}><a href="?q={{q}}&amp;page={{result_paginator.prev}}" class="fda-pagination-prev">prev</a></li>
+		
+		  {% for page_number in result_paginator.pagination_display %}
+		
+		  {% ifequal page_number "..." %}
+		  <li><span>...</span></li>
+		  {% else %}
+		  {% ifequal page_number result_paginator.page %}
+		  <li class="disabled"><span>{{page_number}}</span></li>
+		  {% else %}
+		  <li><a href="?q={{q}}&amp;page={{page_number}}">{{page_number}}</a></li>
+		  {% endifequal %}
+		  {% endifequal %}
+		  {% endfor %}
+		
+		  <li {% if result_paginator.has_next %}{% else %}class="fda-pagination-disabled"{% endif %}><a href="?q={{q}}&amp;page={{result_paginator.next}}" class="fda-pagination-next">next</a></li>  
+		</ul>
         {% endif %}
+	</div>
 {% endif %}
