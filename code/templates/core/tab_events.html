@@ -95,10 +95,13 @@
                          Drug Data
                         </caption>
                         <tbody>
-                           {% for key, value in result.label_data.items %}
+                       {% for label_data in result.label_data %}
+                        <table class="table table-striped table-bordered">
+                           {% for key, value in label_data.items %}
                            <tr>
                              <th scope="row">{{ key|replace_underscores|capfirst }}</th>
-                             <td>{% if value|is_list %}
+                             <td>
+                                 {% if value|is_list %}
                                      {% for val in value %}
                                        {{ val|default:"N/A" }}<br />
                                      {% endfor %}
@@ -108,6 +111,8 @@
                              </td>
                            </tr>
                            {% endfor %}
+                        </table>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
