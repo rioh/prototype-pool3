@@ -44,10 +44,29 @@
 
         <!-- tab 2 -->
         <div id="drugs">
-            <p>Click on the chart below to see adverse effects by gender for a given drug.</p>
+            <p>Click on the chart below to see adverse effects by gender for a given drug,
+                or view data in <a id="adverse-table-trigger" href="#">table format</a>.</p>
+            <div id="adverseTable" style="display:none;">
+                <table class="fda-table-default">
+                    <caption>
+                        Drugs with Adverse Effect: {{ q }}
+                    </caption>
+                    <thead>
+                        <th>Drug Name</th>
+                        <th>Count</th>
+                    </thead>
+                    <tbody>
+                        {% for result in events_count %}
+                        <tr>
+                            <td>{{ result.term|lower|capfirst }}</td>
+                            <td><span class="count">{{ result.count|intcomma }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             <div id="adverseChart"></div>
-            <br/>
-            <div id="productChart"></div><br/>
+
         </div><!-- end tab 2 -->
     </div>
 {% endblock %}
@@ -58,8 +77,8 @@
 
     var drugNames = 
         [
-        {% for results in events_count %}
-        "{{ results.term }}".toLowerCase(),
+        {% for result in events_count %}
+        "{{ result.term }}".toLowerCase(),
         {% endfor %}
     ];
 
@@ -67,8 +86,8 @@
         name: 'Count',
         // data points with extra properties:
         data: [
-        {% for results in events_count %}
-        {x: {{ forloop.counter0 }}, y: {{ results.count }}, investigation: true},
+        {% for result in events_count %}
+        {x: {{ forloop.counter0 }}, y: {{ result.count }}, investigation: true},
         {% endfor %}
         ]
     };
@@ -170,6 +189,11 @@
            createAdverseEffectsChart(drugNames, adverseEffectsData);
            console.log('chart made')
       }, 0);
+    });
+
+    $('#adverse-table-trigger').click(function() {
+       $('#adverseTable').toggle();
+       return false;
     });
 
 })(jQuery);

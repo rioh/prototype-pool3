@@ -44,7 +44,32 @@
 
         <!-- tab 2 -->
         <div id="drugs">
-            <p>Click the chart below to visit the drug detail page.</p>
+            <p>Click the chart below to visit the drug detail page or view data in
+                <a id="detail-table-trigger" href="#">table format</a>.</p>
+
+                <div id="detailTable" style="display:none;">
+                    <table class="fda-table-default">
+                        <caption>
+                            Drugs with Enforcement Reports in {{ q }}
+                        </caption>
+                        <thead>
+                            <th>Drug Name</th>
+                            <th>Count</th>
+                        </thead>
+                        <tbody>
+                            {% for result in drugs_count %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'search_labels' %}?q={{ result.term|replace_spaces|urlencode }}">
+                                        {{ result.term|lower|capfirst }}
+                                    </a>
+                                </td>
+                                <td><span class="count">{{ result.count|intcomma }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 <div id="enforcementChart"></div><br/>
         </div><!-- end tab 2 -->
     </div><!-- end panel -->
@@ -57,8 +82,8 @@
 
     var drugNames = 
         [
-        {% for results in drugs_count %}
-        "{{ results.term }}",
+        {% for result in drugs_count %}
+        "{{ result.term }}",
         {% endfor %}
     ];
 
@@ -66,11 +91,11 @@
         name: 'Counts',
         // data points with extra properties:
         data: [
-        {% for results in drugs_count %}
+        {% for result in drugs_count %}
         {
             x: {{ forloop.counter0 }},
-            y: {{ results.count }},
-            url: "{% url 'search_labels' %}?q={{ results.term|replace_spaces|urlencode }}",
+            y: {{ result.count }},
+            url: "{% url 'search_labels' %}?q={{ result.term|replace_spaces|urlencode }}",
             investigation: true},
         {% endfor %}
         ]
@@ -182,6 +207,11 @@
         });
     }
     createEnforcementChart(drugNames, enforcementData);
+
+    $('#detail-table-trigger').click(function() {
+       $('#detailTable').toggle();
+       return false;
+    });
 
 })(jQuery);
 </script>

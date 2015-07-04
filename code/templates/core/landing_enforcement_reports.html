@@ -15,24 +15,23 @@
 {% block text %}
     <h1 class="page-title">Enforcement Reports</h1>
     <p class="page-description">Select a state from the map below or enter a state into the search above
-        to view current related information.</p>
+        to view current related information.  Click to view state data in
+        <a href="#" id="state-list-trigger">table format</a>.</p>
 {% endblock %}
 
 {% block details %}
-    <!-- highcharts map -->
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="panel">
-                <div class="panel-body">
-	                <!-- highcharts map -->
-                    <div id="map" style="height:800px; min-width:310px; max-width:100%; margin:0 auto"></div>
-                </div>
-            </div>
-        </div>
+    <div id="stateList" style="display:none;">
+        <!-- browse list -->
+        {% include 'core/browse.html' with search_url='search_enforcements' show_count=True %}
     </div>
 
-    <!-- browse list -->
-    {% include 'core/browse.html' with search_url='search_enforcements' show_count=True %}
+    <!-- highcharts map -->
+    <div class="row">
+        <!-- highcharts map -->
+        <div id="map" style="height:800px; min-width:310px; max-width:100%; margin:0 auto"></div>
+    </div>
+
+
 {% endblock %}
 
 {% block extra_js %}
@@ -166,6 +165,12 @@
             }]
         });
     });
+
+    $('#state-list-trigger').click(function() {
+       $('#stateList').toggle();
+       return false;
+    });
+
 </script>
 
 {% endblock %}
