@@ -58,7 +58,7 @@
             <tbody>
             {% for key, value in result.label_data.items %}
                 <tr>
-                    <th scope="row">{{ key|replace_underscores|capfirst }}</th>
+                    <th scope="row">{{ key|replace_underscores|lower|capfirst }}</th>
                     <td>
                         {% if value|is_list %}
                             {% for val in value %}

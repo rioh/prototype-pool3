@@ -31,6 +31,19 @@ PARAMETER_MAPPINGS = {
              "hospitalization, disability, congenital anomaly, or other serious condition.",
         "2": "The adverse event did NOT result in death, a life threatening condition, " +
              "hospitalization, disability, congenital anomaly, or other serious condition."
+    },
+    "drugcharacterization": {
+        "1": "Suspect",
+        "2": "Concomitant",
+        "3": "Interacting"
+    },
+    "action": {
+        "1": "Drug withdrawn",
+        "2": "Dose reduced",
+        "3": "Dose increased",
+        "4": "Dose not changed",
+        "5": "Unknown",
+        "6": "N/A"
     }
 }
 
@@ -277,22 +290,27 @@ class ApiClient(object):
                  "disabling: %s" % self.yes_or_no(d.get("seriousnessdisabling")),
                  "hospitalization: %s" % self.yes_or_no(d.get("seriousnesshospitalization")),
                  "life threatening: %s" % self.yes_or_no(d.get("seriousnesslifethreatening"))]
-            safety_data["duplicate_report_source"] = d.get('reportduplicate.duplicatesource')
-            safety_data["duplicate_report_number"] = d.get('reportduplicate.duplicatenumb')
+            safety_data["duplicate_report_source"] = d.get('reportduplicate', {}).get('duplicatesource')
+            safety_data["duplicate_report_number"] = d.get('reportduplicate', {}).get('duplicatenumb')
 
             patient_data = OrderedDict()
-            patient_data["patient_onset_age"] = "%s%s" % (d.get('patient.patientonsetstage', ""),
-                                                          d.get('patinetonsetageunit', ""))
-            patient_data["patient_sex"] = self.male_or_female(d.get('patient.patientsex'))
-            patient_data["patient_death_details"] = d.get('patient.patientdeath')
+            patient_data["patient_onset_age"] = "%s%s" % (d.get('patient', {}).get('patientonsetstage', ""),
+                                                          d.get('patientonsetageunit', ""))
+            patient_data["patient_sex"] = self.male_or_female(d.get('patient', {}).get('patientsex'))
+            patient_data["patient_death_details"] = d.get('patient', {}).get('patientdeath')
 
             label_data = OrderedDict()
-            label_data["drug_administration_route"] = d.get('patient.drug.drugadministrationroute')
-            label_data["actions_taken_with_drug"] = d.get('patient.drug.actiondrug')
-            label_data["dosage"] = "%s%s" % (d.get('patient.drug.drugcumulativedosagenumb', ""),
-                                             d.get('patient.drug.drugcumulativedosageunit', ""))
-            label_data["number_of_doses"] = d.get('patient.drug.drugstructuredosagenumb')
-            label_data["reported_role_of_the_drug_in_the_adverse_event"] = d.get('patient.drug.drugcharacterization')
+            for drug in d.get('patient', {}).get('drug'):
+                label_data[drug.get('medicinalproduct', "")] = [
+                    "drug administration route: %s" % drug.get('drugadministrationroute'),
+                    "actions taken with drug: %s" %
+                    self.format_field_from_parameter_mapping('action', drug.get('actiondrug')),
+                    "reported dosage: %s%s" % (drug.get('drugcumulativedosagenumb'), drug.get('drugcumulativedosageunit', '')),
+                    "number of doses: %s" % drug.get('drugstructuredosagenumb'),
+                    "reported role of drug in adverse event: %s" %
+                    self.format_field_from_parameter_mapping('drugcharacterization', drug.get('drugcharacterization'))
+                ]
+                print drug.get('medicinalproduct')
 
             # suppress details when seriousness is minor
             if safety_data["seriousness"] != PARAMETER_MAPPINGS.get('serious').get('1'):
@@ -309,6 +327,7 @@ class ApiClient(object):
         for d in data.get('results'):
             clean_data = {
                 'event_id': d.get('event_id'),
+                'recall_number': d.get('recall_number'),
                 'status': d.get('status'),
                 'city': d.get('city'),
                 'state': d.get('state'),
@@ -333,12 +352,16 @@ class ApiClient(object):
             return "No"
 
     def male_or_female(self, value):
-        if value == 1:
-            return 'Male'
-        elif value == 2:
-            return 'Female'
-        elif value == 0:
-            return 'Unknown'
+        try:
+            value = int(value)
+            if value == 1:
+                return 'Male'
+            elif value == 2:
+                return 'Female'
+            elif value == 0:
+                return 'Unknown'
+        except ValueError:
+            return None
 
     def format_date(self, value):
         """
