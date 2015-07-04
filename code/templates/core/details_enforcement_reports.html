@@ -44,14 +44,14 @@
 
         <!-- tab 2 -->
         <div id="drugs">
-            <p>This chart will allow clicking through to another chart to get additional detail</p>
-                <div id="adverseChart"></div><br/>
+            <p>Click the chart below to visit the drug detail page</p>
+                <div id="enforcementChart"></div><br/>
                 <div id="productChart"></div><br/>
-                {% for results in events %}<br />
-                {% for key, value in results.items %}
-                {{ key }}: {{ value }}<br />
-                {% endfor %}
-                {% endfor %}
+{#                {% for results in events %}<br />#}
+{#                {% for key, value in results.items %}#}
+{#                {{ key }}: {{ value }}<br />#}
+{#                {% endfor %}#}
+{#                {% endfor %}#}
         </div><!-- end tab 2 -->
     </div><!-- end panel -->
 
@@ -68,20 +68,22 @@
         {% endfor %}
     ];
 
-    var adverseEffectsData = {
+    var enforcementData = {
         name: 'Counts',
         // data points with extra properties:
         data: [
         {% for results in drugs_count %}
-        {x: {{ forloop.counter0 }}, y: {{ results.count }}, investigation: true},
+        {
+            x: {{ forloop.counter0 }},
+            y: {{ results.count }},
+            url: "{% url 'search_labels' %}?q={{ results.term|replace_spaces|urlencode }}",
+            investigation: true},
         {% endfor %}
         ]
-        // data points with just "y" values:
-        //data: [123, 234, 345, 456, 12, 23, 34]
     };
 
-    function createAdverseEffectsChart(categoryArray, seriesData) {
-        $('#adverseChart').highcharts({
+    function createEnforcementChart(categoryArray, seriesData) {
+        $('#enforcementChart').highcharts({
             credits: {
                 enabled: false
             },
@@ -89,10 +91,7 @@
                 type: 'column'
             },
             title: {
-                text: 'Counts for drugs with enforcement reports in state'
-            },
-            subtitle: {
-                text: '{{ q }}'
+                text: 'Drugs with Enforcement Reports in {{ q }}'
             },
             xAxis: {
                 categories: categoryArray,
@@ -104,7 +103,7 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Number of drugs'
+                    text: 'Number of reports'
                 }
             },
             tooltip: {
@@ -122,16 +121,8 @@
                 series: {
                     point: {
                         events: {
-                            click: function(event) {
-                                var dataPoint = event.point;
-                                var xLabel = dataPoint.series.chart.axes[0].categories[dataPoint.x];
-                                console.log(xLabel+" clicked", dataPoint);
-
-                                // option 1: remove the current chart before replacing it.
-                                //$("#adverseChart").highcharts().destroy();
-
-                                // option 2: create the chart below the current chart
-                                getDataAndCreateProductChart(xLabel); // <-- long name here :)
+                            click: function() {
+                                location.href = this.options.url;
                             }
                         }
                     }
@@ -141,7 +132,7 @@
         });
     }
 
-    function getDataAndCreateProductChart(productName) {
+    function getDataAndCreateHyperlinks(productName) {
 
         $.getJSON("{% url 'search_detail' %}", {"browse_type": "enforcements", "q": "{{ q }}", "filter_string": productName})
             .fail(function() {
@@ -149,8 +140,7 @@
             })
             .done(function(results) {
                 console.log(results);
-                var productData = results;
-                createProductChart(productName, productData);
+                createProductChart(productName, results);
             });
     }
 
@@ -177,7 +167,7 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Number off effects'
+                    text: 'Number of effects'
                 }
             },
             tooltip: {
@@ -197,22 +187,8 @@
             series: productDataArray
         });
     }
+    createEnforcementChart(drugNames, enforcementData);
 
-    /*
-    we can also use ajax to fetch the data passed to this function. something like:
-
-    $.getJSON("/some/url/here")
-        .fail(function() {
-            console.log("error getting data");
-        })
-        .done(function(result) {
-            var names = result.names;
-            var effectsData = result.adverseEffectsData;
-            createAdverseEffectsChart(names, effectsData);
-        });
-    */
-
-    createAdverseEffectsChart(drugNames, adverseEffectsData);
 })(jQuery);
 </script>
 

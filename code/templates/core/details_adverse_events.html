@@ -44,7 +44,7 @@
 
         <!-- tab 2 -->
         <div id="drugs">
-            <p>This chart will allow clicking through to another chart to get additional detail</p>
+            <p>Click on the chart below to see adverse effects by gender for a given drug</p>
             <div id="adverseChart"></div>
             <br/>
             <div id="productChart"></div><br/>
@@ -71,8 +71,6 @@
         {x: {{ forloop.counter0 }}, y: {{ results.count }}, investigation: true},
         {% endfor %}
         ]
-        // data points with just "y" values:
-        //data: [123, 234, 345, 456, 12, 23, 34]
     };
 
     function createAdverseEffectsChart(categoryArray, seriesData) {
@@ -87,10 +85,7 @@
                 }
             },
             title: {
-                text: 'Top 25 drugs with with adverse effect'
-            },
-            subtitle: {
-                text: '{{ q }}'
+                text: 'Top 25 Drugs with Adverse Effect: {{ q }}'
             },
             legend: {
                 enabled: false
@@ -120,19 +115,15 @@
                     borderWidth: 0
                 },
                 series: {
-                    point: {
-                        events: {
-                            click: function(event) {
-                                var dataPoint = event.point;
-                                var xLabel = dataPoint.series.chart.axes[0].categories[dataPoint.x];
-                                console.log(xLabel+" clicked", dataPoint);
+                    events: {
+                        click: function(event) {
+                            var category = event.point.category;
 
-                                // option 1: remove the current chart before replacing it.
-                                //$("#adverseChart").highcharts().destroy();
-
-                                // option 2: create the chart below the current chart
-                                getDataAndCreateProductChart(xLabel); // <-- long name here :)
+                            if (this.chart.series.length > 1) {
+                                this.chart.series[1].remove();
                             }
+
+                            getDataAndCreateProductChart(category, this.chart);
                         }
                     },
                     color: '#1976D2'
@@ -142,86 +133,42 @@
         });
     }
 
-    function getDataAndCreateProductChart(productName) {
+    function getDataAndCreateProductChart(category ,chart) {
 
-        $.getJSON("{% url 'search_detail' %}", {"browse_type": "events", "q": "{{ q }}", "filter_string": productName})
+        $.getJSON("{% url 'search_detail' %}", {"browse_type": "events", "q": "{{ q }}", "filter_string": category})
             .fail(function() {
                 console.log("error getting data");
             })
             .done(function(results) {
-                console.log(results);
-                var productData = results;
-                createProductChart(productName, productData);
+                createPieChart(category, results, chart);
             });
     }
 
-    function createProductChart(productName, productDataArray) {
-        $('#productChart').highcharts({
-            credits: {
-                enabled: false
-            },
-            chart: {
-                type: 'column',
-                style: {
-                    fontFamily: '"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif'
-                }
-            },
+    function createPieChart(category, categoryData, chart) {
+        chart.addSeries({
+            type: "pie",
+            name: category + " effects grouped by sex",
             colors: ['#1976D2', '#212121'],
-            title: {
-                text: productName+" effects grouped by sex"
-            },
-            subtitle: {
-                text: ''
-            },
-            xAxis: {
-                categories: [
-                    "0-100",
-                ],
-                crosshair: false
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Number of effects'
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },
-            },
-            series: productDataArray
+            data: [{
+                name: categoryData[0].name,
+                y: categoryData[0].data[0]
+            }, {
+                name: categoryData[1].name,
+                y: categoryData[1].data[0]
+
+            }],
+            size: '50%',
+            center: ['90%', '25%'],
+            dataLabels: {enabled: false}
         });
     }
-
-    /*
-    we can also use ajax to fetch the data passed to this function. something like:
-
-    $.getJSON("/some/url/here")
-        .fail(function() {
-            console.log("error getting data");
-        })
-        .done(function(result) {
-            var names = result.names;
-            var effectsData = result.adverseEffectsData;
-            createAdverseEffectsChart(names, effectsData);
-        });
-    */
 
     // fix for highcharts width. it needs to wait for the div or else it won't fill the space
     $('a[href=#drugs]').click(function() {
        setTimeout(function(){
-           adverseEffectsData.data = adverseEffectsData.data.slice(0,25)
-         createAdverseEffectsChart(drugNames, adverseEffectsData);
+           adverseEffectsData.data = adverseEffectsData.data.slice(0,25);
+           createAdverseEffectsChart(drugNames, adverseEffectsData);
+           console.log('chart made')
       }, 0);
     });
 

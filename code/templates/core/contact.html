@@ -8,31 +8,36 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
         mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
         ante iaculis lacinia.</p>
-    <div class="box-error">
-    	<h2>There was a problem with the form.</h2>
-    	<ul>
-    		<li><a href="#contact-name">Enter a valid name.</a></li>
-    		<li><a href="#contact-email">Enter a valid email address.</a></li>
-    		<li><a href="#contact-comment">Enter a valid comment.</a></li>
-    	</ul>
-    </div>
+    {% if errors %}
+        <div class="box-error">
+            <h2>There was a problem with the form.</h2>
+            <ul>
+                {% if errors.contact_name %}
+                    <li><a href="#contact-name">Enter a valid name.</a></li>
+                {% endif %}
+                {% if errors.contact_email %}
+                    <li><a href="#contact-email">Enter a valid email address.</a></li>
+                {% endif %}
+                {% if errors.contact_comment %}
+                    <li><a href="#contact-comment">Enter a valid comment.</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
 
     <form name="contact-form" action="{% url 'contact' %}" method="post" id="contact-form">
         {% csrf_token %}
         <p>
             <label for="contact-name">Name</label><br />
             <input type="text" class="width-60-percent" name="contact_name" id="contact-name" placeholder="Name" value="{{ formdata.contact_name }}" required="true" autofocus>
-            <span class="text-error">{{ errors.contact_name.0 }}</span>
         </p>
         <p>
             <label for="contact-email">Email</label><br />
             <input type="email" class="width-60-percent" name="contact_email" id="contact-email" placeholder="Email" value="{{ formdata.contact_email }}" required="true">
-            <span class="text-error">{{ errors.contact_email.0 }}</span>
         </p>
         <p>
             <label for="contact-comment">Comment</label><br />
             <textarea class="width-60-percent" rows="6" name="contact_comment" id="contact-comment" placeholder="Comment" required="true">{{ formdata.contact_comment }}</textarea>
-            <span class="text-error">{{ errors.contact_comment.0 }}</span>
         </p>
         <button type="submit" class="">Submit</button>
     </form>
