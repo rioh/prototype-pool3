@@ -1,0 +1,86 @@
+.default-pagination-font-size {
+  font-size: 14px;
+  @media @tablet {
+    font-size: 12px;
+  };
+};
+.default-pagination-width {
+  width: 30px;
+  @media @tablet {
+    width: 26px;
+  };
+};
+.next-prev-pagination-width {
+  width: 50px;
+  @media @tablet {
+    width: 40px;
+  };
+};
+.default-pagination-height {
+  height: 30px;
+  line-height: 30px;
+  @media @tablet {
+    height: 26px;
+    line-height: 26px;
+  };
+};
+.fda-pagination-bar {
+  overflow: hidden;
+  margin-bottom: 10px;
+  .fda-page-display {
+    display: inline-block;
+    float: left;
+    .default-pagination-font-size;
+    .default-pagination-height;
+    @media @tablet {
+      float: none;
+    };
+  };
+  .fda-pagination {
+    .plain;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: none !important;
+    text-align: right;
+    li {
+      display: inline-block;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: none!important;
+      line-height: normal !important;
+      font-weight: normal !important;
+      .default-pagination-font-size;
+      span,
+      a {
+        display: inline-block;
+        border: 1px solid @fda_blue !important;
+        color: @fda_blue !important;
+        text-align: center;
+        padding: 0 !important;
+        .default-pagination-width;
+        .default-pagination-height;
+        &.fda-pagination-next,
+        &.fda-pagination-prev {
+          .next-prev-pagination-width;
+        };
+      };
+      span {
+        color: @gray !important;
+        border-color: @gray !important;
+        background-color: @white_smoke;
+        cursor:not-allowed;
+      };
+      &.disabled {
+        span {
+          background-color: @fda_blue;
+          border-color: @fda_blue !important;
+          color: @white !important;
+          font-weight: bold;
+        };
+      };
+    };
+    @media @tablet {
+      text-align: center;
+    };
+  };
+};
