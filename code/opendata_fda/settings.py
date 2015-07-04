@@ -211,6 +211,11 @@ CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24  # cache for a day
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=core',
+]
+
 # FDA API details
 FDA_DRUG_API_EVENT_URL = "https://api.fda.gov/drug/event.json"  # adverse events
 FDA_DRUG_API_LABEL_URL = "https://api.fda.gov/drug/label.json"  # drug labeling
