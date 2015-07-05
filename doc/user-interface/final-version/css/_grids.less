@@ -1,0 +1,39 @@
+///////////////////////////////////
+// Grids
+///////////////////////////////////
+@desktop-large:   ~"screen and (max-width: 1200px)";
+@desktop:         ~"screen and (max-width: 1100px)";
+@tablet-large:    ~"screen and (max-width: 980px)";
+@tablet:          ~"screen and (max-width: 810px)";
+@phone-large:     ~"screen and (max-width: 650px)";
+@phone:           ~"screen and (max-width: 480px)";
+@webkit:          ~"screen and (-webkit-min-device-pixel-ratio:0)";
+
+@total_width: 100%;
+// DO NOT MODIFY 
+@container_width: (@grid_width + (@gutter_width * 2));
+
+@grid_width: ((@column_width * @columns) + (@gutter_width * (@gutters)) * 1px) ;
+
+// (20x24)+(20x23)=940+42=982  
+// (20x24)+(20x23)=940 
+@gutter: (@total_width*(@gutter_width/@grid_width))*1px;
+
+.col(@x:1, @y:24) {
+	width: (100% * (
+        ((@column_width * @x) + (@gutter_width * (@x - 1)))/
+        ((@column_width * @y) + (@gutter_width * (@y - 1)) * 1px) 
+    )) * 1px;
+	margin-left: (100% * ( 
+        @gutter_width / ((@column_width * @y) + (@gutter_width * (@y - 1)) * 1px) 
+    )) * 1px;
+}
+
+.standard-padding(@columns:24, @scale:100%) {
+    @padding: (@scale * ( 
+        @gutter_width / ((@column_width * @columns) + (@gutter_width * (@columns - 1)) * 1px) 
+    )) * 1px;
+    @bottom_padding: (@padding * .30);
+    @top_padding: (@padding * .85);
+    padding: @top_padding @padding @bottom_padding @padding;
+}

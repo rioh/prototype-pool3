@@ -1,0 +1,382 @@
+/*
+
+#Table
+ 
+##No style
+
+```
+<table summary="summary of table info">
+  <thead>
+    <tr>
+      <th scope="col">Table Header 1</th>
+      <th scope="col">Table Header 2</th>
+      <th scope="col">Table Header 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+*/
+
+table {
+	background-color: transparent;
+	border-collapse: collapse;
+	border-spacing: 0;
+	thead {
+    tr {
+      th, td {
+        text-align:left;
+        vertical-align: top;
+      };
+    };
+  };
+	tbody {
+  	tr {
+  	  &:hover,
+      &:focus,
+      &:hover,
+      &:focus {
+        background-color:@lighter_gray;
+      };
+    	th, td {
+        text-align:left;
+        vertical-align: top;
+      };
+    };
+  };
+};
+/*
+ 
+##.table-bordered
+
+```
+<table class="table-bordered" summary="summary of table info">
+  <thead>
+    <tr>
+      <th scope="col">Table Header 1</th>
+      <th scope="col">Table Header 2</th>
+      <th scope="col">Table Header 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+*/
+.table-bordered { 
+  th, td {
+    border: @table_bordered;
+  };
+};
+/*
+ 
+##.table-bordered-top
+
+```
+<table class="table-bordered-top" summary="summary of table info">
+  <thead>
+    <tr>
+      <th scope="col">Table Header 1</th>
+      <th scope="col">Table Header 2</th>
+      <th scope="col">Table Header 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+*/
+.table-bordered-top {
+  border-bottom: @table_bordered;
+  th, td {
+    border-top: @table_bordered;
+  };
+};
+/*
+ 
+##.table-bordered + .table-padded
+
+```
+<table class="table-bordered table-padded" summary="summary of table info">
+  <thead>
+    <tr>
+      <th scope="col">Table Header 1</th>
+      <th scope="col">Table Header 2</th>
+      <th scope="col">Table Header 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+*/
+.table-padded {
+  th, td {
+    padding: @table_padded;
+  };
+};
+/*
+ 
+##.table-bordered + .table-padded + .table-full-width = .default
+
+```
+<table class="default" summary="summary of table info">
+  <thead>
+    <tr>
+      <th scope="col">Table Header 1</th>
+      <th scope="col">Table Header 2</th>
+      <th scope="col">Table Header 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+*/
+.table-full-width {
+  width:100%;
+};
+.default {
+  .table-bordered;
+  .table-padded;
+  .table-full-width;
+};
+/*
+ 
+##.table-bordered + .table-padded + .table-full-width + .table-striped = .default-striped
+Not supported in IE8.
+
+```
+<table class="default-striped" summary="summary of table info">
+  <thead>
+    <tr>
+      <th scope="col">Table Header 1</th>
+      <th scope="col">Table Header 2</th>
+      <th scope="col">Table Header 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+*/
+.table-striped {
+  tbody { 
+    tr:nth-child(even) {
+      background-color: @white_smoke;
+    };
+  };
+};
+.default-striped {
+  .default;
+  .table-striped;
+};
+/*
+ 
+##.nowrap-headers
+Forces the content inside `thead > th` should not wrap
+
+```
+<table class="default nowrap-headers" summary="summary of table info">
+  <thead>
+    <tr>
+      <th scope="col">Table Header 1</th>
+      <th scope="col">Table Header 2</th>
+      <th scope="col">Table Header 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+*/
+.nowrap-headers {
+  thead {
+    th {
+      white-space:nowrap;
+    };
+  };
+};
+/*
+ 
+##Sortable table
+Not supported in IE8.
+
+```
+<table class="default sortable-table" summary="summary of table info">
+  <thead>
+    <tr>
+      <th scope="col">Table Header 1</th>
+      <th scope="col">Table Header 2</th>
+      <th scope="col">Table Header 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+    <tr>
+      <td>Division 1</td>
+      <td>Division 2</td>
+      <td>Division 3</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+*/
+.sortable-table {
+  .table-bordered-top;
+  .table-padded;
+  .table-full-width;
+  .tablesorter-header {
+    cursor:pointer;
+    .tablesorter-header-inner {
+      padding-left: 13px;
+      position:relative;
+      i {
+        .icon;
+        width:7px;
+        height:12px;
+        background-position: -171px -16px;
+        position:absolute;
+        left:0;
+        top:3px;
+      };
+    };
+    &.tablesorter-headerAsc {
+      .tablesorter-header-inner {
+        i {
+          background-position: -171px -28px;
+        };
+      };
+    };
+    &.tablesorter-headerDesc {
+      .tablesorter-header-inner {
+        i {
+          background-position: -171px -40px;
+        };
+      };
+    };
+  };
+};
+
+
+
+
+
