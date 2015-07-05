@@ -38,7 +38,7 @@ PARAMETER_MAPPINGS = {
         "3": "Interacting"
     },
     "drugadministrationroute": {
-        # TODO: add the drug administration route mappings
+        # TODO: add the drug administration route mappingsf
     },
     "action": {
         "1": "Drug withdrawn",
@@ -183,7 +183,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=openfda.manufacturer_name:\"%s\"" % (
             API_TYPES['labels'], urllib.quote(query_term)), page)
         if sub_data:
-            labels_pagination, labels = sub_data.clean_labels(sub_data)
+            labels_pagination, labels = sub_data.clean_labels()
             data['labels'] = labels
             data['labels_paginator'] = Paginator(labels_pagination)
 
@@ -191,7 +191,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=patient.drug.openfda.manufacturer_name:\"%s\"" % (
             API_TYPES['events'], urllib.quote(query_term)), page)
         if sub_data:
-            events_pagination, events = sub_data.clean_events(sub_data)
+            events_pagination, events = sub_data.clean_events()
             data['events'] = events
             data['events_paginator'] = Paginator(events_pagination)
 

@@ -90,7 +90,7 @@ class UserTests(StaticLiveServerTestCase):
         """
         # I want to read information about the site
         self.driver.get('%s/about' % (self.live_server_url))
-        self.assertIn('Licensing', self.driver.find_element_by_tag_name('h2').text)
+        self.assertIn('Licensing', self.driver.find_elements_by_tag_name('h2')[1].text)
 
     def test_contact_form(self):
         """
@@ -152,6 +152,12 @@ class UserTests(StaticLiveServerTestCase):
 
             # there should be a list of the top items to browse
             browse_list = self.driver.find_element_by_class_name('fda-list-group').find_elements_by_id('li')
+
+            if item['name'] == 'Enforcement Reports':
+                table_link = self.driver.find_element_by_id("state-list-trigger")
+                table_link.click()
+                self.driver.implicitly_wait(3)
+
             self.assertTrue('100', len(browse_list))
 
             # click the first browse list item to go to its detail page
@@ -177,7 +183,6 @@ class UserTests(StaticLiveServerTestCase):
             EC.text_to_be_present_in_element((By.TAG_NAME, 'h1'), 'Enforcement Report Details'))
         self.assertIn('UT', self.driver.find_element_by_tag_name('h1').text)
 
-    # TODO finish this test!
     def test_search_categories(self):
         """
         Test that we can search the site using the different categories in the search bar
