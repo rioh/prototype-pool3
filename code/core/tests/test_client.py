@@ -1,13 +1,98 @@
 import json
-from mock import patch
+from mock import patch, MagicMock
 from django.test import TestCase
+from core.api_client import ApiClient, ApiResult
 
-from core.api_client import ApiResult
+
+class ApiClientTestCase(TestCase):
+
+    @patch('requests.get')
+    @patch('requests.models.Response')
+    def test_browse(self, mock_response, mock_get):
+        mock_get.return_value = mock_response
+        mock_response.json.return_value = {"results": [
+            {"term": "manufacturing B", "count": "10"},
+            {"term": "manufacturing A", "count": "20"}]}
+        client = ApiClient()
+        results = client.browse('manufacturers')
+        self.assertEqual(results, [{'count': '20', 'term': 'manufacturing A'},
+                                   {'count': '10', 'term': 'manufacturing B'}])
+
+    @patch('core.api_client.ApiClient.get_sub_data')
+    def test_search_labels(self, mock_get_sub_data):
+        mock_get_sub_data.return_value = api_result = MagicMock()
+        api_result.clean_labels.return_value = ({"total": 1}, {})
+        api_result.clean_events.return_value = ({"total": 1}, {})
+        api_result.clean_enforcements.return_value = ({"total": 1}, {})
+        client = ApiClient()
+        term = "test"
+        page = 1
+        client.search_labels(term, page)
+        mock_get_sub_data.asert_called_with()
+
+    @patch('core.api_client.ApiClient.get_sub_data')
+    @patch('core.api_client.ApiClient.get_count_data')
+    def test_search_events(self, mock_get_count_data, mock_get_sub_data):
+        mock_get_sub_data.return_value = api_result = MagicMock()
+        api_result.clean_events.return_value = ({"total": 1}, {})
+        client = ApiClient()
+        term = "test"
+        page = 1
+        client.search_events(term, page)
+        mock_get_sub_data.asert_called_with()
+        mock_get_count_data.asert_called_with()
+
+    @patch('core.api_client.ApiClient.get_sub_data')
+    @patch('core.api_client.ApiClient.get_count_data')
+    def test_search_enforcements(self, mock_get_count_data, mock_get_sub_data):
+        mock_get_sub_data.return_value = api_result = MagicMock()
+        api_result.clean_enforcements.return_value = ({"total": 1}, {})
+        client = ApiClient()
+        term = "test"
+        page = 1
+        client.search_enforcements(term, page)
+        mock_get_sub_data.asert_called_with()
+        mock_get_count_data.asert_called_with()
+
+    @patch('core.api_client.ApiClient.get_sub_data')
+    @patch('core.api_client.ApiClient.get_count_data')
+    def test_search_manufacturers(self, mock_get_count_data, mock_get_sub_data):
+        mock_get_sub_data.return_value = api_result = MagicMock()
+        api_result.clean_labels.return_value = ({"total": 1}, {})
+        api_result.clean_events.return_value = ({"total": 1}, {})
+        api_result.clean_enforcements.return_value = ({"total": 1}, {})
+        client = ApiClient()
+        term = "test"
+        page = 1
+        client.search_manufacturers(term, page)
+        mock_get_sub_data.asert_called_with()
+        mock_get_count_data.asert_called_with()
+
+    @patch('requests.get')
+    @patch('requests.models.Response')
+    def test_get_age_sex(self, mock_response, mock_get):
+        mock_get.return_value = mock_response
+        mock_response.json.return_value = {"meta": {"results": {"total": "1"}}}
+        client = ApiClient()
+        result = client.get_age_sex('labels', 'filter', 'param')
+        self.assertEquals(result, '[{"data": ["1"], "name": "Male"}, {"data": ["1"], "name": "Female"}]')
+
+    @patch('requests.get')
+    @patch('requests.models.Response')
+    def test_get_sub_data(self, mock_response, mock_get):
+        mock_get.return_value = mock_response
+        mock_response.status_code = 200
+        client = ApiClient()
+        sub_data = client.get_sub_data('', 1)
+        self.assertIsNotNone(sub_data)
+
+        mock_response.status_code = 400
+        client = ApiClient()
+        sub_data = client.get_sub_data('', 1)
+        self.assertIsNone(sub_data)
+
 
 class ApiResultTestCase(TestCase):
-    def setUp(self):
-        pass 
-
     def test_lookup(self):
         test_dictionary = json.loads('{"openfda": "testing"}')
         test_string = 'openfda'
@@ -26,7 +111,7 @@ class ApiResultTestCase(TestCase):
         result = ApiResult({})
         value = result.lookup(test_dictionary, test_string, "xyz")
         self.assertEquals(value, 'xyz')
-        
+
     def test_clean_labels(self):
         test_dictionary = json.loads("""
           {"meta": {
@@ -218,7 +303,7 @@ class ApiResultTestCase(TestCase):
         }
         """)
         result = ApiResult(test_dictionary)
-        meta, results = result.clean_labels()
+        meta, results = result.clean_events()
         self.assertEquals(meta['total'], 4587031)
 
     def test_clean_enforcements(self):
@@ -262,5 +347,5 @@ class ApiResultTestCase(TestCase):
         }
         """)
         result = ApiResult(test_dictionary)
-        meta, results = result.clean_labels()
+        meta, results = result.clean_enforcements()
         self.assertEquals(meta['total'], 3769)

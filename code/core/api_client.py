@@ -37,7 +37,7 @@ PARAMETER_MAPPINGS = {
 
 # TODO: pull out some of the url strings
 # TODO: we need to limit the number of results returned since the API only supports 5000 or less
-
+# TODO: Create a wrapper around requests that customizes error handling
 
 class ApiClient(object):
     """
@@ -71,7 +71,6 @@ class ApiClient(object):
         for api_type, api_path in BROWSE_TYPES.get('manufacturers').items():
             self.logger.debug('Browsing for manufacturers by %s' % api_type)
             api_type_data = requests.get("%s?count=%s.exact" % (API_TYPES.get(api_type), api_path))
-
             if api_type_data:
                 data[api_type] = api_type_data
 
@@ -165,7 +164,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=openfda.manufacturer_name:\"%s\"" % (
             API_TYPES['labels'], urllib.quote(query_term)), page)
         if sub_data:
-            labels_pagination, labels = self.clean_labels(sub_data)
+            labels_pagination, labels = sub_data.clean_labels(sub_data)
             data['labels'] = labels
             data['labels_paginator'] = Paginator(labels_pagination)
 
@@ -173,7 +172,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=patient.drug.openfda.manufacturer_name:\"%s\"" % (
             API_TYPES['events'], urllib.quote(query_term)), page)
         if sub_data:
-            events_pagination, events = self.clean_events(sub_data)
+            events_pagination, events = sub_data.clean_events(sub_data)
             data['events'] = events
             data['events_paginator'] = Paginator(events_pagination)
 
@@ -221,7 +220,7 @@ class ApiClient(object):
         self.logger.debug("url: %s", url)
         resp = requests.get(url)
         if resp.status_code == 200:
-            resp = requests.get(url).json()
+            resp = resp.json()
             return ApiResult(resp)
         self.logger.info('no results found for %s', query_string)
         return None
@@ -231,7 +230,11 @@ class ApiClient(object):
         This is used by browse to call the fda API
         """
         self.logger.debug("url: %s", query_url)
-        resp = requests.get(query_url).json().get('results')
+        count_json = requests.get(query_url).json()
+        if 'error' in count_json:
+            self.logger.error("Error getting at url %s: %s", query_url, count_json['message'])
+            return None
+        resp = count_json.get('results')
         return resp
 
 
