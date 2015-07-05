@@ -1,0 +1,11 @@
+---
+applications:
+- name: opendata
+  instances: 1
+  host: opendatafda-artemis-staging
+  path: .
+  timeout: 120
+  memory: 512M
+  services:
+     - artemis-memcached
+     - opendata_ds

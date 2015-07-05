@@ -50,9 +50,9 @@ PARAMETER_MAPPINGS = {
     }
 }
 
-
 # TODO: pull out some of the url strings
 # TODO: we need to limit the number of results returned since the API only supports 5000 or less
+# TODO: Create a wrapper around requests that customizes error handling
 
 class ApiClient(object):
     """
@@ -111,7 +111,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=openfda.brand_name:\"%s\"" % (
             API_TYPES['labels'], urllib.quote(query_term)), page)
         if sub_data:
-            label_pagination, labels = self.clean_labels(sub_data)
+            label_pagination, labels = sub_data.clean_labels()
             data['labels'] = labels
             data['labels_paginator'] = Paginator(label_pagination)
 
@@ -119,7 +119,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=patient.drug.medicinalproduct:\"%s\"" % (
             API_TYPES['events'], urllib.quote(query_term)), page)
         if sub_data:
-            events_pagination, events = self.clean_events(sub_data)
+            events_pagination, events = sub_data.clean_events()
             data['events'] = events
             data['events_paginator'] = Paginator(events_pagination)
 
@@ -127,7 +127,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=product_description:\"%s\"" % (
             API_TYPES['enforcements'], urllib.quote(query_term)), page)
         if sub_data:
-            enforcements_pagination, enforcements = self.clean_enforcements(sub_data)
+            enforcements_pagination, enforcements = sub_data.clean_enforcements()
             data['enforcements'] = enforcements
             data['enforcements_paginator'] = Paginator(enforcements_pagination)
 
@@ -147,7 +147,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=patient.reaction.reactionmeddrapt:\"%s\"" % (
             API_TYPES['events'], query_term), page)
         if sub_data:
-            events_pagination, events = self.clean_events(sub_data)
+            events_pagination, events = sub_data.clean_events()
             data['events'] = events
             data['events_paginator'] = Paginator(events_pagination)
 
@@ -161,7 +161,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=state:\"%s\"" % (
             API_TYPES['enforcements'], urllib.quote(query_term)), page)
         if sub_data:
-            enforcements_pagination, enforcements = self.clean_enforcements(sub_data)
+            enforcements_pagination, enforcements = sub_data.clean_enforcements()
             data['enforcements'] = enforcements
             data['enforcements_paginator'] = Paginator(enforcements_pagination)
 
@@ -183,7 +183,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=openfda.manufacturer_name:\"%s\"" % (
             API_TYPES['labels'], urllib.quote(query_term)), page)
         if sub_data:
-            labels_pagination, labels = self.clean_labels(sub_data)
+            labels_pagination, labels = sub_data.clean_labels(sub_data)
             data['labels'] = labels
             data['labels_paginator'] = Paginator(labels_pagination)
 
@@ -191,7 +191,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=patient.drug.openfda.manufacturer_name:\"%s\"" % (
             API_TYPES['events'], urllib.quote(query_term)), page)
         if sub_data:
-            events_pagination, events = self.clean_events(sub_data)
+            events_pagination, events = sub_data.clean_events(sub_data)
             data['events'] = events
             data['events_paginator'] = Paginator(events_pagination)
 
@@ -204,7 +204,7 @@ class ApiClient(object):
         sub_data = self.get_sub_data("%s?search=openfda.manufacturer_name:\"%s\"" % (
             API_TYPES['enforcements'], urllib.quote(query_term)), page)
         if sub_data:
-            enforcements_pagination, enforcements = self.clean_enforcements(sub_data)
+            enforcements_pagination, enforcements = sub_data.clean_enforcements()
             data['enforcements'] = enforcements
             data['enforcements_paginator'] = Paginator(enforcements_pagination)
 
@@ -239,8 +239,8 @@ class ApiClient(object):
         self.logger.debug("url: %s", url)
         resp = requests.get(url)
         if resp.status_code == 200:
-            resp = requests.get(url).json()
-            return resp
+            resp = resp.json()
+            return ApiResult(resp)
         self.logger.info('no results found for %s', query_string)
         return None
 
@@ -249,71 +249,108 @@ class ApiClient(object):
         This is used by browse to call the fda API
         """
         self.logger.debug("url: %s", query_url)
-        resp = requests.get(query_url).json().get('results')
+        count_json = requests.get(query_url).json()
+        if 'error' in count_json:
+            self.logger.error("Error getting at url %s: %s", query_url, count_json['message'])
+            return None
+        resp = count_json.get('results')
         return resp
 
-    def clean_labels(self, data):
+
+class ApiResult(object):
+    """
+    Class to hold api results returned
+    """
+
+    def __init__(self, data):
+        self.data = data
+
+    def lookup(self, d, key_string, default=None):
+        """
+        returns values from nested dictionaries
+        """
+        key_list = key_string.split('.')[::-1]
+        try:
+            return self._lookup(d, key_list)
+        except KeyError:
+            return default
+
+    def _lookup(self, data_dict, key_list):
+        key = key_list.pop()
+        data = data_dict[key]
+        if isinstance(data, dict):
+            return self._lookup(data, key_list)
+        else:
+            return data
+
+    def clean_labels(self):
+        """
+        returns only the fields needed for labels
+        """
         results = []
-        meta = data.get('meta').get('results')
-        for d in data.get('results'):
+        meta = self.data.get('meta').get('results')
+        for d in self.data.get('results'):
             clean_data = {
-                "id": d.get('id', {}),
-                "brand_name": d.get('openfda', {}).get('brand_name'),
-                "generic_name": d.get('openfda', {}).get('generic_name'),
-                "description": d.get('openfda', {}).get('description'),
-                "pharm_class_epc": d.get('openfda', {}).get('pharm_class_epc'),
-                "pharm_class cs": d.get('openfda', {}).get('pharm_class_cs'),
-                "route": d.get('openfda', {}).get('route'),
-                "manufacturer": d.get('openfda', {}).get('manufacturer_name'),
-                "do_not_use": d.get('openfda', {}).get('do_not_use'),
-                "active_ingredient": d.get('active_ingredient'),
-                "inactive_ingredient": d.get('inactive_ingredient'),
-                "dosage_and_administration": d.get('dosage_and_administration'),
-                "warnings": d.get('warnings'),
-                "adverse_reactions": d.get('adverse_reactions'),
-                "drug_interactions": d.get('drug_interactions'),
-                "pharmacokinetics": d.get('pharmacokinetics'),
+                "id": self.lookup(d, 'id'),
+                "brand_name": self.lookup(d, 'openfda.brand_name'),
+                "generic_name": self.lookup(d, 'openfda.generic_name'),
+                "description": self.lookup(d, 'openfda.description'),
+                "pharm_class_epc": self.lookup(d, 'openfda.pharm_class_epc'),
+                "pharm_class cs": self.lookup(d, 'openfda.pharm_class_cs'),
+                "route": self.lookup(d, 'openfda.route'),
+                "manufacturer": self.lookup(d, 'openfda.manufacturer_name'),
+                "do_not_use": self.lookup(d, 'openfda.do_not_use'),
+                "active_ingredient": self.lookup(d, 'active_ingredient'),
+                "inactive_ingredient": self.lookup(d, 'inactive_ingredient'),
+                "dosage_and_administration": self.lookup(d, 'dosage_and_administration'),
+                "warnings": self.lookup(d, 'warnings'),
+                "adverse_reactions": self.lookup(d, 'adverse_reactions'),
+                "drug_interactions": self.lookup(d, 'drug_interactions'),
+                "pharmacokinetics": self.lookup(d, 'pharmacokinetics'),
             }
             results.append(clean_data)
         return meta, results
 
-    def clean_events(self, data):
+    def clean_events(self):
         results = []
-        meta = data.get('meta').get('results')
-        for d in data.get('results'):
+        meta = self.data.get('meta').get('results')
+        for d in self.data.get('results'):
             safety_data = OrderedDict()
-            safety_data["safety_report"] = d.get('safetyreportid')
-            safety_data["safety_report_version"] = d.get('safetyreportversion')
-            safety_data["receive_date"] = self.format_date(d.get('receivedate'))
-            safety_data["receipt_date_format"] = d.get('receiptdateformat')
-            safety_data["seriousness"] = self.format_field_from_parameter_mapping('serious', d.get('serious'))
+            safety_data["safety_report"] = self.lookup(d, 'safetyreportid')
+            safety_data["safety_report_version"] = self.lookup(d, 'safetyreportversion')
+            safety_data["receive_date"] = self.format_date(self.lookup(d, 'receivedate'))
+            safety_data["receipt_date_format"] = self.lookup(d, 'receiptdateformat')
+            safety_data["seriousness"] = self.format_field_from_parameter_mapping('serious', self.lookup(d, 'serious'))
             safety_data["seriousness_details"] = \
-                ["congenital anomaly: %s" % self.yes_or_no(d.get("seriouscongenitalanomali")),
-                 "death: %s" % self.yes_or_no(d.get("seriousnessdeath")),
-                 "disabling: %s" % self.yes_or_no(d.get("seriousnessdisabling")),
-                 "hospitalization: %s" % self.yes_or_no(d.get("seriousnesshospitalization")),
-                 "life threatening: %s" % self.yes_or_no(d.get("seriousnesslifethreatening"))]
-            safety_data["duplicate_report_source"] = d.get('reportduplicate', {}).get('duplicatesource')
-            safety_data["duplicate_report_number"] = d.get('reportduplicate', {}).get('duplicatenumb')
+                ["congenital anomaly: %s" % self.yes_or_no(self.lookup(d, "seriouscongenitalanomali")),
+                 "death: %s" % self.yes_or_no(self.lookup(d, "seriousnessdeath")),
+                 "disabling: %s" % self.yes_or_no(self.lookup(d, "seriousnessdisabling")),
+                 "hospitalization: %s" % self.yes_or_no(self.lookup(d, "seriousnesshospitalization")),
+                 "life threatening: %s" % self.yes_or_no(self.lookup(d, "seriousnesslifethreatening")),
+                 "other: %s" % self.yes_or_no(self.lookup(d, "seriousnessother"))]
+            safety_data["duplicate_report_source"] = self.lookup(d, 'reportduplicate.duplicatesource')
+            safety_data["duplicate_report_number"] = self.lookup(d, 'reportduplicate.duplicatenumb')
 
             patient_data = OrderedDict()
-            patient_data["patient_onset_age"] = "%s%s" % (d.get('patient', {}).get('patientonsetstage', ""),
-                                                          d.get('patientonsetageunit', ""))
-            patient_data["patient_sex"] = self.male_or_female(d.get('patient', {}).get('patientsex'))
-            patient_data["patient_death_details"] = d.get('patient', {}).get('patientdeath')
+            patient_data["patient_onset_age"] = "%s%s" % (self.lookup(d, 'patient.patientonsetstage', ""),
+                                                          self.lookup(d, 'patientonsetageunit', ""))
+            patient_data["patient_sex"] = self.male_or_female(self.lookup(d, 'patient.patientsex'))
+            patient_data["patient_death_details"] = self.lookup(d, 'patient.patientdeath')
 
-            label_data = OrderedDict()
-            for drug in d.get('patient', {}).get('drug'):
-                label_data[drug.get('medicinalproduct', "")] = [
-                    "drug administration route: %s" % drug.get('drugadministrationroute'),
+            label_data = {}
+            drugs = self.lookup(d, 'patient.drug')
+
+            for drug in drugs:
+                label_data[self.lookup(drug, "medicinalproduct")] = [
+                    "drug administration route: %s" % (self.lookup(drug, 'drugadministrationroute')),
                     "actions taken with drug: %s" %
-                    self.format_field_from_parameter_mapping('action', drug.get('actiondrug')),
-                    "reported dosage: %s%s" % (drug.get('drugcumulativedosagenumb'), drug.get('drugcumulativedosageunit', '')),
-                    "number of doses: %s" % drug.get('drugstructuredosagenumb'),
+                    self.format_field_from_parameter_mapping('action', self.lookup(drug, 'actiondrug')),
+                    "reported dosage: %s%s" %
+                    (self.lookup(drug, 'drugcumulativedosagenumb'), self.lookup(drug, 'drugcumulativedosageunit', '')),
+                    "number of doses: %s" % self.lookup(drug, 'drugstructuredosagenumb'),
                     "reported role of drug in adverse event: %s" %
-                    self.format_field_from_parameter_mapping('drugcharacterization', drug.get('drugcharacterization'))
+                    self.format_field_from_parameter_mapping('drugcharacterization', self.lookup(drug, 'drugcharacterization'))
                 ]
-
             # suppress details when seriousness is minor
             if safety_data["seriousness"] != PARAMETER_MAPPINGS.get('serious').get('1'):
                 safety_data.pop("seriousness_details")
@@ -323,26 +360,26 @@ class ApiClient(object):
                             'label_data': label_data})
         return meta, results
 
-    def clean_enforcements(self, data):
+    def clean_enforcements(self):
         results = []
-        meta = data.get('meta').get('results')
-        for d in data.get('results'):
+        meta = self.data.get('meta').get('results')
+        for d in self.data.get('results'):
             clean_data = {
-                'event_id': d.get('event_id'),
-                'recall_number': d.get('recall_number'),
-                'status': d.get('status'),
-                'city': d.get('city'),
-                'state': d.get('state'),
-                'recalling_firm': d.get('recalling_firm'),
-                'reason_for_recall': d.get('reason_for_recall'),
-                'manufacturer_name': d.get('openfda', {}).get('manufacturer_name'),
-                'recall_initiation_date': self.format_date(d.get('recall_initiation_date')),
-                'classification': d.get('classification'),
-                'product_description': d.get('product_description'),
-                'code_info': d.get('code_info'),
-                'voluntary_mandated': d.get('voluntary_mandated'),
-                'initial_firm_notification': d.get('initial_firm_notification'),
-                'report_date': self.format_date(d.get('report_date')),
+                'event_id': self.lookup(d, 'event_id'),
+                'recall_number': self.lookup(d, 'recall_number'),
+                'status': self.lookup(d, 'status'),
+                'city': self.lookup(d, 'city'),
+                'state': self.lookup(d, 'state'),
+                'recalling_firm': self.lookup(d, 'recalling_firm'),
+                'reason_for_recall': self.lookup(d, 'reason_for_recall'),
+                'manufacturer_name': self.lookup(d, 'openfda.manufacturer_name'),
+                'recall_initiation_date': self.format_date(self.lookup(d, 'recall_initiation_date')),
+                'classification': self.lookup(d, 'classification'),
+                'product_description': self.lookup(d, 'product_description'),
+                'code_info': self.lookup(d, 'code_info'),
+                'voluntary_mandated': self.lookup(d, 'voluntary_mandated'),
+                'initial_firm_notification': self.lookup(d, 'initial_firm_notification'),
+                'report_date': self.format_date(self.lookup(d, 'report_date')),
             }
             results.append(clean_data)
         return meta, results

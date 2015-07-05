@@ -172,8 +172,8 @@ def search_detail(request):
     results = {}
     if request.method == 'GET' and 'q' in request.GET:
         q = request.GET.get('q').strip()
-        filter_string = request.GET.get('filter_string').strip()
-        browse_type = request.GET.get('browse_type').strip()
+        filter_string = request.GET.get('filter_string')
+        browse_type = request.GET.get('browse_type')
         client = ApiClient()
         results = client.get_age_sex(browse_type, q, filter_string)
         return HttpResponse(results, content_type='application/json')
