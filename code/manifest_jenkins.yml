@@ -5,7 +5,7 @@ applications:
   host: opendatafda-artemis-staging
   path: .
   timeout: 120
-  memory: 512M 
+  memory: 512M
   services:
      - artemis-memcached
      - opendata_ds
