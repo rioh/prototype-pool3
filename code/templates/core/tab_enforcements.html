@@ -19,7 +19,11 @@
                         <div class="text">
                             {% if value|is_list %}
                                 {% for val in value %}
-                                  {{ val|default:"N/A" }}
+                                    {% if key == 'manufacturer_name' and val %}
+                                        <a href="{% url 'search_manufacturers' %}?q={{ val|replace_spaces|urlencode }}">{{ val }}</a>
+                                    {% else %}
+                                        {{ val|default:"N/A" }}
+                                    {% endif %}
                                 {% endfor %}
                             {% else %}
                                 {{ value|default:"N/A" }}
