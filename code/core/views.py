@@ -150,7 +150,7 @@ def search_manufacturers(request):
     query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
     tab = request.GET.get('tab', 'labels')
-    data = client.search_manufacturers(query_term, int(page))
+    data = client.search_manufacturers(query_term, int(page), tab)
     data['q'] = query_term
     data['browse_type'] = 'manufacturers'
     data['tab'] = tab
