@@ -2199,18 +2199,6 @@ input[type="checkbox"][readonly] {
   box-sizing: border-box;
   text-align: center;
 }
-.fdahead .fdahead-nav ul li.one {
-  background-color: #007dd2;
-}
-.fdahead .fdahead-nav ul li.two {
-  background-color: #006eb9;
-}
-.fdahead .fdahead-nav ul li.three {
-  background-color: #005f9f;
-}
-.fdahead .fdahead-nav ul li.four {
-  background-color: #005086;
-}
 .fdahead .fdahead-nav ul li a {
   display: block;
   color: #FFFFFF;
@@ -2248,18 +2236,6 @@ input[type="checkbox"][readonly] {
   position: absolute;
   right: 2.0242914979757%;
   top: 20px;
-}
-.fdahead .fdahead-search ::-webkit-input-placeholder {
-  color: #333333;
-}
-.fdahead .fdahead-search :-moz-placeholder {
-  color: #333333;
-}
-.fdahead .fdahead-search ::-moz-placeholder {
-  color: #333333;
-}
-.fdahead .fdahead-search :-ms-input-placeholder {
-  color: #333333;
 }
 .fdahead .fdahead-search form {
   margin: 0;
@@ -2302,15 +2278,12 @@ input[type="checkbox"][readonly] {
   }
   .fdahead .fdahead-search form select {
     width: 40%;
-    float: left;
   }
   .fdahead .fdahead-search form input {
     width: 55%;
-    float: left;
   }
   .fdahead .fdahead-search form button {
     width: 5%;
-    float: right;
   }
 }
 @media screen and (max-width: 650px) {
@@ -2335,18 +2308,22 @@ input[type="checkbox"][readonly] {
     width: 10%;
   }
 }
+.wrapper.footer {
+  background-color: #EFEFEF;
+}
+.content.footer {
+  background-color: transparent;
+}
 .fdafoot {
   clear: both;
-  padding: 20px 2.0242914979757% 0;
   position: relative;
+  color: #999999;
 }
 .fdafoot ul {
   margin-left: 0;
   list-style: none;
   margin-left: 0;
   list-style: none;
-  margin-bottom: 10px;
-  border-top: 5px solid #CCCCCC;
   padding: 20px 0 0;
 }
 .fdafoot ul .plain {
@@ -2365,11 +2342,8 @@ input[type="checkbox"][readonly] {
   padding-left: 0;
   border-left: 0;
 }
-body {
-  background-color: #FFFFFF;
-}
-.content {
-  background-color: #FFFFFF;
+.fdafoot ul a {
+  color: #005f9f;
 }
 h1,
 h2,
@@ -2399,7 +2373,7 @@ h3,
   background-color: transparent;
   border: none;
 }
-footer.locfoot {
+footer.fdafoot {
   background-color: #CCCCCC;
   padding: 20px;
   color: #FFFFFF;
@@ -2660,7 +2634,6 @@ label.readonly {
   list-style: none;
   padding-top: 10px;
   border-bottom: 1px solid #CCCCCC;
-  margin-bottom: 21px;
 }
 .fda-tabs-interface ul .plain {
   margin-left: 25px;
@@ -2781,19 +2754,6 @@ label.readonly {
     width: 35%;
   }
 }
-.cell .text {
-  max-height: 55px;
-  overflow: hidden;
-}
-.expanded .text {
-  max-height: none;
-  overflow: visible;
-}
-.more,
-.less {
-  cursor: pointer;
-  color: #005f9f;
-}
 .icon {
   display: inline-block;
   width: 5px;
@@ -2858,12 +2818,6 @@ label.readonly {
   text-align: center;
   color: #005f9f;
 }
-.fda-alpha-nav ol li a.alpha-disabled {
-  color: #CCCCCC;
-  border-color: #CCCCCC;
-  background-color: #F5F5F5;
-  cursor: not-allowed;
-}
 .fda-alpha-nav ol li.selected a {
   background-color: #005f9f;
   color: #FFFFFF;
@@ -2890,17 +2844,9 @@ label.readonly {
     width: 20%;
   }
   .fda-alpha-nav ol li.K {
-    border-right: 2px solid #FFFFFF;
-  }
-  .fda-alpha-nav ol li.L {
-    border-left: 2px solid #FFFFFF;
-  }
-  .fda-alpha-nav ol li.F,
-  .fda-alpha-nav ol li.P {
     border-right: none;
   }
-  .fda-alpha-nav ol li.G,
-  .fda-alpha-nav ol li.Q {
+  .fda-alpha-nav ol li.L {
     border-left: none;
   }
 }
