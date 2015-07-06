@@ -105,7 +105,7 @@ class ApiClient(object):
 
         return None
 
-    def search_labels(self, query_term, page):
+    def search_labels(self, query_term, page, tab):
         self.logger.debug("Searching for '%s'", query_term)
         data = {}
         # get general drug info
