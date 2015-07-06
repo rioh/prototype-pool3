@@ -28,6 +28,12 @@
 
     <!--  --><link href="{% static "css/style-fda.css" %}" type='text/css' rel="stylesheet"/>
 
+    <!-- github ribbon css -->
+    <link rel="stylesheet" href="{% static "css/gh-fork-ribbon.min.css" %}" />
+    <!--[if lt IE 9]>
+      <link rel="stylesheet" href="{% static "css/gh-fork-ribbon.ie.min.css" %}" />
+    <![endif]-->
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -82,6 +88,14 @@
             </footer><!-- end footer -->
         </div>
     </div>
+
+    <!-- github fork ribbon -->
+    <div id="github" class="github-fork-ribbon-wrapper right-bottom">
+        <div class="github-fork-ribbon">
+            <a href="https://github.com/artemis-consulting">Fork me on GitHub</a>
+        </div>
+    </div>
+
     <script>
         {# django url variables for search bar #}
         var urlLabels = "{% url 'search_labels' %}";
