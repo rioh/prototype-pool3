@@ -8,6 +8,13 @@ body {
 //.content {
 //	background-color: @white;
 //}
+.wrapper {
+  &.body {
+    .content {
+      padding-top: 30px;
+    };
+  };
+};
 h1, 
 h2,
 .mimic-h2, 
@@ -35,13 +42,6 @@ h3,
 .button-transparent {
 	background-color:transparent;
 	border:none;
-};
-footer {
-	&.fdafoot {
-		background-color:@gray;
-		padding:20px;
-		color:@white;
-	};
 };
 .default-table {
   display:table;
@@ -372,6 +372,9 @@ label {
     color: @white;
     color: rgba(255, 255, 255, 0.75);
     margin-bottom: 5px;
+  };
+  a {
+    color: @white;
   };
 };
 .thumb-link {
