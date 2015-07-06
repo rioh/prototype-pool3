@@ -1,0 +1,29 @@
+{% load staticfiles %}
+
+<header class="fdahead">
+	<div class="wrapper header">
+		<div class="content header">
+			<button class="fdahead-nav-toggle"><span>show navigation</span></button>
+			<span class="fdahead-logo"><a href="/">
+                <img title="Official FDA Logo" width="92" height="38" alt="logo" src="{% static "images/fda-logo.png" %}">
+                <span>Drug Monitor</span></a></span>
+
+              {% block search %}
+                  {% include 'core/searchbar.html' with search_category=search_header %}
+              {% endblock %}
+
+		</div>
+	</div>
+	<div class="wrapper header header-nav">
+		<div class="content header header-nav">
+			<nav class="fdahead-nav">
+				<ul class="">
+                    <li class="one"><a href="{% url 'browse_labels' %}">Drug Names</a> </li>
+                    <li class="two"><a href="{% url 'browse_events' %}">Adverse Events</a> </li>
+                    <li class="three"><a href="{% url 'browse_enforcements' %}">Enforcement Reports</a> </li>
+                    <li class="four"><a href="{% url 'browse_manufacturers' %}">Drug Manufacturers</a> </li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</header>	

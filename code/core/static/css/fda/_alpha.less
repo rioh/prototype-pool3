@@ -1,0 +1,79 @@
+.fda-alpha-nav {
+  h2 {
+    .hidden;
+  };
+  ol {
+    .plain;
+    overflow: hidden;
+    clear:both;
+    li {
+      float: left;
+      margin: 0;
+      .box-sizing;
+      width:3.3333333%;
+      height: 28px;
+      line-height: 24px;
+      border: 2px solid @white;
+      &:first-child {
+        border-left: none;
+      };
+      &:last-child {
+        border-right: none;
+      };
+      &.double {
+        width: 6.6666666%
+      };
+      a {
+        border: 1px solid @fda_blue;
+        display:block;
+        .box-sizing;
+        text-align: center;
+        color: @fda_blue;
+        &.alpha-disabled {
+          color: @gray;
+          border-color: @gray;
+          background-color: @white_smoke;
+          cursor:not-allowed;
+        };
+      };
+      &.selected {
+        a {
+          background-color: @fda_blue;
+          color: @white;
+        };
+      };
+      @media @tablet {
+        width:6.6666666%;
+        &.double {
+          width: 13.3333333%
+        };
+        &.K {
+          border-right: none;
+        };
+        &.L {
+          border-left: none;
+        };
+      };
+      @media @phone {
+        width:10%;
+        &.double {
+          width: 20%
+        };
+        &.K {
+          border-right: 2px solid @white;
+        };
+        &.L {
+          border-left: 2px solid @white;
+        };
+        &.F,
+        &.P {
+          border-right: none;
+        };
+        &.G,
+        &.Q {
+          border-left: none;
+        };
+      };
+    };
+  };
+};

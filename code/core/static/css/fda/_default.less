@@ -1,0 +1,431 @@
+body {
+	background-color: @lighter_gray !important;
+};
+//.container {
+	//width: 100%;
+	//.box-sizing;
+//};
+//.content {
+//	background-color: @white;
+//}
+h1, 
+h2,
+.mimic-h2, 
+h3,
+.mimic-h3 {
+	font-weight: normal;
+	color: @charcoal;
+};
+.hidden {
+	position: absolute;
+	left: 0px;
+	top: -500px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+};
+.visible {
+	position: static;
+	left: auto;
+	top: auto;
+	width: auto;
+	height: auto;
+	overflow: visible;
+};
+.button-transparent {
+	background-color:transparent;
+	border:none;
+};
+footer {
+	&.fdafoot {
+		background-color:@gray;
+		padding:20px;
+		color:@white;
+	};
+};
+.default-table {
+  display:table;
+  margin:0;
+  padding:0;
+  table-layout: fixed;
+  width:100%;
+};
+.default-table-row {
+  display:table-row;
+};
+.default-table-cell {
+  display:table-cell;
+  text-align:left;
+  vertical-align: top;
+};
+.default-tabs {
+	margin: 0 0 -1px;
+	padding: 0;
+	list-style:none;
+	li {
+		display: inline-block;
+		padding: 5px 15px;
+		border: 1px solid @gray;
+		border-bottom: none;
+		background-color: transparent;
+		&.active {
+			background-color: @white;
+		};
+	};
+};
+
+//form
+
+@label_text_color: @charcoal;
+
+@input_font_size: @base_font_size;
+@input_height: @input_font_size * 2.6;
+@input_border_color: @gray;
+@input_background_color: @white;
+
+@form_text_disabled_color: @dark_gray;
+@form_text_readonly_color: @label_text_color;
+
+@button_text_color: @fda_blue;
+@button_border_color: @fda_blue;
+@button_background_color: @white;
+
+@button_primary_text_color: @white;
+@button_primary_border_color: @fda_blue;
+@button_primary_background_color: @fda_blue;
+
+@button_tertiary_text_color: @charcoal;
+@button_tertiary_border_color: @gray;
+@button_tertiary_background_color: @gray;
+
+input,
+textarea {
+	box-shadow: none !important;
+};
+fieldset {
+	border: 1px solid @gray;
+	padding: 10px 20px 15px;
+	ul,
+	ol,
+	p {
+		&:last-child {
+			.margin-bottom-none;
+		};
+	};
+};
+legend {
+  .mimic-h3;
+  font-weight:normal;
+	display: block;
+	width: auto;
+	padding: 0 5px;
+	margin: 0;
+	border: 0;
+};
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+	font-size: @input_font_size;
+	height: @input_height;
+	line-height: normal;
+	.box-sizing;
+	padding: 0 8px;
+	background-color: @input_background_color;
+	border: 1px solid @input_border_color;
+	border-radius: 0 !important;
+	-webkit-appearance: none;
+}
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button,
+.default-button {
+  font-size: @input_font_size;
+  height: @input_height;
+  .box-sizing;
+  padding: 0 8px;
+  background-color: @button_background_color;
+  border: 1px solid @button_border_color;
+  border-radius: 0 !important;
+  color: @button_text_color;
+}
+.button {
+  .default-button;
+  display: inline-block;
+  line-height: @input_height - 2;
+
+}
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button,
+.default-button {
+	&.button-primary {
+		color: @button_primary_text_color;
+		background-color: @button_primary_background_color;
+		border: 1px solid @button_primary_border_color;
+	};
+	&.button-tertiary {
+		color: @button_tertiary_text_color;
+		background-color: @button_tertiary_background_color;
+		border: 1px solid @button_tertiary_border_color;
+	};
+};
+select {
+	padding: 0 0 0 6px;
+};
+select[multiple] {
+	padding: 6px;
+};
+/* webkit only */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  select {
+    padding-right:20px;
+    background: transparent url(sprite-fda.png) 100% -477px no-repeat;  
+  }
+}
+textarea {
+	height: auto;
+	padding: 6px;
+}
+label {
+	color: @label_text_color;
+	&.disabled	{
+		color: @form_text_disabled_color;
+	};
+	&.readonly	{
+		color: @form_text_readonly_color;
+	};
+};
+.fda-list-group {
+  .plain;
+  li {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid @lighter_gray;
+    a {
+      padding: 10px 100px 10px 0;
+      display: block;
+      position: relative;
+      .count {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -11px;
+        font-size: 12px;
+        background-color: @lighter_gray;
+        color: @dark_gray;
+        display: inline-block;
+        padding: 0 7px;
+        height: 22px;
+        line-height: 22px;
+        border-radius: 5px;
+      };
+      &:hover,
+      &:focus {
+        background-color: @white_smoke;
+        .count {
+          background-color: @white;
+        };
+      };
+    };
+  };
+};
+.homepage-banner-temp {
+  background-color: @charcoal;
+  overflow:hidden;
+  position: relative;
+  
+  padding-bottom: 30%; /* 12:4 */
+  padding-top: 25px;
+  height: 0;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+  };
+  .text-wrapper {
+    width:@container_width;
+    margin: 0 auto;
+    position:relative;
+    .box-sizing;
+    clear:both;
+    padding: 0 @gutter;
+    .text {
+      color: @white;
+      //.content;
+      width: 27%;
+      background-color: @darker_gray;
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      left: @gutter;
+      top: 50px;
+      z-index: 2;
+      .box-sizing;
+      padding: 20px;
+      h1 {
+        color: @white;
+        font-weight: normal;
+      };
+      p {
+        color: @gray;
+        margin: 0;
+        a {
+          color: @white;
+        };
+      };
+      @media @tablet-large {
+        top: 0;
+        left: 0;
+        width: 50%;
+        padding: @gutter;
+      };
+      @media @phone-large {
+        width: 60%;
+        h1 {
+          .mimic-h2;
+          color: @white;
+        };
+        p {
+          font-size: 12px;
+          line-height: 16px;
+        };
+      };
+      @media @phone {
+        p {
+          span {
+            display: none;
+          };
+        };
+      };
+    };
+    @media @tablet-large {
+      width: 100%;
+    };
+  };
+};
+
+.page-header {
+  background-color: @dim_gray;
+  background: linear-gradient(
+    rgba(100,100,100, 0.85), 
+    rgba(100,100,100, 0.85)
+  ),
+  url(../images/pic08.jpg) 100% -210px no-repeat;
+  padding: 40px 0 15px;
+  &.fda-drug-names {
+    background-color: @fda_drug_names;
+    background: linear-gradient(
+      rgba(107,152,59, 0.90), 
+      rgba(107,152,59, 0.90)
+    ),
+    url(../images/pic04.jpg) 100% -50px no-repeat;
+  };
+  &.fda-adverse-events {
+    background-color: @fda_adverse_events;
+    background: linear-gradient(
+      rgba(2,91,148, 0.85), 
+      rgba(2,91,148, 0.85)
+    ),
+    url(../images/pic05.jpg) 100% -10px no-repeat;
+  };
+  &.fda-enforcement-reports {
+    background-color: @fda_enforcement_reports;
+    background: linear-gradient(
+      rgba(197,143,11, 0.85), 
+      rgba(197,143,11, 0.85)
+    ),
+    url(../images/pic07.jpg) 100% -60px no-repeat;
+  };
+  &.fda-drug-manufacturers {
+    background-color: @fda_drug_manufacturers;
+    background: linear-gradient(
+      rgba(102,51,102, 0.85), 
+      rgba(102,51,102, 0.85)
+    ),
+    url(../images/pic06.jpg) 100% -60px no-repeat;
+  };
+  h1 {
+    color: @white;
+    margin-bottom: 5px;
+  };
+  p {
+    color: @white;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 5px;
+  };
+};
+.thumb-link {
+  img {
+    display:block;
+    margin-bottom: 10px;
+  };
+  h2 {
+    //.mimic-h3;
+    small {
+      display: block;
+      font-size: 12px;
+      color: @dark_gray;
+      margin-bottom: 3px;
+      i {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 3px;
+        background-color: @fda_drug_names;
+        vertical-align: text-top;
+        margin-top: 2px;
+        &.blue {
+          background-color: @fda_adverse_events;
+        };
+        &.orange {
+          background-color: @fda_enforcement_reports;
+        };
+        &.purple {
+          background-color: @fda_drug_manufacturers;
+        };
+      };
+    };
+  };
+};
+.fda-home {
+  .span8 {
+    @media @tablet {
+      .col(24, 24);
+      float:none;
+    };
+  };
+  .span4 {
+    @media @tablet {
+      .col(6, 24);
+      &.first-row {
+        margin-left:0;
+      };
+    };
+    @media @phone-large {
+      .col(12, 24);
+      &.second-row {
+        margin-left:0;
+      };
+    };
+  };
+};

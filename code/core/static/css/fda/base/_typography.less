@@ -1,0 +1,533 @@
+/*
+
+#Typography
+ 
+##Base
+
+Refer to _config.less for body font style.
+
+```
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ultrices, risus facilisis vestibulum viverra, lectus leo pharetra tortor, sed congue nisl libero ut turpis. Integer consequat, purus non pharetra suscipit, metus lorem egestas urna, eu mattis est augue a justo. Vestibulum eget justo rhoncus, commodo magna id, egestas purus. In porta erat erat, nec dapibus neque vestibulum ullamcorper. Pellentesque dapibus, nibh eget aliquet maximus, magna mauris lacinia lorem, vel consectetur orci ipsum vel tellus. Vestibulum sodales bibendum ornare. Phasellus odio velit, malesuada non sollicitudin vitae, fringilla vel justo.</p>
+```
+
+*/
+body { 
+  font-family: @body_font_family;
+  font-size: @base_font_size;
+  color:@body_text_color;
+  line-height:@base_line_height;
+  background-color:@body_background;
+};
+::-moz-selection { 
+  background: @text_select_background; 
+  color: @text_select_color; 
+  text-shadow: none; 
+};
+::selection { 
+  background: @text_select_background; 
+  color: @text_select_color; 
+  text-shadow: none; 
+};
+
+/*
+ 
+##Links
+
+```
+<a href="">Default Link</a>
+<a href="" class="white">Link white text</a>
+<a href="" class="gray">Link gray text</a>
+```
+
+*/
+
+a { 
+  &:link {
+    color: @link_color;
+    text-decoration:none;
+  };
+  &:visited { 
+    color: @link_color_visited; 
+    text-decoration:none;
+  };
+  &:hover, 
+  &:focus { 
+    color: @link_color_hover; 
+    text-decoration:underline;
+  };
+  &:hover,
+  &:active {
+    outline: 0;
+  };
+};
+.white {  
+  &:link {
+    color: @link_color_white;
+    text-decoration:none;
+  };
+  &:visited { 
+    color: @link_color_white_visited; 
+    text-decoration:none;
+  };
+  &:hover, 
+  &:focus { 
+    color: @link_color_white_hover; 
+    text-decoration:underline;
+  };
+};
+.gray { 
+  color: @darker_gray;
+  text-decoration:none;
+  &:visited { 
+    color:@darker_gray ; 
+    text-decoration:none;
+  };
+  &:hover, 
+  &:focus { 
+    color: @link_color_hover; 
+    text-decoration:underline;
+  };
+};
+
+
+/*
+ 
+##Message options
+
+```
+<h2 class="mute"><code>mute</code> is used to suppress headings or other html elements to base font style</h2>
+<p class="text-warning"><code>text-warning</code> indicates caution should be taken with this action</p>
+<p class="text-alert"><code>text-alert</code> is for informational alert messages</p>
+<p class="text-error"><code>text-error</code> indicates error or potentially negative action</p>
+<p class="text-info"><code>text-info</code> is for informational alert messages</p>
+<p class="text-success"><code>text-success</code> indicates a successful or positive action</p>
+
+```
+
+*/
+.mute {
+  font-size: @base_font_size;
+  line-height: @base_line_height;
+  font-weight: normal;
+  color: @mute_font_color;
+};
+.text-warning {
+  color: @text_warning_color;
+};
+.text-alert {
+  color: @text_alert_color;
+  a {
+    color: @text_alert_color !important;
+    text-decoration:underline !important;
+  };
+};
+.text-error {
+  color: @text_error_color;
+};
+.text-info {
+  color: @text_info_color;
+};
+.text-success {
+  color: @text_success_color;
+};
+.back-to-top {
+  text-align:right;
+};
+
+/*
+ 
+##Headings
+
+```
+<h1>h1 heading</h1>
+<h2>h2 heading</h2>
+<h3>h3 heading</h3>
+<h4>h4 heading</h4>
+<h5>h5 heading</h5>
+<h6>h6 heading</h6>
+```
+
+*/
+
+h1 {font-family: @h1_font_family; color:@h1_font_color;};
+h2 {font-family: @h2_font_family; color:@h2_font_color;};
+h3 {font-family: @h3_font_family; color:@h3_font_color;};
+h4 {font-family: @h4_font_family; color:@h4_font_color;};
+h5 {font-family: @h5_font_family; color:@h5_font_color;};
+h6 {font-family: @h6_font_family; color:@h6_font_color;};
+
+/*
+ 
+##Headings - Alternative style
+
+```
+<h1 class="alt">h1 heading</h1>
+<h2 class="alt">h2 heading</h2>
+<h3 class="alt">h3 heading</h3>
+<h4 class="alt">h4 heading</h4>
+<h5 class="alt">h5 heading</h5>
+<h6 class="alt">h6 heading</h6>
+```
+
+*/
+h1.alt {font-family: @h1_alt_font_family; color:@h1_alt_font_color;};
+h2.alt {font-family: @h2_alt_font_family; color:@h2_alt_font_color;};
+h3.alt {font-family: @h3_alt_font_family; color:@h3_alt_font_color;};
+h4.alt {font-family: @h4_alt_font_family; color:@h4_alt_font_color;};
+h5.alt {font-family: @h5_alt_font_family; color:@h5_alt_font_color;};
+h6.alt {font-family: @h6_alt_font_family; color:@h6_alt_font_color;};
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: @base_line_height;
+  margin: 0 0 @margin_bottom_single;
+};
+/*
+ 
+##small in headings
+
+```
+<h1>h1 heading <small>iamsmall</small></h1>
+<h1>h1 heading <small class="block">iamsmall</small></h1>
+<h2>h2 heading <small>iamsmall</small></h2>
+<h2>h2 heading <small class="block">iamsmall</small></h2>
+<h3>h3 heading <small>iamsmall</small></h3>
+<h3>h3 heading <small class="block">iamsmall</small></h3>
+```
+
+*/
+.small-in-heading {
+  font-weight: normal;
+  line-height: 1;
+  color: #666;
+  font-size: @base_font_size;
+  @media @phone {
+    display: block;
+    margin-top: 5px;
+  };
+  &.block {
+    display: block;
+    margin-top: 5px;
+  };
+};
+h1,
+.mimic-h1 {
+  font-size: @base_font_size * 2;
+  line-height: @base_line_height * 1.5;
+  font-weight: bold;
+  small {
+    .small-in-heading;
+    span {
+      font-weight:bold;
+    };
+    &.match-header {
+      font-size: @base_font_size * 2;
+      line-height: @base_line_height * 1.5;
+    };
+  };
+};
+h2,
+.mimic-h2 {
+  font-size: @base_font_size * 1.5;
+  line-height: @base_line_height * 1.25;
+  font-weight: bold;
+  small {
+    .small-in-heading;
+  };
+};
+h3,
+.mimic-h3 {
+  font-size: @base_font_size * 1.125;
+  line-height: @base_line_height * 1.05;
+  font-weight: bold;
+  small {
+    .small-in-heading;
+  };
+};
+h4,
+.mimic-h4 {
+  font-size: @base_font_size;
+  line-height: @base_line_height;
+  font-weight: bold;
+  small {
+    .small-in-heading;
+  };
+};
+h5,
+.mimic-h5 {
+  font-size: @base_font_size * .85;
+  line-height: @base_line_height * .75;
+  font-weight: bold;
+};
+h6,
+.mimic-h6 {
+  font-size: @base_font_size * .85;
+  line-height: @base_line_height * .75;
+  font-weight: normal;
+};
+/*
+ 
+##small in headings
+
+```
+<h1>h1 heading <small>iamsmall</small></h1>
+<h1>h1 heading <small class="block">iamsmall</small></h1>
+<h2>h2 heading <small>iamsmall</small></h2>
+<h2>h2 heading <small class="block">iamsmall</small></h2>
+<h3>h3 heading <small>iamsmall</small></h3>
+<h3>h3 heading <small class="block">iamsmall</small></h3>
+```
+
+*/
+.bordered-bottom {
+  border-bottom: 1px solid @gray;
+  padding-bottom: 5px;
+};
+.base-font-size {
+  font-size: @base_font_size;
+  line-height: @base_line_height;
+  margin-bottom:0;
+  font-weight: normal;
+};
+.base-font-size-smaller {
+  font-size: @base_font_size * .90;
+  line-height: @base_line_height * .85;
+  margin-bottom:0;
+  font-weight: normal;
+};
+.page-head {
+  margin-bottom: @margin_bottom_quad; 
+};
+hr{
+  width: 100%;
+  height: 1px;
+  background-color: @gray;
+  color: @gray;
+  border:none;
+  margin: 0 0 @margin_bottom_quad;
+};
+section, 
+article, 
+hgroup, 
+nav, 
+figure, 
+aside,
+table, 
+form,
+pre,
+p, 
+dl, 
+ul, 
+ol {
+  margin:0 0 @margin_bottom_quad;
+};
+.footnote li:target {
+  background-color: @footnote_target_color;
+};
+ul,
+ol {
+  padding: 0;
+  margin-left: @list_indent;
+};
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin-bottom: 0;
+};
+.plain {
+  margin-left: 0;
+  list-style: none;
+  .plain {
+    margin-left: @list_indent;
+    list-style: none;
+  };
+};
+.inside {
+	margin-left: 0;
+	list-style-position: inside;
+};
+.inline {
+  margin-left: 0;
+  list-style: none;
+  > li {
+    display: inline-block;
+    *display: inline;
+    padding-right:15px;
+    *zoom: 1;
+    line-height:@base_font_size;
+    margin: 4px 0;
+		&:first-child {
+			padding-left: 0;
+			border-left: 0;
+		};
+  };
+};
+.dividers{ 
+  > li {
+    border-right:1px solid #ccc;
+    padding-right: 12px;
+		margin-right: 8px;
+		&:last-child {
+			padding-right: 0;
+			margin-right: 0;
+			border-right: 0;
+		};
+  };
+};
+
+.plain-2-column-list {
+  margin-left: 0;
+  list-style: none;
+  -moz-column-count: 2;
+  -moz-column-gap: 20px;
+  -webkit-column-count: 2;
+  -webkit-column-gap: 20px;
+  @media @phone-large {
+    -moz-column-count: 1;
+    -moz-column-gap: 0;
+    -webkit-column-count: 1;
+    -webkit-column-gap: 0;
+  };
+};
+
+
+.margin-bottom-onehalf-li {
+  > li {
+    margin-bottom: @margin_bottom_onehalf;
+  };
+};
+.margin-bottom-quad-li {
+  > li {
+    margin-bottom: @margin_bottom_quad;
+  };
+};
+.margin-bottom-double-li {
+  > li {
+    margin-bottom: @margin_bottom_double;
+  };
+};
+.margin-bottom-single-li { 
+  > li {
+    margin-bottom: @margin_bottom_single;
+  };
+};
+dl {
+  > dt {
+    font-weight:bold;
+    margin-bottom: @margin_bottom_half;
+  };
+  dd {
+    margin: 0 0 @margin_bottom_half @list_indent;
+  };
+  &.alt {
+    > dt {
+      margin: @margin_bottom_quad 0 @margin_bottom_half;
+      &:first-child {
+        margin-top:0;
+      };
+    };
+    > dd {
+      margin: 0 0 @margin_bottom_half;
+    };
+  };
+};
+dl.inline dt {
+  font-weight: bold;
+  display:inline;
+  margin: 0 5px 0 0;
+  float:left;
+  clear:left;
+}
+dl.inline dd {
+  margin: 0 0 @margin_bottom_single;
+  clear:right;
+};
+blockquote {
+  margin:0 0 0 @list_indent;
+};
+blockquote.plain {
+  margin:0;
+};
+pre.prenowrap {
+    white-space: pre;
+};
+abbr {
+  cursor: help;
+};
+.margin-bottom-single {margin-bottom:@margin_bottom_single;};
+.margin-bottom-double {margin-bottom:@margin_bottom_double;};
+.margin-bottom-triple {margin-bottom:@margin_bottom_triple;};
+.margin-bottom-quad {margin-bottom:@margin_bottom_quad;};
+.margin-bottom-onehalf {margin-bottom:@margin_bottom_onehalf;};
+.margin-bottom-half {margin-bottom:@margin_bottom_half;};
+.margin-bottom-none {margin-bottom:@margin_bottom_none !important;};
+
+///////////////////////////////////
+// figure
+///////////////////////////////////
+figure {
+  .default {
+    //display:table;
+    img {
+      .scalable-image;
+    };
+    figcaption {
+      margin-top:5px;
+      color: @dark_gray;
+      //display: table-caption;
+      caption-side: bottom;
+    };
+  };
+  &.right-align {
+    .default;
+    float:right;
+    margin: 0 0 15px 15px;
+  };
+  &.center-align {
+    .default;
+    float:none;
+    margin: 0 auto 15px;
+    img {
+      margin: 0 auto;
+    };
+  };
+  &.left-align {
+    .default;
+    float:left;
+    margin: 0 15px 15px 0;
+  };
+  &.width-30 {
+    width:30%;
+  };
+  &.width-40 {
+    width:40%;
+  };
+  &.width-50 {
+    width:50%;
+  };
+  &.width-60 {
+    width:60%;
+  };
+  &.width-70 {
+    width:70%;
+  };
+};
+.banner-with-caption a {
+  text-decoration: none;
+};
+.banner-with-caption img {
+  .scalable-image;
+};
+.banner-with-caption figcaption {
+  color:@figure_caption_text_color;
+  margin: 3px 0 0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-align: right;
+};

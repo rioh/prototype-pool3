@@ -8,17 +8,25 @@
 <title>FDA Drug Monitor - Adverse Events</title>
 {% endblock %}
 
-{% block searchbar %}
-    {% include 'core/searchbar.html' with search_category='events'%}
-{% endblock %}
+{% block header %}
+    {% include 'core/header.html' with search_header='events'%}
+{% endblock header %}
 
-{% block text %}
-    <h1 class="page-title">Adverse Events</h1>
-    <p class="page-description">Select an adverse event from the list below or enter an event into the search
-    above to view current related information.  Only the top 100 adverse events are shown here.</p>
-{% endblock %}
+{% block main %}
+<main>
+	<div class="wrapper page-header fda-adverse-events">
+		<div class="content">
+            <h1 class=margin-bottom-quad">Adverse Events</h1>
+            <p>Select an adverse event from the list below or enter an event into the search
+            above to view current related information.  Only the top 100 adverse events are shown here.</p>
+          </div>
+	</div>
 
-{% block details %}
-    <!-- browse list -->
-    {% include 'core/browse.html' with search_url='search_events' show_count=True%}
+    <div class="wrapper body">
+		<div class="content">
+            <!-- browse list -->
+            {% include 'core/browse.html' with search_url='search_events' show_count=True%}
+        </div>
+    </div>
+</main>
 {% endblock %}

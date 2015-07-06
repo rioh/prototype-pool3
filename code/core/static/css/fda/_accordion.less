@@ -1,0 +1,34 @@
+.fda-accordion-interface {
+   h3 {
+     .mimic-h4;
+     line-height: 18px;
+     margin: 5px 0 0;
+     font-weight: normal;
+     background-color: @dark_gray;
+     color: @white;
+     padding: 10px 35px 10px 10px;
+     position: relative;
+     i {
+       display: inline-block;
+       width: 10px;
+       height: 10px;
+       background-color: yellow;
+       background: transparent url(sprite-fda.png) 0 -83px no-repeat;  
+       position:absolute;
+       right: 12px;
+       top: 50%;
+       margin-top: -5px;
+     };
+     &.ui-accordion-header-active {
+       background-color: @charcoal;
+       i {
+         background-position: 0 -93px;
+       };
+     };
+   };
+   div {
+     &.ui-accordion-content {
+       padding: 10px 0 10px;
+     };
+   };
+};

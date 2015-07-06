@@ -2,50 +2,49 @@
 
 {% load staticfiles %}
 
-{% block text %}
+{% block banner %}
+{% endblock %}
 
-    <h1 class="page-title">About</h1>
+{% block main %}
+<main>
+    <div class="wrapper page-header">
+        <div class="content">
+            <h1>About Us</h1>
+        </div>
+    </div>
+    <div class="wrapper body">
+        <div class="content">
+            <div class="TODO">
+                <h2>Source Code</h2>
+                <p>This application was designed and built by Artemis Consulting, Inc.  All source code hosted on github at
+                    <a href="https://github.com/artemis-consulting">github.com/artemis-consulting</a>. For
+                more information, please visit
+                    <a href="http://www.artemisconsultinginc.com">www.artemisconsultinginc.com</a>.</p>
 
-    <p>We know you take your health seriously. Having the latest drug related
-    information and tools at your fingertips is a critical part of your
-    overall health and well-being. The information provided by the FDA Drug
-    Monitor is the latest and most relevant in our database. Use it along
-    with your physicians advice to make informed decisions about the drugs
-    you take.</p>
+                <h2><a name="anchor1" id="anchor1">Licensing Information</a></h2>
+                <p>Copyright 2015 Artemis Consulting, Inc.</p>
+                <p>This website and all source files (the "Software") are made available under the MIT License (MIT).</p>
 
-    <p>Please note that the information provided here is for reference only and
-    is not intended as medical advice or diagnosis. Always consult your
-    physician before making drug related decisions.</p>
+                <p>Permission is hereby granted, free of charge, to any person obtaining a copy
+                of this software and associated documentation files (the "Software"), to deal
+                in the Software without restriction, including without limitation the rights
+                to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                copies of the Software, and to permit persons to whom the Software is
+                furnished to do so, subject to the following conditions:</p>
 
-    <p>For more information regarding the data sources used on this website, visit
-        <a href="http://www.fda.gov">www.fda.gov</a></p>
+                <p>The above copyright notice and this permission notice shall be included in
+                all copies or substantial portions of the Software.</p>
 
-    <h2>Source Code</h2>
-    <p>This application was designed and built by Artemis Consulting, Inc.  All source code hosted on github at
-        <a href="https://github.com/artemis-consulting">github.com/artemis-consulting</a>. For
-    more information, please visit
-        <a href="http://www.artemisconsultinginc.com">www.artemisconsultinginc.com</a>.</p>
-
-    <h2><a name="anchor1" id="anchor1">Licensing Information</a></h2>
-    <p>Copyright 2015 Artemis Consulting, Inc.</p>
-    <p>This website and all source files (the "Software") are made available under the MIT License (MIT).</p>
-
-    <p>Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:</p>
-
-    <p>The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.</p>
-
-    <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.</p>
+                <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                THE SOFTWARE.</p>
+            </div>
+        </div><!-- end content -->
+    </div><!-- end wrapper -->
+</main>
 
 {% endblock %}

@@ -8,17 +8,25 @@
 <title>FDA Drug Monitor - Drug Names</title>
 {% endblock %}
 
-{% block searchbar %}
-    {% include 'core/searchbar.html' with search_category='labels'%}
-{% endblock %}
+{% block header %}
+    {% include 'core/header.html' with search_header='labels'%}
+{% endblock header %}
 
-{% block text %}
-    <h1 class="page-title">Drug Names</h1>
-    <p class="page-description">Select a drug from the list below or enter a drug name into the search above
-        to view current related information.  Only the top 100 drug names are shown here.</p>
-{% endblock %}
+{% block main %}
+<main>
+	<div class="wrapper page-header fda-drug-names">
+		<div class="content">
+            <h1 class="margin-bottom-quad">Drug Names</h1>
+            <p>Select a drug from the list below or enter a drug name into the search above
+            to view current related information.  Only the top 100 drug names are shown here.</p>
+	    </div>
+	</div>
 
-{% block details %}
-    <!-- browse list -->
-    {% include 'core/browse.html' with search_url='search_labels' show_count=True %}
+    <div class="wrapper body">
+		<div class="content">
+            <!-- browse list -->
+            {% include 'core/browse.html' with search_url='search_labels' show_count=True%}
+        </div>
+    </div>
+</main>
 {% endblock %}

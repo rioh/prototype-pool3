@@ -2,36 +2,74 @@
 
 {% load staticfiles %}
 
-{% block search %}
-    {% include 'core/searchbar.html' %}
-{% endblock %}
 
-{% block text %}
-    <h1>Welcome to the FDA Drug Monitor</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
-        mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
-        ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
-        ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla. Aliquam rutrum
-        nunc et nisi venenatis, sed feugiat mi aliquet. Fusce et risus massa. Donec suscipit volutpat quam,
-        ac maximus mauris facilisis sit amet. Maecenas sed lobortis turpis, non sagittis nulla. </p>
+{% block main %}
+    <div class="wrapper body">
+        <div class="homepage-banner-temp">
+            <img class="scalable-image" src="{% static "images/pic01.jpg" %}">
+            <div class="text-wrapper">
+                <div class="text">
+                    <h1>Welcome to the FDA Drug Monitor</h1>
+                    <p><span>Begin your search for drug-related information by browsing the categories above or
+                        searching for a specific term.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper body">
+        <div class="content">
+            <article>
+                <div class="row fda-home">
+                    <!--div class="span6">
+                        <ul>
+                            <li><a href="">Mi velit vestibulum nulla</a></li>
+                            <li><a href="">Ipsum dolor sit amet</a></li>
+                            <li><a href="">Nullam gravida</a></li>
+                            <li><a href="">Suscipit elementum</a></li>
+                            <li><a href="">Consectetur adipiscing elit ivamus</a></li>
+                            <li><a href="">ullamcorper ante iaculis</a></li>
+                        </ul>
+                    </div-->
 
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus, neque in suscipit elementum,
-        mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper
-        ante iaculis lacinia. In varius risus urna, nec pharetra dolor scelerisque quis. Curabitur sem nisl,
-        ornare quis ornare quis, consequat ut sem. Nullam facilisis interdum augue vel fringilla.</p>
-    <div class="row responsive01">
-		<div class="span8">
-			<h2><a href="">Nullam gravida</a></h2>
-			<p>Vivamus tempus, neque in suscipit elementum, mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper ante iaculis lacinia.</p>
-		</div>
-		<div class="span8">
-			<h2><a href="">Vestibulum nulla</a></h2>
-			<p>Vivamus tempus, neque in suscipit elementum, mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper ante iaculis lacinia.</p>
-		</div>
-		<div class="span8">
-			<h2><a href="">Eget malesuada urn</a></h2>
-			<p>Vivamus tempus, neque in suscipit elementum, mi velit vestibulum nulla, eget malesuada urna justo at ex. Nullam gravida volutpat nisi, at ullamcorper ante iaculis lacinia.</p>
-		</div>
-		<div class="clear"></div>
-	</div>
+                    <div class="span8">
+                        <h2>Drug Data</h2>
+                         <p>Having drug-related
+                            information and tools at your fingertips is a critical part of your
+                            overall health and well-being. The data provided by the FDA Drug
+                            Monitor are the latest and most relevant available. Use this site along
+                            with your physician's advice to make informed decisions about the drugs
+                            you take.</p>
+                        <p>For more information regarding the data sources used on this website, visit
+                            <a href="http://www.fda.gov">www.fda.gov<a>.
+                        </p>
+                    </div>
+                    <div class="span4 thumb-link first-row">
+                        <img src="{% static "images/thumb03.jpg" %}" class="scalable-image">
+                        <h2><small><i class="green"></i> Lore dolar</small> Drug Names</h2>
+                        <p>Consectetur adipiscing uscipit <a href="">elementum</a>.</p>
+                    </div>
+                    <div class="span4 thumb-link">
+                        <img src="{% static "images/thumb04.jpg" %}" class="scalable-image">
+                        <h2><small><i class="blue"></i> Get malesuad</small> Adverse Events</h2>
+                        <p>Lorem ipsum dolar sit amet elit ivamus tempus, <a href="">ipiscing elit</a>.</p>
+                    </div>
+                    <div class="span4 thumb-link second-row">
+                        <img src="{% static "images/thumb01.jpg" %}" class="scalable-image">
+                        <h2><small><i class="orange"></i> Lorem ipsum</small> Enforcement</h2>
+                        <p>Adipiscing elit ivamus tempus, <a href="">ipiscing elit</a>.</p>
+                    </div>
+                    <div class="span4 thumb-link">
+                        <img src="{% static "images/thumb02.jpg" %}" class="scalable-image">
+                        <h2><small><i class="purple"></i> Malesuada</small> Manufacturers</h2>
+                        <ul class="plain">
+                            <li><a href="">Mi velit vestibulum</a></li>
+                            <li><a href="">ullamcorper iaculis</a></li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </article>
+        </div><!-- end content -->
+    </div>
 {% endblock %}

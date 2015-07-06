@@ -4,14 +4,14 @@ $(document).ready(function(){
 		$('.fdahead-nav').toggleClass('active', 300);
 		if ($('.fdahead-nav').is(':hidden')) {
 			$('.fdahead-nav-toggle').html('<span>show navigation</span>');
-			
+
 		} else {
 			$('.fdahead-nav-toggle').html('<span>hide navigation</span>');
 		}
 		$('.nav').removeClass('active');
 		$('.nav-toggle').html('show nav box');
 	});
-	
+
 	$( ".fda-tabs-interface" ).tabs();
 	$( ".fda-accordion-interface" ).accordion({
 		collapsible: true,
@@ -20,7 +20,7 @@ $(document).ready(function(){
         animate: 100,
         activate: accordionActivate
 	});
-  
+
     // search bar functionality
     var searchOptions = ['search_labels', 'search_events', 'search_enforcements'];
 
@@ -135,11 +135,16 @@ $(document).ready(function(){
 
     // functionality to support accordion expand/collapse of divs for large bodies of text
     function accordionActivate(event, ui) {
+        console.log('called activate');
         $(ui.newPanel).find('.cell').each(function () {
+            console.log('in ui.newpanel');
             var cell = this;
             var text = $(cell).find(".text");
             var more = $(cell).find(".more");
             var less = $(cell).find(".less");
+
+            console.log(more);
+            console.log(less);
 
             // correct for resizing
             if ($(text).height() < 55) {
@@ -155,5 +160,3 @@ $(document).ready(function(){
 
     }
 });
-
-

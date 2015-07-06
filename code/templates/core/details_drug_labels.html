@@ -8,63 +8,62 @@
 <title>FDA Drug Monitor - Drug Details</title>
 {% endblock %}
 
-{% block searchbar %}
-    {% include 'core/searchbar.html' with search_category='labels'%}
+{% block header %}
+    {% include 'core/header.html' with search_header='labels'%}
 {% endblock %}
 
-{% block text %}
-    <h1 class="page-title">Drug Details
-        <br/>
-        <small>Information for <strong>{{ q|replace_plus_signs }}</strong></small>
-    </h1>
-    <p class="page-description">
-        <strong>Definition:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a magna ullamcorper,
-        commodo nunc consectetur, pretium elit. Integer purus elit, commodo sed interdum in, aliquet sed erat.
-        Donec quis quam vel massa consequat dictum eget in diam.
-    </p>
-{% endblock %}
+{% block main %}
+<main>
+	<div class="wrapper page-header fda-drug-names">
+		<div class="content">
+			<h1>Drug Details: Information for {{ q|replace_plus_signs }}</h1>
+            <p><strong>Definition:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a magna ullamcorper,
+            commodo nunc consectetur, pretium elit. Integer purus elit, commodo sed interdum in, aliquet sed erat.
+            Donec quis quam vel massa consequat dictum eget in diam.</p>
+		</div>
+	</div>
+	<div class="wrapper body">
+		<div class="content">
+            <!-- Nav tabs -->
+            <div id="fda-tabs-interface" class="fda-tabs-interface">
+                <ul>
+                    <li><a href="#labels">Labels</a></li>
+                    <li><a href="#events">Adverse Events</a></li>
+                    <li><a href="#enforcements">Enforcement Reports</a></li>
+                </ul>
 
-{% block details %}
-<!-- Nav tabs -->
-    <div id="fda-tabs-interface" class="fda-tabs-interface">
-        <ul>
-            <li><a href="#labels">Labels</a></li>
-            <li><a href="#events">Adverse Events</a></li>
-            <li><a href="#enforcements">Enforcement Reports</a></li>
-        </ul>
+                <!-- tab 1 -->
+                <div id="labels">
+                    {% include 'core/pagination.html' with result_list=labels result_paginator=labels_paginator %}
 
-        <!-- tab 1 -->
-        <div id="labels">
-            {% include 'core/pagination.html' with result_list=labels result_paginator=labels_paginator %}
+                    <div class="fda-accordion-interface">
+                        <!-- accordion panel groups -->
+                        {% include 'core/tab_labels.html' with prefix='labels' %}
+                    </div>
+                </div><!-- end tab 1 -->
 
-            <div class="fda-accordion-interface">
-                <!-- accordion panel groups -->
-                {% include 'core/tab_labels.html' with prefix='labels' %}
-            </div>
-        </div><!-- end tab 1 -->
+                <!-- tab 2 -->
+                <div id="events">
+                    {% include 'core/pagination.html' with result_list=events result_paginator=events_paginator %}
 
-        <!-- tab 2 -->
-        <div id="events">
-            {% include 'core/pagination.html' with result_list=events result_paginator=events_paginator %}
+                    <div class="fda-accordion-interface">
+                        <!-- accordion panel groups -->
+                       {% include 'core/tab_events.html' with prefix='events'%}
+                    </div>
+                </div><!-- end tab 2 -->
 
-            <div class="fda-accordion-interface">
-                <!-- accordion panel groups -->
-               {% include 'core/tab_events.html' with prefix='events'%}
-            </div>
-        </div><!-- end tab 2 -->
+                <!-- tab 3 -->
+                <div id="enforcements">
+                    {% include 'core/pagination.html' with result_list=enforcements result_paginator=enforcements_paginator %}
 
-        <!-- tab 3 -->
-        <div id="enforcements">
-            {% include 'core/pagination.html' with result_list=enforcements result_paginator=enforcements_paginator %}
-
-            <div class="fda-accordion-interface">
-                <!-- accordion panel groups -->
-               {% include 'core/tab_enforcements.html' with prefix='enforce'%}
-            </div>
-        </div><!-- end tab 3 -->
-    </div>
-{% endblock %}
-
-{% block extra_js %}
+                    <div class="fda-accordion-interface">
+                        <!-- accordion panel groups -->
+                       {% include 'core/tab_enforcements.html' with prefix='enforce'%}
+                    </div>
+                </div><!-- end tab 3 -->
+            </div><!--end nav tabs -->
+		</div><!-- end content -->
+	</div><!-- end wrapper -->
+</main>
 {% endblock %}
 

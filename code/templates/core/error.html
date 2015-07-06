@@ -2,17 +2,24 @@
 
 {% load staticfiles %}
 
-{% block search %}
-    {% include 'core/searchbar.html' %}
+{% block main %}
+<main>
+    <div class="wrapper page-header">
+        <div class="content">
+            <h1>{{ code }} ERROR</h1>
+        </div>
+    </div>
+    <div class="wrapper body">
+        <div class="content">
+            <div class="TODO">
+                <p>{{ detail }}</p>
+
+                <p>Please use the navigation options above to continue your search or return to the
+                    <a href="{% static homepage %}">homepage</a>
+                </p>
+            </div>
+        </div><!-- end content -->
+    </div><!-- end wrapper -->
+</main>
 {% endblock %}
 
-{% block text %}
-    <h1>{{ code }} ERROR</h1>
-
-    <p>{{ detail }}</p>
-
-    <p>Please use the navigation options above to continue your search or return to the
-        <a href="{% static homepage %}">homepage</a>
-    </p>
-
-{% endblock %}

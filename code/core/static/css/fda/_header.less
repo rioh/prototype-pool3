@@ -1,0 +1,271 @@
+.wrapper {
+  &.header {
+    background-color: @white;
+  };
+  &.header-nav {
+    background-color: @lighter_gray;
+    border-top: 5px solid @gray;
+  };
+};
+.content {
+  &.header {
+    background-color: @white;
+  };
+  &.header-nav {
+    background-color: @transparent;
+    @media @tablet {
+      padding: 0;
+    };
+  };
+};
+.fdahead {
+   clear:both;
+   //background-color: @white;
+   //padding: 0 @gutter 10px;
+   //position:relative;
+  .content.header {
+    position: relative;
+  };
+  .fdahead-logo {
+    font-size: 24px;
+    a {
+      display:inline-block;
+      color: @charcoal;
+      text-decoration: none;
+      padding: 20px 0 15px;
+      img {
+        vertical-align: middle;
+      };
+      span {
+        display:inline-block;
+        vertical-align: middle;
+      };
+      @media @tablet {
+        padding: 10px 0 10px;
+      };
+    };
+  };
+  .fdahead-nav-toggle {
+    display:none;
+    span {
+      position: absolute;
+      left: 0;
+      top: -5000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    };
+    @media @tablet {
+      display:inline-block;
+      width: 20px;
+      height:17px;
+      margin-right: 20px;
+      background: transparent url(sprite-fda.png) 0 0 no-repeat;
+      .button-transparent;
+    };
+  };
+  .fdahead-nav {
+    //background-color: @fda_blue;
+    
+    //display:none;
+    margin: -5px 0 0 !important;
+    ul {
+      .plain;
+      .inline;
+      overflow:hidden;
+      margin: 0 !important;
+      li {
+        width: 25%;
+        float:left;
+        margin: 0;
+        padding: 0;
+        .box-sizing;
+        text-align:center;
+        border-right: 1px solid @white;
+        &:first-child {
+          border-left: 1px solid @white;
+        };
+        a {
+          display:block;
+          color: @charcoal;
+          padding: 8px 0 10px;
+          .box-sizing;
+          border-top: 5px solid @fda_blue;
+          background-color: @lighter_gray;
+          text-decoration: none;
+          &:focus,
+          &:hover {
+            background-color: @fda_drug_names;
+            color: @white;
+          };
+        };
+        &.one   {
+          a {
+            border-color: @fda_drug_names;
+          };
+        };
+        &.two   {
+          a {
+            border-color: @fda_adverse_events;
+            &:focus,
+            &:hover {
+              background-color: @fda_adverse_events;
+            };
+          };
+        };
+        &.three   {
+          a {
+            border-color: @fda_enforcement_reports;
+            &:focus,
+            &:hover {
+              background-color: @fda_enforcement_reports;
+            };
+          };
+        };
+        &.four   {
+          a {
+            border-color: @fda_drug_manufacturers;
+            &:focus,
+            &:hover {
+              background-color: @fda_drug_manufacturers;
+            };
+          };
+        };
+        @media @tablet {
+          width: 100%;
+          float: none;
+          text-align:left;
+          border: none !important;
+          border-top: 1px solid @white !important;
+          a {
+            padding: 15px @gutter;
+            color: @white;
+            border: none;
+          };
+          &.one   {
+            a {
+              background-color: @fda_drug_names;
+              &:focus,
+              &:hover {
+                background-color: @fda_drug_names_dark;
+              };
+            };
+          };
+          &.two   {
+            a {
+              background-color: @fda_adverse_events;
+              &:focus,
+              &:hover {
+                background-color: @fda_adverse_events_dark;
+              };
+            };
+          };
+          &.three   {
+            a {
+              background-color: @fda_enforcement_reports;
+              &:focus,
+              &:hover {
+                background-color: @fda_enforcement_reports_dark;
+              };
+            };
+          };
+          &.four   {
+            a {
+              background-color: @fda_drug_manufacturers;
+              &:focus,
+              &:hover {
+                background-color: @fda_drug_manufacturers_dark;
+              };
+            };
+          };
+        };
+      };
+    };
+    @media @tablet {
+      display:none;
+      &.active {
+        display:block;
+      };
+    };
+  };
+  .fdahead-search {
+    background-color: @lighter_gray;
+    //border-radius: 5px;
+    position:absolute;
+    right: @gutter;
+    top: 20px;
+    form {
+      margin: 0;
+      input,
+      button,
+      select {
+        border: none;
+        background-color: transparent;
+        .box-sizing;
+      };
+      input {
+        width: 300px;
+      };
+      button {
+        span {
+            position: absolute;
+            left: 0;
+            top: -5000px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        };
+        i {
+          display: inline-block;
+          width: 14px;
+          height: 13px;
+          background: transparent url(sprite-fda.png) -14px -60px no-repeat;  
+        };
+      };
+    };
+    @media @tablet {
+      position: static;
+      overflow: hidden;
+      //margin-bottom: 15px;
+      border-bottom: 10px solid @white;
+      form {
+        overflow: hidden;
+        select {
+          width: 40%;
+        };
+        input {
+          width: 55%;
+        };
+        button {
+          width: 5%;
+        };
+      };
+    };
+    @media @phone-large {
+      form {
+        select {
+          width: 40%;
+        };
+        input {
+          width: 53%;
+        };
+        button {
+          width: 7%;
+        };
+      };
+    };
+    @media @phone {
+      form {
+        select {
+          width: 40%;
+        };
+        input {
+          width: 50%;
+        };
+        button {
+          width: 10%;
+        };
+      };
+    };
+  };
+};

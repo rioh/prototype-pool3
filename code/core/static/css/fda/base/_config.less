@@ -1,0 +1,203 @@
+// Grids
+// --------------------------------------------------
+@column_width: 30;
+@gutter_width: 20;
+@columns: 24;
+@gutters: 23;
+
+// Layouts
+// --------------------------------------------------
+@container_background: transparent;
+@wrapper_background: @white;
+@content_background: transparent;
+
+// Fonts
+// --------------------------------------------------
+@sans_font_family: Arial, Helvetica, sans_serif;
+@sans_font_family_alternative: Arial, Helvetica, sans_serif;
+@serif_font_family: Georgia, "Times New Roman", Times, serif;
+@serif_font_family_alternative: Georgia, "Times New Roman", Times, serif;
+
+/*
+
+##Colors
+
+*/
+@transparent: transparent;
+@black: #000000; 
+@charcoal: #333333;	 
+@darker_gray: #666666;
+@dim_gray: #888888;
+@dark_gray: #999999;
+@gray: #CCCCCC;
+@light_gray: #D8D8D8;	 
+@lighter_gray: #EFEFEF;	 
+@white_smoke: #F5F5F5; 
+@white: #FFFFFF;
+
+@dark_red: #990000;
+@dark_red: #c4380d;
+
+@red: #dd4b39;
+@light_red: #FFB2B2;	 
+@navy: #003366;
+@blue: #3366CC; 
+@cyan: #0066CC; 
+@medium_blue: #6699CC;
+@fda_navy: #003152;
+
+@fda_drug_names: darken(#78aa42, 5%);
+@fda_adverse_events: #025b94;
+@fda_enforcement_reports: darken(#f2b111, 10%);
+@fda_drug_manufacturers: #636;
+
+@fda_drug_names_dark: darken(#78aa42, 25%);
+@fda_adverse_events_dark: darken(#025b94, 20%);
+@fda_enforcement_reports_dark: darken(#f2b111, 30%);
+@fda_drug_manufacturers_dark: darken(#636, 20%);
+
+@fda_blue: lighten(#005f9f, 20%);
+@fda_blue_lighten_10: lighten(#005f9f, 10%);
+@fda_blue_lighten_15: lighten(#005f9f, 15%);
+@fda_darker_blue: darken(#005f9f, 5%);
+@fda_light_blue: #8fbbe4;
+@fda_lighter_blue: #ddedfd;
+@fda_yellow: #f3ffd1; 
+@light_blue: #D4E9FF;
+@lighter_blue: #EFF6FD;	 
+@lightest_blue: #F7FAFD;	 
+@lighter_cyan: #D6F5FA; 
+@lighter_azure: #D7E9FA;	 
+@indigo: #343268;
+@purple: #660066;	 
+@violet: #660099;	 
+@orange: #FF6600;	 
+@tan: #EEEBDA;
+@green: green;
+
+@body_background: @black;
+@body_font_family: @sans_font_family;
+@body_text_color: @charcoal;
+
+@text_select_background: @navy;
+@text_select_color: @white;
+
+@link_color: @fda_blue;
+@link_color_visited: @fda_blue;
+@link_color_hover: darken(@link_color, 25%);
+
+@link_color_white: @white;
+@link_color_white_visited: @gray;
+@link_color_white_hover: darken(@link_color_white, 25%);
+
+@base_font_size: 14px;
+@base_line_height: 21px;
+@test_line_height: 16px;
+
+@margin_bottom_single: @base_line_height/4;
+@margin_bottom_double: @margin_bottom_single * 2;
+@margin_bottom_triple: @margin_bottom_single * 3;
+@margin_bottom_quad: @margin_bottom_single * 4;
+@margin_bottom_onehalf: @margin_bottom_single * 6;
+@margin_bottom_half: @margin_bottom_single / 2;
+@margin_bottom_none: 0;
+
+@mute_font_color: @darker_gray;
+@text_warning_color: @orange;
+@text_alert_color: @dark_red;
+@text_error_color:@red;
+@text_info_color:@cyan;
+@text_success_color:@green;
+
+@footnote_target_color:@fda_lighter_blue;
+
+@list_indent: 25px;
+
+@h1_font_family: @sans_font_family;
+@h2_font_family: @sans_font_family;
+@h3_font_family: @sans_font_family;
+@h4_font_family: @sans_font_family;
+@h5_font_family: @sans_font_family;
+@h6_font_family: @sans_font_family;
+@h1_font_color: @darker_gray;
+@h2_font_color: @charcoal;
+@h3_font_color: @charcoal;
+@h4_font_color: @charcoal;
+@h5_font_color: @charcoal;
+@h6_font_color: @charcoal;
+@h1_alt_font_family: @serif_font_family;
+@h2_alt_font_family: @serif_font_family;
+@h3_alt_font_family: @serif_font_family;
+@h4_alt_font_family: @serif_font_family;
+@h5_alt_font_family: @serif_font_family;
+@h6_alt_font_family: @serif_font_family;
+@h1_alt_font_color: @charcoal;
+@h2_alt_font_color: @charcoal;
+@h3_alt_font_color: @charcoal;
+@h4_alt_font_color: @charcoal;
+@h5_alt_font_color: @charcoal;
+@h6_alt_font_color: @charcoal;
+
+///////////////////////////////////
+// _table
+///////////////////////////////////
+@table_bordered: 1px solid @light_gray;
+@table_padded: 8px;
+@table_striped_background: @lighter_gray;
+
+///////////////////////////////////
+// _form
+///////////////////////////////////
+@form_legend_text_color:@charcoal; 
+@form_legend_border_color:1px solid @light_gray;
+@form_legend_small_text_color:@charcoal;
+@form_required_color:@dark_red;
+@form_help_text_color:@dark_gray;
+
+///////////////////////////////////
+// _elements
+///////////////////////////////////
+@figure_caption_text_color: @dim_gray;
+
+@alpha_nav_bg_color:@black;
+@alpha_nav_link_color:@white;
+@alpha_nav_link_border_color: @alpha_nav_bg_color;
+@alpha_nav_link_color_hover:@black;
+@alpha_nav_link_bg_color_hover: @lighter_gray;
+@alpha_nav_link_border_color_hover: @alpha_nav_bg_color;
+@alpha_nav_link_color_selected:@black;
+@alpha_nav_link_bg_color_selected: @lighter_gray;
+@alpha_nav_link_border_color_selected: @light_gray;
+
+@bgcolored_box01: @lighter_gray;
+@bgcolored_box01_margin_bottom:@margin_bottom_quad;
+
+@bgcolored_box02: @fda_lighter_blue;
+@bgcolored_box02_margin_bottom:@margin_bottom_quad;
+
+@bordered_box01: 1px solid @gray;
+@bordered_box01_margin_bottom:@margin_bottom_quad;
+
+@bordered_box02: 8px solid @gray;
+@bordered_box02_margin_bottom:@margin_bottom_quad;
+
+@bordered_color: @gray;
+
+@tab_links_bg_color: @fda_lighter_blue;
+@tab_links_active_link_color: @fda_blue;
+@tab_links_active_border_color: @fda_light_blue;
+@tab_links_active_bg_color: @transparent;
+@tab_links_selected_link_color: @charcoal;
+@tab_links_selected_border_color: @fda_light_blue;
+@tab_links_selected_border_bottom_color: @white;
+@tab_links_selected_bg_color: @white;
+
+@leftnav_link_color: @charcoal;
+@leftnav_link_visited_color: @charcoal;
+@leftnav_box_border_color: @gray;
+@leftnav_link_selected_bg_color: @fda_blue;
+@leftnav_link_selected_color: @white;
+@leftnav_box_selected_bg_color: @fda_lighter_blue;
+
+@resources_nav_bg_color: @lighter_gray;
+@resources_nav_header_color: @darker_gray;

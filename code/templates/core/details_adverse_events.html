@@ -8,68 +8,69 @@
 <title>FDA Drug Monitor - Adverse Event Details</title>
 {% endblock %}
 
-
-{% block searchbar %}
-    {% include 'core/searchbar.html' with search_category='events'%}
+{% block header %}
+    {% include 'core/header.html' with search_header='events'%}
 {% endblock %}
 
-{% block text %}
-    <h1 class="page-title">Adverse Event Details<br />
-        <small>Information for <strong>{{ q|replace_plus_signs }}</strong></small>
-    </h1>
-    <p class="page-description">
-    <strong>Definition:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a magna ullamcorper, commodo nunc consectetur,
-    pretium elit. Integer purus elit, commodo sed interdum in, aliquet sed erat. Donec quis quam vel massa
-    consequat dictum eget in diam.
-    </p>
+{% block main %}
+<main>
+	<div class="wrapper page-header fda-adverse-events">
+		<div class="content">
+			<h1>Adverse Event Details: Information for {{ q|replace_plus_signs }}</h1>
+            <p><strong>Definition:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a magna ullamcorper,
+            commodo nunc consectetur, pretium elit. Integer purus elit, commodo sed interdum in, aliquet sed erat.
+            Donec quis quam vel massa consequat dictum eget in diam.</p>
+		</div>
+	</div>
+    <div class="wrapper body">
+        <div class="content">
+        <!-- Nav tabs -->
+            <div id="fda-tabs-interface" class="fda-tabs-interface">
+                <ul>
+                    <li><a href="#details">Details</a></li>
+                    <li><a href="#drugs">Drugs with this adverse effect</a></li>
+                </ul>
+                <!-- tab 1 -->
+                <div id="details">
+                    {% include 'core/pagination.html' with result_list=events result_paginator=events_paginator %}
 
+                    <div class="fda-accordion-interface">
+                        <!-- accordion panel groups -->
+                        {% include 'core/tab_events.html' with prefix='events' %}
+                    </div>
+                </div><!-- end tab 1 -->
+
+                <!-- tab 2 -->
+                <div id="drugs">
+                    <p>Click on the chart below to see adverse effects by gender for a given drug,
+                        or view data in <a id="adverse-table-trigger" href="#">table format</a>.</p>
+                    <div id="adverseTable" style="display:none;">
+                        <table class="fda-table-default">
+                            <caption>
+                                Drugs with Adverse Effect: {{ q }}
+                            </caption>
+                            <thead>
+                                <th>Drug Name</th>
+                                <th>Count</th>
+                            </thead>
+                            <tbody>
+                                {% for result in events_count %}
+                                <tr>
+                                    <td>{{ result.term|lower|capfirst }}</td>
+                                    <td><span class="count">{{ result.count|intcomma }}</span></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="adverseChart"></div>
+                </div><!-- end tab 2 -->
+            </div><!-- end nav tabs -->
+        </div><!-- end content -->
+    </div><!-- end wrapper -->
+</main>
 {% endblock %}
 
-{% block details %}
-<!-- Nav tabs -->
-    <div id="fda-tabs-interface" class="fda-tabs-interface">
-        <ul>
-            <li><a href="#details">Details</a></li>
-            <li><a href="#drugs">Drugs with this adverse effect</a></li>
-        </ul>
-        <!-- tab 1 -->
-        <div id="details">
-            {% include 'core/pagination.html' with result_list=events result_paginator=events_paginator %}
-
-            <div class="fda-accordion-interface">
-                <!-- accordion panel groups -->
-                {% include 'core/tab_events.html' with prefix='events' %}
-            </div>
-        </div><!-- end tab 1 -->
-
-        <!-- tab 2 -->
-        <div id="drugs">
-            <p>Click on the chart below to see adverse effects by gender for a given drug,
-                or view data in <a id="adverse-table-trigger" href="#">table format</a>.</p>
-            <div id="adverseTable" style="display:none;">
-                <table class="fda-table-default">
-                    <caption>
-                        Drugs with Adverse Effect: {{ q }}
-                    </caption>
-                    <thead>
-                        <th>Drug Name</th>
-                        <th>Count</th>
-                    </thead>
-                    <tbody>
-                        {% for result in events_count %}
-                        <tr>
-                            <td>{{ result.term|lower|capfirst }}</td>
-                            <td><span class="count">{{ result.count|intcomma }}</span></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <div id="adverseChart"></div>
-
-        </div><!-- end tab 2 -->
-    </div>
-{% endblock %}
 
 {% block extra_js %}
 <script type="text/javascript">
