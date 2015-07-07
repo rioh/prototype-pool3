@@ -50,7 +50,7 @@ Section-pool3-Scrum
 ### Scrum ceremonies
 
 Daily standups at 10:30am, 2-day sprints, sprint planning every other day, review, retro, and release planning to occur and the end of each sprint, entire team to attend all meetings. Backlog grooming and reprioritization happened daily. 
-To view all our agile artifacts, click [here](https://github.com/artemis-consulting/prototype/tree/master/doc/agile-process). 
+To view all our agile artifacts, click [here](https://github.com/artemis-consulting/prototype-pool3/tree/master/doc/agile-process). 
 
 
 Section-pool3-UCD
@@ -59,7 +59,7 @@ Section-pool3-UCD
 In most of our current client projects, we use an integrated ‘User-Centered Design’ process  where we strongly encourage end-users to shape how the final system gets developed. For the FDA project, we decided on the following UCD techniques (mainly due to time constraints): user personas, user journeys, usability testing, interviews, expert reviews, and prototypes.
 
 During the story planning meetings, the following prospective users where identified: Public users, doctors, pharmacists, attorneys, FDA SMEs/employees, Federal regulators, Federal Watchdog agencies, state regulators
-The discovery phase artifacts are [linked here.](https://github.com/artemis-consulting/prototype-pool3/tree/master/user-centered-design/1-discovery)
+The discovery phase artifacts are [linked here.](https://github.com/artemis-consulting/prototype-pool3/tree/master/doc/user-centered-design/1-discovery)
 
 Based on the analyzed interview results, the team ended up with the following personas:
 * Novice – public users, concerned parents, students, people in the drug and food industry 
@@ -67,7 +67,7 @@ Based on the analyzed interview results, the team ended up with the following pe
 * Specialist – Attorney, policy makers, and maybe bloggers 
 * Experts – FDA employees, state regulators, federal watchdogs
 
-Click on the links to see the [initial user personas](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/2-user-personas-and-journeys/18f-personas-draft-6-23-2015.pdf), [final user personas](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/2-user-personas-and-journeys/18f-personas-final-6-23-2015.pdf), [initial user journeys](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/2-user-personas-and-journeys/18f-user-journeys-draft-6-23-2015.pdf) and [final user journeys](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/2-user-personas-and-journeys/18f-user-journeys-final-6-23-2015.pdf).
+Click on the links to see the [initial user personas](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/2-user-personas-and-journeys/18f-personas-draft-6-23-2015.pdf), [final user personas](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/2-user-personas-and-journeys/18f-personas-final-6-23-2015.pdf), [initial user journeys](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/2-user-personas-and-journeys/18f-user-journeys-draft-6-23-2015.pdf) and [final user journeys](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/2-user-personas-and-journeys/18f-user-journeys-final-6-23-2015.pdf).
 
 The team strongly felt that applying the UCD techniques in the sections previously mentioned satisfy Play [1] and [2].
 
@@ -129,9 +129,9 @@ Section-pool3-Agile
 
 Artemis Consulting uses agile scrum techniques for all their internal development efforts and for most of our client projects. For our agile projects, sprints are usually 1-2 week in duration but never exceed 3 weeks. In general, the shorter the sprints, the faster feedback we receive from our users and clients. This timely feedback enables the team quickly make the necessary adjustments, avoiding potential long-term and costly rework. For the FDA prototype, we decided on 2 day sprints but chose to add a 4 day sprint to accommodate the unusual nature of this project and weekend work.
 
-* We used the open source Taiga tool for agile project management and defect tracking. Taiga tends to be more ‘lightweight’ for project with relative quick turnarounds and firm deadlines. Additional information on Taiga can be found [here](https://github.com/artemis-consulting/prototype-pool3/tree/master/agile-process/agile-tool-taiga).
-* All our agile artifacts related to Play 4, can be found here -> [Sprints](https://github.com/artemis-consulting/prototype-pool3/tree/master/agile-process). 
-* Our team did fairly extensive user testing with doctors and lawyers. Here are the links to the [User Interview Questions](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/4-user-interviews/User%20Interview%20Questions.pdf), the [user testing feedback and our team's remediation comments from a practising pharmaceutical industry lawyer](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/4-user-interviews/User%20Interview%20Questions-Response1-Pharmaceutical-Company-Lawyer.pdf)  and the [user testing feedback and our team's remediation comments from a practising doctor](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/4-user-interviews/User%20Interview%20Questions-Response2-and-Remediation-Doctor-MD.pdf).
+* We used the open source Taiga tool for agile project management and defect tracking. Taiga tends to be more ‘lightweight’ for project with relative quick turnarounds and firm deadlines. Additional information on Taiga can be found [here](https://github.com/artemis-consulting/prototype-pool3/tree/master/doc/agile-process/agile-tool-taiga).
+* All our agile artifacts related to Play 4, can be found here -> [Sprints](https://github.com/artemis-consulting/prototype-pool3/tree/master/doc/agile-process). 
+* Our team did fairly extensive user testing with doctors and lawyers. Here are the links to the [User Interview Questions](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/4-user-interviews/User%20Interview%20Questions.pdf), the [user testing feedback and our team's remediation comments from a practising pharmaceutical industry lawyer](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/4-user-interviews/User%20Interview%20Questions-Response1-Pharmaceutical-Company-Lawyer.pdf)  and the [user testing feedback and our team's remediation comments from a practising doctor](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/4-user-interviews/User%20Interview%20Questions-Response2-and-Remediation-Doctor-MD.pdf).
 
 
 Section-pool3-automated-testing
@@ -143,7 +143,7 @@ Section-pool3-automated-testing
 * The Pyunit framework was used for unit testing.  As mentioned earlier, the Pyunit code coverage is currently at >92%. [Pool 2 requirements F, Play 10]
 * The team used Selenium WebDriver for automated web testing.  Links to the Selenium testing scripts have already been provided earlier in this document. 
 * Jenkins was used as our continuous integration and continuous deployment tool. Upon code commits into GitHub, Jenkins automatically runs the unit test suites. If the unit tests pass, the code is automatically promoted to the testing/integration environment. 
-For the purposes of this app, Artemis used a cloud-based Jenkins installation called [CloudBees](https://www.cloudbees.com/), and a configuration management tool called [Puppet](https://puppetlabs.com/). The setup of Jenkins instance on Cloudbees is shown in the following screenshots: [Jenkins Screenshot 1](https://github.com/artemis-consulting/prototype/blob/master/deployment/CloudBeesScreenshot1.png), [Jenkins Screenshot 2](https://github.com/artemis-consulting/prototype/blob/master/deployment/CloudBeesScreenshot2.png), and [Jenkins Screenshot 3](https://github.com/artemis-consulting/prototype/blob/master/deployment/CloudBeesScreenshot1.png).
+For the purposes of this app, Artemis used a cloud-based Jenkins installation called [CloudBees](https://www.cloudbees.com/), and a configuration management tool called [Puppet](https://puppetlabs.com/). The setup of Jenkins instance on Cloudbees is shown in the following screenshots: [Jenkins Screenshot 1](https://github.com/artemis-consulting/prototype-pool3/blob/master/deployment/CloudBeesScreenshot1.png), [Jenkins Screenshot 2](https://github.com/artemis-consulting/prototype-pool3/blob/master/deployment/CloudBeesScreenshot2.png), and [Jenkins Screenshot 3](https://github.com/artemis-consulting/prototype-pool3/blob/master/deployment/CloudBeesScreenshot1.png).
 
 
 Section-pool3-tools

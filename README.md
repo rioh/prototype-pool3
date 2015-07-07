@@ -103,7 +103,7 @@ The team used Puppet for automated configuration management. Docker is used for 
 Automated testing and deployments
 ---------------------------------
 For this prototype, we built a suite of automated tests, which tested the app as well as ensured wide code coverage (>92%). [Pool 3 requirements F, Play 10].
-To read more about the [testing frameworks and tools](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-automated-testing) used for the FDA Pool2 prototype.
+To read more about the [testing frameworks and tools](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-automated-testing) used for the FDA Pool3 prototype.
 
 Running locally
 ---------------
