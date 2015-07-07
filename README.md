@@ -114,7 +114,7 @@ Running locally
 
 Install the following for system level dependencies for Ubuntu
 ```shell
-$ sudo apt-get install python python-dev apache2 libapache2-mod-wsgi git python_psycopg2 libpq-dev memcached
+$ sudo apt-get install python python-dev apache2 libapache2-mod-wsgi git python-psycopg2 libpq-dev memcached postgresql postgresql-contrib
 ```
 
 Clone this repository into desired $APP_DIR
@@ -173,13 +173,13 @@ Sample apache config for django running daemon mode with virtualenv:
  WSGIDaemonProcess prototype python-path=/apps/prototype-pool3/code:/apps/env/lib/python2.7/site-packages
  WSGIScriptAlias / /apps/prototype-pool3/code/opendata_fda/wsgi.py process-group=prototype
 
- Alias /static/ /apps/prototype-pool3/code/.static/
+ Alias /static/ /apps/prototype-pool3/code/.static3/
  
  <Directory /apps/prototype-pool3/code/opendata_fda>
  Require all granted
  </Directory>
  
- <Directory /apps/prototype-pool3/code/.static>
+ <Directory /apps/prototype-pool3/code/.static3>
  Require all granted
  </Directory>
  
