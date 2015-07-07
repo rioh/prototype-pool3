@@ -13,6 +13,7 @@ $(document).ready(function(){
 	});
 
 	$( ".fda-tabs-interface" ).tabs();
+
 	$( ".fda-accordion-interface" ).accordion({
 		collapsible: true,
         active: false,
