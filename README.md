@@ -99,7 +99,7 @@ Read more about our [Nagios server monitoring](https://github.com/artemis-consul
 Configuration Management
 ========================
 
-The team used Puppet for automated configuration management. Docker is used for container virtualization. A Docker container is available.
+The team used Puppet for automated configuration management. Docker is used for container virtualization. A [Docker container] (https://github.com/artemis-consulting/prototype-pool3/blob/master/deployment/Dockerfile) is available.
 [Pool 3 requirements G]
 
 Automated testing and deployments
@@ -203,7 +203,4 @@ The unit tests will also kick off the selenium tests.
 You can view the full details of coverage in a drill-down enabled report by opening:
 
  - Backend report: $APP_DIR/cover/index.html
-
-### Docker image
-If you use [Docker](https://www.docker.com/) for virtualization, a Docker container is [available] (https://github.com/artemis-consulting/prototype-pool3/)
 
