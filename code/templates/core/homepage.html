@@ -51,26 +51,26 @@
                         <h2><small><i class="green"></i>Drug Labels and more</small> Drugs </h2>
                         <p>This section allows users to browse drug names, their labels, and see adverse reactions 
                         for a selected drug, as well as any enforcement actions for a selected drug.
-                        <a href="/pool3/browse/labels/">Start browsing drugs</a>.</p>
+                        <a href="{% url 'browse_labels' %}">Start browsing drugs</a>.</p>
                     </div>
                     <div class="span4 thumb-link">
                         <img src="{% static "images/thumb04.jpg" %}" class="scalable-image">
                         <h2><small><i class="blue"></i> Adverse reactions and more</small> Adverse Events</h2>
                         <p>This section allows users to browse adverse events, see drugs associated with these adverse events, and also drilldown by attributes like gender.
-                        <a href="/pool3/browse/events/">Start browsing adverse events</a>.</p>
+                        <a href="{% url 'browse_events' %}">Start browsing adverse events</a>.</p>
                     </div>
                     <div class="span4 thumb-link second-row">
                         <img src="{% static "images/thumb01.jpg" %}" class="scalable-image">
                         <h2><small><i class="orange"></i>Enforcement and more</small> Enforcements </h2>
                         <p>Allows users to browse by State, and see the associated drugs and drug manufacturers. Links from 
                            Enforcement actions to related Manufacturer information.
-                        <a href="/pool3/browse/enforcements/">Start browsing enforcement actions</a>.</p>
+                        <a href="{% url 'browse_enforcements' %}">Start browsing enforcement actions</a>.</p>
                     </div>
                     <div class="span4 thumb-link">
                         <img src="{% static "images/thumb02.jpg" %}" class="scalable-image">
                         <h2><small><i class="purple"></i> Drug makers and more</small> Manufacturers</h2>
                         <p>This section allows users to browse drug manufacturers that are part of our source data, as either a manufacturer, or as a party in an enforcement action.
-                        <a href="/pool3/browse/manufacturers/">Start browsing manufacturers</a>.</p>
+                        <a href="{% url 'browse_manufacturers' %}">Start browsing manufacturers</a>.</p>
                     </div>
                     <div class="clear"></div>
                 </div>
