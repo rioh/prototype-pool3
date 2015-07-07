@@ -22,9 +22,9 @@ His responsibilities include:
 * Ensuring that key features are built
 * Managing the features and defect backlogs on a daily basis
 * Setting priorities and providing the definition of "done" 
-[Pool 2, requirement A, B and Play 6 ]
+[Pool 3, requirement A, B and Play 6 ]
 
-The team members assembled for this project are experts in their respective disciplines. [Pool 2, requirement A and Play 7 ]
+The team members assembled for this project are experts in their respective disciplines. [Pool 3, requirement A and Play 7 ]
 
 User-Centered Design 
 ====================
@@ -85,12 +85,12 @@ Click [here to see the details of the tools and full technology stack](https://g
 Hosting environment
 ===================
 During Sprint 0, the team worked on deploying the hosting environment for both test and production.  
-Click [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-hosting) to read more about the testing and production cloud setup [Pool 2 requirements D, Play 9]. 
+Click [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-hosting) to read more about the testing and production cloud setup [Pool 3 requirements D, Play 9]. 
 
 Continuous Monitoring
 =====================
 
-For this prototype, we installed CloudWatch and Threat Stack, two security-related monitoring services that are built for AWS. [Pool 2 requirements F, Play 9 and Play 12]
+For this prototype, we installed CloudWatch and Threat Stack, two security-related monitoring services that are built for AWS. [Pool 3 requirements F, Play 9 and Play 12]
 Read more about our [continuous monitoring](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-monitoring) here.
 Read more about our [Nagios server monitoring](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-nagios) here.
 
@@ -98,11 +98,11 @@ Configuration Management
 ========================
 
 The team used Puppet for automated configuration management. Docker is used for container virtualization. A Docker container is available.
-[Pool 2 requirements G]
+[Pool 3 requirements G]
 
 Automated testing and deployments
 ---------------------------------
-For this prototype, we built a suite of automated tests, which tested the app as well as ensured wide code coverage (>92%). [Pool 2 requirements F, Play 10].
+For this prototype, we built a suite of automated tests, which tested the app as well as ensured wide code coverage (>92%). [Pool 3 requirements F, Play 10].
 To read more about the [testing frameworks and tools](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-automated-testing) used for the FDA Pool2 prototype.
 
 Running locally
