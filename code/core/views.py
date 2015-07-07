@@ -1,4 +1,5 @@
 import logging
+from django.core.urlresolvers import reverse
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
@@ -58,7 +59,7 @@ def contact(request):
         contact_form = ContactInformationForm(request.POST)
         if contact_form.is_valid():
             contact_form.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('homepage'))
         else:
             # pass the errors and data back to the form; the template will escape html as needed
             data['errors'] = contact_form.errors
@@ -98,8 +99,10 @@ def search_labels(request):
     client = ApiClient()
     query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
-    data = client.search_labels(query_term, int(page))
+    tab = request.GET.get('tab', 'labels')
+    data = client.search_labels(query_term, int(page), tab)
     data['q'] = query_term
+    data['tab'] = tab
     data['browse_type'] = 'labels'
     return render(request, 'core/details_drug_labels.html', data)
 
@@ -113,8 +116,10 @@ def search_events(request):
     client = ApiClient()
     query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
+    tab = request.GET.get('tab', 'labels')
     data = client.search_events(query_term, int(page))
     data['q'] = query_term
+    data['tab'] = tab
     data['browse_type'] = 'events'
     return render(request, 'core/details_adverse_events.html', data)
 
@@ -128,13 +133,14 @@ def search_enforcements(request):
     client = ApiClient()
     query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
+    tab = request.GET.get('tab', 'labels')
     data = client.search_enforcements(query_term, int(page))
     data['q'] = query_term
+    data['tab'] = tab
     data['browse_type'] = 'enforcements'
     return render(request, 'core/details_enforcement_reports.html', data)
 
 
-# TODO -- add this method
 def search_manufacturers(request):
     """
     Search manufacturer api
@@ -144,9 +150,11 @@ def search_manufacturers(request):
     client = ApiClient()
     query_term = request.GET.get('q')
     page = request.GET.get('page', '1')
-    data = client.search_manufacturers(query_term, int(page))
+    tab = request.GET.get('tab', 'labels')
+    data = client.search_manufacturers(query_term, int(page), tab)
     data['q'] = query_term
     data['browse_type'] = 'manufacturers'
+    data['tab'] = tab
     return render(request, 'core/details_manufacturers.html', data)
 
 
