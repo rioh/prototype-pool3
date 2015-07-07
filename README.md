@@ -54,9 +54,8 @@ Mobile-first Responsive Design
 ------------------------------
 Our HTML experts created multiple functioning web prototypes throughout the course of the design phase. These were used for Accessibility testing and usability testing. 
 The prototypes with accompanying HTML markup are available at:
-* [Initial responsive web prototype using Bootstrap](https://github.com/artemis-consulting/prototype-pool3/tree/master/html/1-initial-bootstrap-version)
-* [Second responsive and accessible web prototype](https://github.com/artemis-consulting/prototype-pool3/tree/master/html/2-intermediate-version)
-* [Final responsive and accessible web prototype](https://github.com/artemis-consulting/prototype-pool3/tree/master/html/3-final-version)
+* [Initial responsive web prototype using Bootstrap](https://github.com/artemis-consulting/prototype-pool3/tree/master/doc/user-interface/initial-bootstrap-version)
+* [Final responsive and accessible web prototype](https://github.com/artemis-consulting/prototype-pool3/tree/master/doc/user-interface/final-version)
 
 Formal Accessibility Review
 ---------------------------
