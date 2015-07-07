@@ -295,17 +295,19 @@ class ApiResult(object):
         """
         key_list = key_string.split('.')[::-1]
         try:
-            return self._lookup(d, key_list)
+            value = self._lookup(d, key_list)
+            return value if value else default
         except KeyError:
             return default
 
     def _lookup(self, data_dict, key_list):
-        key = key_list.pop()
-        data = data_dict[key]
-        if isinstance(data, dict):
-            return self._lookup(data, key_list)
-        else:
-            return data
+        if key_list:
+            key = key_list.pop()
+            data = data_dict[key]
+            if isinstance(data, dict):
+                return self._lookup(data, key_list)
+            else:
+                return data
 
     def clean_labels(self):
         """
@@ -359,7 +361,7 @@ class ApiResult(object):
             patient_data["patient_onset_age"] = "%s%s" % (self.lookup(d, 'patient.patientonsetstage', ""),
                                                           self.lookup(d, 'patientonsetageunit', ""))
             patient_data["patient_sex"] = self.male_or_female(self.lookup(d, 'patient.patientsex'))
-            patient_data["patient_death_details"] = self.lookup(d, 'patient.patientdeath')
+            patient_data["patient_death_details"] = self.format_date(self.lookup(d, 'patient.patientdeath.patientdeathdate'))
 
             label_data = {}
             drugs = self.lookup(d, 'patient.drug')
