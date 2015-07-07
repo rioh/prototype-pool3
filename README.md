@@ -38,17 +38,17 @@ During the story planning meetings, the following prospective users where identi
 * State regulators
 
 To read the full UCD approach, techniques, and results, go to [the supporting document](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-ucd)
-Click on the links to see the [final user personas](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/2-user-personas-and-journeys/18f-personas-final-6-23-2015.pdf) and [final user journeys](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/2-user-personas-and-journeys/18f-user-journeys-final-6-23-2015.pdf).
+Click on the links to see the [final user personas](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/2-user-personas-and-journeys/18f-personas-final-6-23-2015.pdf) and [final user journeys](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/2-user-personas-and-journeys/18f-user-journeys-final-6-23-2015.pdf).
 
 The team strongly felt that applying the UCD techniques in the sections previously mentioned satisfy Play [1] and [2].
 
 Wireframes
 ----------
-Our team created an initial set of wireframes based on brainstorming with the product owner.  These can be seen [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/3-user-interface/wireframes/18f-wireframes-draft1.pdf).
+Our team created an initial set of wireframes based on brainstorming with the product owner.  These can be seen [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/3-user-interface/wireframes/18f-wireframes-draft1.pdf).
 
 Design Comps
 ------------
-Our team created an initial set of design comps based on brainstorming with the product owner.  These can be seen [here](https://github.com/artemis-consulting/prototype-pool3/tree/master/user-centered-design/3-user-interface/design-comps).
+Our team created an initial set of design comps based on brainstorming with the product owner.  These can be seen [here](https://github.com/artemis-consulting/prototype-pool3/tree/master/doc/user-centered-design/3-user-interface/design-comps).
 
 Mobile-first Responsive Design
 ------------------------------
@@ -60,7 +60,7 @@ The prototypes with accompanying HTML markup are available at:
 
 Formal Accessibility Review
 ---------------------------
-Our team conducted a fairly formal accessibility review with the initial web prototype. The results of this review are [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/3-user-interface/accessibility/FDA%20Drug%20Monitor%20Formal%20Accessibility%20Review.pdf).
+Our team conducted a fairly formal accessibility review with the initial web prototype. The results of this review are [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/doc/user-centered-design/3-user-interface/accessibility/FDA%20Drug%20Monitor%20Formal%20Accessibility%20Review.pdf).
 
 Usability Testing
 -----------------
