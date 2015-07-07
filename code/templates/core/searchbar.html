@@ -1,15 +1,15 @@
 {# searchbar for use throughout the site#}
 <div class="fdahead-search">
     <form class="" action="" method="get" name="main_search" id="mainsearch">
-        <select class="" id="select-category">
+        <select class="" id="select-category" title="select search category">
             <option>Select a search category</option>
             <option value="search_labels" {% if search_category == 'labels' %} selected="selected" {% endif %}>Drug Names</option>
             <option value="search_events" {% if search_category == 'events' %} selected="selected" {% endif %}>Adverse Events</option>
             <option value="search_enforcements" {% if search_category == 'enforcements' %} selected="selected" {% endif %}>Enforcement Reports</option>
             <option value="search_manufacturers" {% if search_category == 'manufacturers' %} selected="selected" {% endif %}>Manufacturers</option>
         </select><!--
-        --><input type="search" class="" name="q" id="search-term" placeholder="Enter keyword"><!--
-        --><input class="" type="text" id='search-state' placeholder="Enter US state" style="display:none"><!--
+        --><input type="search" class="" name="q" id="search-term" title='search term' placeholder="Enter keyword"><!--
+        --><input class="" type="text" id='search-state' title='search state' placeholder="Enter US state" style="display:none"><!--
         --><button class="" type="submit" id="search-category"><span>GO</span><i></i></button>
     </form>
 </div>
