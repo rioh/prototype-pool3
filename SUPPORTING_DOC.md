@@ -206,4 +206,5 @@ Using AWS for the production environment provided us additional integration bene
 
 Section-pool3-Nagios
 --------------------
-Add information about our Nagios implementation here.
+Information on we setup Nagios for our needs on Ubuntu is [here] (http://nagios.sourceforge.net/docs/3_0/quickstart-ubuntu.html). Nagios of course can be set up on other Linux variants. 
+
