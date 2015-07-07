@@ -63,7 +63,7 @@ Our team conducted a fairly formal accessibility review with the initial web pro
 
 Usability Testing
 -----------------
-Agile usability testing was integrated into the design and prototyping process so that the team could identify and fix user experience problems before they become baked in and expensive to address.  To view the results the usability testing conducted on 06/24/14, click [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-ucd)
+Agile usability testing was integrated into the design and prototyping process so that the team could identify and fix user experience problems before they become baked in and expensive to address.  To view the results the usability testing conducted on 06/24/14, click [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-ucd).
 To read the full UCD approach, techniques, and results, go to [the supporting document](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-ux-testing)
 
 Agile Delivery Approach
@@ -76,7 +76,7 @@ For automated testing, we used the open source Selenium tool. The scripts for th
 
 Scrum Ceremonies & Roadmap
 ==========================
-To view Scrum ceremonies, product roadmap, and release strategy for our FDA project, click [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-scrum)
+To view Scrum ceremonies, product roadmap, and release strategy for our FDA project, click [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-scrum).
 
 Tools and Technology Stack
 ==========================
