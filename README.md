@@ -1,8 +1,8 @@
 ﻿Project Overview
 ================
 Artemis Consulting kicked off our agile project named "FDA Drug Monitor" by assembling the project team and discussing the 18F opportunity/problem statement. 
-To read more about the Problem and Vision Statements, go to [the supporting document](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-vision).
-To read more about the Project Scope and Key Features, go to [the supporting document](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-overview).
+To read more about the Problem and Vision Statements, go to [the supporting document](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-vision).
+To read more about the Project Scope and Key Features, go to [the supporting document](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-overview).
 
 Team and Stakeholders
 =====================
@@ -37,7 +37,7 @@ During the story planning meetings, the following prospective users where identi
 * Federal regulators and watchdog agencies
 * State regulators
 
-To read the full UCD approach, techniques, and results, go to [the supporting document](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-ucd)
+To read the full UCD approach, techniques, and results, go to [the supporting document](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-ucd)
 Click on the links to see the [final user personas](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/2-user-personas-and-journeys/18f-personas-final-6-23-2015.pdf) and [final user journeys](https://github.com/artemis-consulting/prototype-pool3/blob/master/user-centered-design/2-user-personas-and-journeys/18f-user-journeys-final-6-23-2015.pdf).
 
 The team strongly felt that applying the UCD techniques in the sections previously mentioned satisfy Play [1] and [2].
@@ -71,29 +71,29 @@ Agile Delivery Approach
 =======================
 For the FDA prototype, we decided on 2-day sprints but chose to add a 4-day sprint to accommodate the unusual nature of this project and weekend work after the project deadline was extended.
 
-To view our entire agile section and artifacts related to Play 4, click [here](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-agile).
-Results of usability testing can be viewed [here](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-ucd). 
-For automated testing, we used the open source Selenium tool. The scripts for these tests are checked in [here](https://github.com/artemis-consulting/prototype/blob/master/code/core/tests/test_behavior.py).
+To view our entire agile section and artifacts related to Play 4, click [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-agile).
+Results of usability testing can be viewed [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-ucd). 
+For automated testing, we used the open source Selenium tool. The scripts for these tests are checked in [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/code/core/tests/test_behavior.py).
 
 Scrum Ceremonies & Roadmap
 ==========================
-To view Scrum ceremonies, product roadmap, and release strategy for our FDA project, click [here](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-scrum)
+To view Scrum ceremonies, product roadmap, and release strategy for our FDA project, click [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-scrum)
 
 Tools and Technology Stack
 ==========================
-Click [here to see the details of the tools and full technology stack](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-tools) used by the team for the FDA prototype.
+Click [here to see the details of the tools and full technology stack](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-tools) used by the team for the FDA prototype.
 
 Hosting environment
 ===================
 During Sprint 0, the team worked on deploying the hosting environment for both test and production.  
-Click [here](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-hosting) to read more about the testing and production cloud setup [Pool 2 requirements D, Play 9]. 
+Click [here](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-hosting) to read more about the testing and production cloud setup [Pool 2 requirements D, Play 9]. 
 
 Continuous Monitoring
 =====================
 
 For this prototype, we installed CloudWatch and Threat Stack, two security-related monitoring services that are built for AWS. [Pool 2 requirements F, Play 9 and Play 12]
-Read more about our [continuous monitoring](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-monitoring) here.
-Read more about our [Nagios server monitoring](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-nagios) here.
+Read more about our [continuous monitoring](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-monitoring) here.
+Read more about our [Nagios server monitoring](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-nagios) here.
 
 Configuration Management
 ========================
@@ -104,7 +104,7 @@ The team used Puppet for automated configuration management. Docker is used for 
 Automated testing and deployments
 ---------------------------------
 For this prototype, we built a suite of automated tests, which tested the app as well as ensured wide code coverage (>92%). [Pool 2 requirements F, Play 10].
-To read more about the [testing frameworks and tools](https://github.com/artemis-consulting/prototype/blob/master/SUPPORTING_DOC.md#section-pool3-automated-testing) used for the FDA Pool2 prototype.
+To read more about the [testing frameworks and tools](https://github.com/artemis-consulting/prototype-pool3/blob/master/SUPPORTING_DOC.md#section-pool3-automated-testing) used for the FDA Pool2 prototype.
 
 Running locally
 ---------------
@@ -137,7 +137,7 @@ Grant privileges to the user
 ```
 Create a virtualenv
 ```shell
-virtualenv aretmisprototype
+virtualenv artemisprototype
 source $APP_DIR/artemisprototype/bin/activate
 ```
 Install the Python modules using pip. 
@@ -169,16 +169,16 @@ Sample apache config for django running daemon mode with virtualenv:
 ```shell
 <VirtualHost *:80>
 
- WSGIDaemonProcess prototype python-path=/apps/prototype/code:/apps/env/lib/python2.7/site-packages
- WSGIScriptAlias / /apps/prototype/code/opendata_fda/wsgi.py process-group=prototype
+ WSGIDaemonProcess prototype python-path=/apps/prototype-pool3/code:/apps/env/lib/python2.7/site-packages
+ WSGIScriptAlias / /apps/prototype-pool3/code/opendata_fda/wsgi.py process-group=prototype
 
- Alias /static/ /apps/prototype/code/.static/
+ Alias /static/ /apps/prototype-pool3/code/.static/
  
- <Directory /apps/prototype/code/opendata_fda>
+ <Directory /apps/prototype-pool3/code/opendata_fda>
  Require all granted
  </Directory>
  
- <Directory /apps/prototype/code/.static>
+ <Directory /apps/prototype-pool3/code/.static>
  Require all granted
  </Directory>
  
@@ -204,5 +204,5 @@ You can view the full details of coverage in a drill-down enabled report by open
  - Backend report: $APP_DIR/cover/index.html
 
 ### Docker image
-If you use [Docker](https://www.docker.com/) for virtualization, a Docker container is [available] (https://github.com/artemis-consulting/prototype/)
+If you use [Docker](https://www.docker.com/) for virtualization, a Docker container is [available] (https://github.com/artemis-consulting/prototype-pool3/)
 
