@@ -1,4 +1,4 @@
-Supporting Document for Artemis Consulting's Pool 2 Submission
+Supporting Document for Artemis Consulting's Pool 3 Submission
 ==============================================================
 Section-pool3-Vision
 ----------------------
